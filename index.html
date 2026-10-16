@@ -556,15 +556,14 @@
         </div>
 
         <div class="servers-row">
-            <button class="srv-btn active" onclick="setServer(0, this)">⚡ Kaynak 1 (VidSrc CC)</button>
+            <button class="srv-btn active" onclick="setServer(0, this)">🇹🇷 Kaynak 1 (VidSrc ME)</button>
             <button class="srv-btn" onclick="setServer(1, this)">🚀 Kaynak 2 (VidLink Pro)</button>
-            <button class="srv-btn" onclick="setServer(2, this)">🇹🇷 Kaynak 3 (VidSrc XYZ)</button>
-            <button class="srv-btn" onclick="setServer(3, this)">🎬 Kaynak 4 (MultiEmbed)</button>
-            <button class="srv-btn" onclick="setServer(4, this)">🔥 Kaynak 5 (AutoEmbed)</button>
+            <button class="srv-btn" onclick="setServer(2, this)">⚡ Kaynak 3 (VidSrc PM)</button>
+            <button class="srv-btn" onclick="setServer(3, this)">🔥 Kaynak 4 (AutoEmbed)</button>
         </div>
 
         <div class="player-frame-box">
-            <iframe id="playerIframe" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture"></iframe>
+            <iframe id="playerIframe" allowfullscreen allow="autoplay; fullscreen; encrypted-media; picture-in-picture" referrerpolicy="origin"></iframe>
         </div>
 
         <div class="episodes-section" id="episodesBox" style="display: none;">
@@ -621,6 +620,7 @@
         let hls = null;
         let state = {
             id: '',
+            tmdbId: null,
             tvmazeId: null,
             type: 'movie',
             name: '',
@@ -655,7 +655,9 @@
                 if (genre) url = `${CINEMETA}/catalog/movie/${catalog}/genre=${encodeURIComponent(genre)}.json`;
                 const res = await fetch(url).then(r => r.json());
                 if (res.metas && res.metas.length > 0) {
-                    renderGrid('moviesGrid', res.metas.slice(0, 48), 'movie');
+                    // Henüz vizyona girmemiş (IMDb puanı olmayan) filmleri filtrele
+                    const released = res.metas.filter(m => m.imdbRating && parseFloat(m.imdbRating) > 0);
+                    renderGrid('moviesGrid', (released.length ? released : res.metas).slice(0, 48), 'movie');
                 }
             } catch {
                 renderGrid('moviesGrid', DEFAULT_MOVIES, 'movie');
@@ -758,7 +760,7 @@
 
         // Oynatıcı
         async function openPlayer(id, type, name, tvmazeId) {
-            state = { id, tvmazeId, type, name, season: 1, episode: 1, server: 0, trSubUrl: '', episodes: [] };
+            state = { id, tmdbId: null, tvmazeId, type, name, season: 1, episode: 1, server: 0, trSubUrl: '', episodes: [] };
             document.getElementById('playerModal').classList.add('open');
             document.getElementById('modalTitle').textContent = name;
             document.querySelectorAll('.srv-btn').forEach((b, i) => b.classList.toggle('active', i === 0));
@@ -770,9 +772,24 @@
                 document.getElementById('episodesBox').style.display = 'none';
             }
 
-            // Önce Stremio OpenSubtitles'tan Türkçe altyazı linkini al, sonra oynatıcıyı başlat
-            await fetchTrSub();
+            // VidLink Pro dizilerde TMDB ID (moviedb_id) zorunlu tuttuğu için Cinemeta'dan çekiyoruz
+            await Promise.all([fetchMetaInfo(), fetchTrSub()]);
             refreshIframe();
+        }
+
+        async function fetchMetaInfo() {
+            try {
+                const res = await fetch(`${CINEMETA}/meta/${state.type}/${state.id}.json`).then(r => r.json());
+                if (res?.meta?.moviedb_id) {
+                    state.tmdbId = res.meta.moviedb_id;
+                }
+                if (state.type === 'series' && (!state.episodes || state.episodes.length === 0) && res?.meta?.videos?.length) {
+                    state.episodes = res.meta.videos
+                        .filter(v => v.season > 0)
+                        .map(v => ({ season: v.season, episode: v.episode || v.number, name: v.name || `${v.episode || v.number}. Bölüm` }));
+                    renderEpisodesUI();
+                }
+            } catch {}
         }
 
         async function fetchTrSub() {
@@ -786,22 +803,20 @@
         }
 
         function refreshIframe() {
-            const { id, type, season, episode, server, trSubUrl } = state;
-            const subQuery = trSubUrl ? `&sub_file=${encodeURIComponent(trSubUrl)}&sub_label=Turkce&sub.file=${encodeURIComponent(trSubUrl)}&sub.label=Turkce` : '';
+            const { id, tmdbId, type, season, episode, server, trSubUrl } = state;
+            const subParam = trSubUrl ? `&sub_file=${encodeURIComponent(trSubUrl)}&sub_label=Turkce` : '';
 
             let url = '';
             if (type === 'movie') {
-                if (server === 0) url = `https://vidsrc.cc/v2/embed/movie/${id}?autoPlay=true`;
-                else if (server === 1) url = `https://vidlink.pro/movie/${id}?autoplay=true${subQuery}`;
-                else if (server === 2) url = `https://vidsrc.xyz/embed/movie/${id}?ds_lang=tr${subQuery}`;
-                else if (server === 3) url = `https://multiembed.mov/?video_id=${id}`;
-                else if (server === 4) url = `https://autoembed.co/movie/imdb/${id}`;
+                if (server === 0) url = `https://vidsrc.me/embed/movie?imdb=${id}&ds_lang=tr`;
+                else if (server === 1) url = `https://vidlink.pro/movie/${tmdbId || id}?autoplay=true${subParam}`;
+                else if (server === 2) url = `https://vidsrc.pm/embed/movie?imdb=${id}&ds_lang=tr`;
+                else if (server === 3) url = `https://autoembed.co/movie/imdb/${id}`;
             } else {
-                if (server === 0) url = `https://vidsrc.cc/v2/embed/tv/${id}/${season}/${episode}?autoPlay=true`;
-                else if (server === 1) url = `https://vidlink.pro/tv/${id}/${season}/${episode}?autoplay=true${subQuery}`;
-                else if (server === 2) url = `https://vidsrc.xyz/embed/tv/${id}/${season}-${episode}?ds_lang=tr${subQuery}`;
-                else if (server === 3) url = `https://multiembed.mov/?video_id=${id}&s=${season}&e=${episode}`;
-                else if (server === 4) url = `https://autoembed.co/tv/imdb/${id}-${season}-${episode}`;
+                if (server === 0) url = `https://vidsrc.me/embed/tv?imdb=${id}&season=${season}&episode=${episode}&ds_lang=tr`;
+                else if (server === 1) url = `https://vidlink.pro/tv/${tmdbId || id}/${season}/${episode}?autoplay=true${subParam}`;
+                else if (server === 2) url = `https://vidsrc.pm/embed/tv?imdb=${id}&season=${season}&episode=${episode}&ds_lang=tr`;
+                else if (server === 3) url = `https://autoembed.co/tv/imdb/${id}-${season}-${episode}`;
             }
 
             document.getElementById('playerIframe').src = url;
@@ -828,8 +843,10 @@
                 }
                 if (showId) {
                     const eps = await fetch(`https://api.tvmaze.com/shows/${showId}/episodes`).then(r => r.json());
-                    state.episodes = eps.map(e => ({ season: e.season, episode: e.number, name: e.name }));
-                    renderEpisodesUI();
+                    if (eps && eps.length) {
+                        state.episodes = eps.map(e => ({ season: e.season, episode: e.number, name: e.name }));
+                        renderEpisodesUI();
+                    }
                 }
             } catch {}
         }
