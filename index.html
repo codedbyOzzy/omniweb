@@ -482,15 +482,15 @@
             display: block;
         }
 
-        /* Dokunma Kalkanı */
+        /* Akıllı Dokunma & Tıklama Kalkanı (Altyazıları Kapatmaması İçin Üstte & Otomatik Gizlenen) */
         .touch-shield {
             position: absolute;
             inset: 0;
             z-index: 10;
             background: transparent;
             display: none;
-            align-items: flex-end;
-            justify-content: flex-end;
+            align-items: flex-start;
+            justify-content: center;
             padding: 12px;
         }
 
@@ -498,16 +498,18 @@
             display: flex;
         }
 
-        .shield-badge {
-            background: rgba(16, 185, 129, 0.95);
-            color: #fff;
-            font-size: 12px;
-            font-weight: 700;
-            padding: 8px 14px;
-            border-radius: 20px;
-            border: none;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.7);
-            cursor: pointer;
+        .touch-shield .shield-hud {
+            opacity: 0;
+            transform: translateY(-6px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            pointer-events: none;
+        }
+
+        .touch-shield.hud-show .shield-hud,
+        .touch-shield:hover .shield-hud {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
         }
 
         /* Tek El Mobil Kontrol Barı (Videonun Hemen Altında - Tam Boyutlu) */
@@ -757,6 +759,345 @@
             text-overflow: ellipsis;
             margin-top: 2px;
         }
+
+        /* Akıllı Kalkan HUD (Eklentisiz Reklam/Popup Koruması) */
+        .shield-hud {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(11, 11, 15, 0.92);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(16, 185, 129, 0.45);
+            padding: 8px 12px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+            max-width: 95%;
+        }
+
+        .hud-mini-btn {
+            background: var(--surface-2);
+            color: #fff;
+            border: 1px solid var(--border);
+            padding: 6px 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .hud-mini-btn.unlock {
+            background: var(--green);
+            border-color: var(--green);
+            color: #fff;
+        }
+
+        /* Sinema Modu (PC & Tablet Geniş Ekran) */
+        .modal.theater-mode .player-frame-box,
+        .modal.theater-mode .mobile-action-bar,
+        .modal.theater-mode .resume-bar,
+        .modal.theater-mode .servers-row,
+        .modal.theater-mode .modal-body {
+            max-width: 1380px;
+        }
+
+        .modal.theater-mode .player-frame-box {
+            max-height: 76vh;
+        }
+
+        /* YOUTUBE+ (PREMIUM) SEKMESİ STİLLERİ */
+        .yt-search-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .yt-search-bar input {
+            flex: 1;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 11px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .yt-search-bar input:focus {
+            border-color: var(--accent);
+        }
+
+        .yt-search-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 0 18px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .yt-player-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        .yt-player-card.active {
+            display: block;
+        }
+
+        .yt-video-wrap {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            position: relative;
+        }
+
+        .yt-video-wrap iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        .sb-toast {
+            position: absolute;
+            bottom: 56px;
+            right: 16px;
+            z-index: 20;
+            background: rgba(16, 185, 129, 0.96);
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+            display: none;
+            pointer-events: none;
+        }
+
+        .yt-controls-bar {
+            padding: 12px 14px;
+            background: #12121a;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .yt-now-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .yt-now-title {
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.35;
+        }
+
+        .yt-now-sub {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 3px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .yt-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .yt-btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .yt-ctrl-btn {
+            background: var(--surface-2);
+            color: #e5e7eb;
+            border: 1px solid var(--border);
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .yt-ctrl-btn.on {
+            background: rgba(16, 185, 129, 0.22);
+            border-color: var(--green);
+            color: #34d399;
+        }
+
+        .yt-ctrl-btn.speed-active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        /* 16:9 YouTube Video Kartları Izgarası */
+        .yt-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 14px;
+        }
+
+        .yt-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.15s ease, border-color 0.15s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .yt-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(229, 9, 20, 0.5);
+        }
+
+        .yt-thumb {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #1a1a24;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .yt-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .yt-dur {
+            position: absolute;
+            bottom: 6px;
+            right: 6px;
+            background: rgba(0, 0, 0, 0.85);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .yt-resume-pill {
+            position: absolute;
+            bottom: 6px;
+            left: 6px;
+            background: rgba(229, 9, 20, 0.92);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .yt-card-body {
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .yt-card-title {
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.35;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .yt-card-meta {
+            font-size: 11px;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+        }
+
+        .pwa-btn {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            border: 1px solid var(--green);
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            display: none;
+        }
+
+        /* PC WEB (MASAÜSTÜ GENİŞ EKRAN) UYUMLULUĞU */
+        @media (min-width: 900px) {
+            body {
+                padding-bottom: 32px;
+            }
+            header {
+                padding: 14px 32px;
+            }
+            .container, .chips-row {
+                max-width: 1380px;
+                margin-left: auto;
+                margin-right: auto;
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(156px, 1fr));
+                gap: 16px;
+            }
+            .bottom-nav {
+                position: sticky;
+                top: 61px;
+                bottom: auto;
+                justify-content: center;
+                gap: 12px;
+                padding: 8px 24px;
+                border-top: none;
+                border-bottom: 1px solid var(--border);
+                background: rgba(15, 15, 22, 0.95);
+            }
+            .nav-item {
+                flex-direction: row;
+                font-size: 13px;
+                padding: 7px 16px;
+                border-radius: 10px;
+                gap: 8px;
+            }
+            .nav-item.active {
+                background: rgba(229, 9, 20, 0.16);
+            }
+        }
     </style>
 </head>
 <body>
@@ -768,7 +1109,27 @@
         <div class="search-wrap">
             <input type="text" id="searchInput" placeholder="Film veya dizi ara..." oninput="onSearch(this.value)" />
         </div>
+        <button class="pwa-btn" id="pwaInstallBtn" onclick="installPWA()">📲 Uygulamayı Yükle</button>
     </header>
+
+    <!-- ANA NAVİGASYON (Mobilde Altta, PC'de Üstte) -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" data-tab="movies" onclick="showTab('movies')">
+            <span class="ico">🎬</span><span>Filmler</span>
+        </button>
+        <button class="nav-item" data-tab="series" onclick="showTab('series')">
+            <span class="ico">📺</span><span>Diziler</span>
+        </button>
+        <button class="nav-item" data-tab="youtube" onclick="showTab('youtube')">
+            <span class="ico">▶️</span><span>YouTube+</span>
+        </button>
+        <button class="nav-item" data-tab="history" onclick="showTab('history')">
+            <span class="ico">🕒</span><span>İzlediklerim</span>
+        </button>
+        <button class="nav-item" data-tab="tv" onclick="showTab('tv')">
+            <span class="ico">📡</span><span>Canlı TV</span>
+        </button>
+    </nav>
 
     <!-- 1. FİLMLER SEKMESİ -->
     <div id="view-movies" class="tab-view">
@@ -810,7 +1171,75 @@
         </div>
     </div>
 
-    <!-- 3. İZLEDİKLERİM & LİSTEM SEKMESİ -->
+    <!-- 3. YOUTUBE+ (GÖMÜLÜ YOUTUBE PREMIUM & SPONSORBLOCK) SEKMESİ -->
+    <div id="view-youtube" class="tab-view" style="display: none;">
+        <div class="container" style="padding-bottom: 4px;">
+            <div class="yt-search-bar">
+                <input type="text" id="ytSearchInput" placeholder="YouTube'da video, müzik, kanal ara veya YouTube linki yapıştır..." onkeydown="if(event.key==='Enter') searchYouTube()" />
+                <button class="yt-search-btn" onclick="searchYouTube()">🔍 Ara / Aç</button>
+            </div>
+
+            <!-- Gömülü Reklamsız YouTube+ Oynatıcısı -->
+            <div class="yt-player-card" id="ytPlayerCard">
+                <div class="yt-video-wrap" id="ytVideoWrap">
+                    <div id="ytPlayerMount"></div>
+                    <div class="sb-toast" id="sbToast">⚡ Sponsorlu Bölüm Otomatik Atlandı!</div>
+                </div>
+                <div class="yt-controls-bar">
+                    <div class="yt-now-header">
+                        <div>
+                            <div class="yt-now-title" id="ytNowTitle">Video Seçin</div>
+                            <div class="yt-now-sub">
+                                <span id="ytNowChannel">YouTube+ Premium</span>
+                                <span>•</span>
+                                <span style="color:#fbbf24; font-weight:700;" id="ytTimeLabel">⏱ 00:00</span>
+                                <span id="ytSbStatus" style="color:#34d399; font-weight:600;">🛡️ Reklamsız + SponsorBlock Aktif</span>
+                            </div>
+                        </div>
+                        <button class="yt-ctrl-btn" onclick="closeYtPlayer()">✕ Kapat</button>
+                    </div>
+
+                    <div class="yt-toolbar">
+                        <div class="yt-btn-group">
+                            <button class="yt-ctrl-btn" onclick="seekYt(-10)">⏪ -10sn</button>
+                            <button class="yt-ctrl-btn" id="ytPlayPauseBtn" onclick="toggleYtPlay()">⏯ Oynat/Durdur</button>
+                            <button class="yt-ctrl-btn" onclick="seekYt(10)">⏩ +10sn</button>
+                            <button class="yt-ctrl-btn" onclick="playNextYt()">⏭ Sıradaki</button>
+                            <button class="yt-ctrl-btn" id="ytLoopBtn" onclick="toggleYtLoop()">🔁 Döngü: Kapalı</button>
+                            <button class="yt-ctrl-btn on" id="ytSbBtn" onclick="toggleSponsorBlock()">⚡ SponsorBlock: Açık</button>
+                            <button class="yt-ctrl-btn" onclick="toggleYtFullscreen()">⛶ Tam Ekran</button>
+                        </div>
+                        <div class="yt-btn-group" id="ytSpeedGroup">
+                            <span style="font-size:11px; color:var(--muted);">Hız:</span>
+                            <button class="yt-ctrl-btn speed-active" onclick="setYtSpeed(1, this)">1x</button>
+                            <button class="yt-ctrl-btn" onclick="setYtSpeed(1.25, this)">1.25x</button>
+                            <button class="yt-ctrl-btn" onclick="setYtSpeed(1.5, this)">1.5x</button>
+                            <button class="yt-ctrl-btn" onclick="setYtSpeed(2, this)">2x</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chips-row" style="padding-top: 4px;">
+            <button class="chip active" onclick="loadYtCategory('trend', this)">🔥 Türkiye & Gündem</button>
+            <button class="chip" onclick="loadYtCategory('music', this)">🎵 Türkçe Pop & Lofi</button>
+            <button class="chip" onclick="loadYtCategory('podcast', this)">🎙️ Podcast & Sohbet</button>
+            <button class="chip" onclick="loadYtCategory('tech', this)">💻 Bilim & Teknoloji</button>
+            <button class="chip" onclick="loadYtCategory('sport', this)">⚽ Spor & Özet</button>
+            <button class="chip" onclick="loadYtCategory('gaming', this)">🎮 Oyun</button>
+            <button class="chip" onclick="loadYtCategory('history', this)">🕒 Son İzlediğim YT</button>
+        </div>
+
+        <div class="container">
+            <div class="section-header">
+                <div class="section-title" id="ytSectionTitle">🔥 Öne Çıkan Videolar (Reklamsız & SponsorBlock)</div>
+            </div>
+            <div class="yt-grid" id="ytGrid"></div>
+        </div>
+    </div>
+
+    <!-- 4. İZLEDİKLERİM & LİSTEM SEKMESİ -->
     <div id="view-history" class="tab-view" style="display: none;">
         <div class="container">
             <div class="section-header">
@@ -828,7 +1257,7 @@
         </div>
     </div>
 
-    <!-- 4. CANLI TV SEKMESİ -->
+    <!-- 5. CANLI TV SEKMESİ -->
     <div id="view-tv" class="tab-view" style="display: none;">
         <div class="chips-row">
             <button class="chip active" onclick="filterTv('ALL', this)">Tümü</button>
@@ -864,23 +1293,7 @@
         </div>
     </div>
 
-    <!-- ALT MENÜ -->
-    <nav class="bottom-nav">
-        <button class="nav-item active" data-tab="movies" onclick="showTab('movies')">
-            <span class="ico">🎬</span><span>Filmler</span>
-        </button>
-        <button class="nav-item" data-tab="series" onclick="showTab('series')">
-            <span class="ico">📺</span><span>Diziler</span>
-        </button>
-        <button class="nav-item" data-tab="history" onclick="showTab('history')">
-            <span class="ico">🕒</span><span>İzlediklerim</span>
-        </button>
-        <button class="nav-item" data-tab="tv" onclick="showTab('tv')">
-            <span class="ico">📡</span><span>Canlı TV</span>
-        </button>
-    </nav>
-
-    <!-- GELİŞMİŞ MOBİL DOSTU OYNATICI MODALI -->
+    <!-- GELİŞMİŞ MOBİL & PC DOSTU OYNATICI MODALI -->
     <div class="modal" id="playerModal">
         <div class="modal-top-sticky">
             <div class="modal-header">
@@ -888,19 +1301,26 @@
                 <button class="close-btn" onclick="closeModal()">✕</button>
             </div>
 
-            <div class="player-frame-box">
+            <div class="player-frame-box" id="playerFrameBox">
                 <iframe id="playerIframe" allowfullscreen allow="autoplay; fullscreen; encrypted-media; picture-in-picture" referrerpolicy="origin"></iframe>
-                <!-- Dokunma Kalkanı: Aktifken video üzerindeki reklam yönlendirmelerini %100 engeller -->
-                <div class="touch-shield" id="touchShield" onclick="unlockShieldTemporarily()">
-                    <button class="shield-badge">🛡️ Reklam Kilidi Aktif (Kontrol için dokun)</button>
+                <!-- Akıllı Reklam & Popup Kalkanı: Film oynarken reklama tıklamayı %100 engeller ve hızlı kontrol sunar -->
+                <div class="touch-shield" id="touchShield">
+                    <div class="shield-hud">
+                        <button class="hud-mini-btn unlock" onclick="unlockShieldTemporarily()">🔓 Oynatıcıya Dokun (6sn)</button>
+                        <button class="hud-mini-btn" onclick="adjustWatchedTime(-60)">⏪ -1dk</button>
+                        <button class="hud-mini-btn" onclick="adjustWatchedTime(60)">⏩ +1dk</button>
+                        <button class="hud-mini-btn" onclick="togglePlayerFullscreen()">⛶ Tam Ekran</button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Tek El Başparmak Kontrol Barı (Videonun Hemen Altında) -->
+        <!-- Tek El Başparmak & PC Kontrol Barı (Videonun Hemen Altında) -->
         <div class="mobile-action-bar">
             <button class="act-btn back" onclick="closeModal()">⬅ Geri</button>
-            <button class="act-btn" id="shieldBtn" onclick="toggleShield()">🛡️ Reklam Kilidi</button>
+            <button class="act-btn shield-on" id="shieldBtn" onclick="toggleShield()">🛡️ Oto-Kalkan: Açık</button>
+            <button class="act-btn" id="sandboxBtn" onclick="toggleSandboxGuard()">🔒 Katı Sandbox: Kapalı</button>
+            <button class="act-btn" id="theaterBtn" onclick="toggleTheaterMode()">🎭 Sinema Modu</button>
             <button class="act-btn" id="favBtn" onclick="toggleFavorite()">🤍 Listem</button>
             <button class="act-btn" id="nextEpBtn" style="display: none;" onclick="playNextEpisode()">⏭ Sonraki Bölüm</button>
         </div>
@@ -1005,10 +1425,17 @@
         let moviesCache = [...DEFAULT_MOVIES];
         let seriesCache = [];
         let hls = null;
-        let shieldLocked = false;
+        let autoShieldEnabled = true;
+        let shieldTemporarilyUnlocked = false;
+        let sandboxGuard = false;
         let shieldTimer = null;
+        let hudHideTimer = null;
         let watchInterval = null;
         let adjustDebounceTimer = null;
+        let deferredPwaPrompt = null;
+
+        let uiHidePauseTimer = null;
+        let playStartTimer = null;
 
         let state = {
             id: '',
@@ -1027,7 +1454,8 @@
             duration: 0,
             iframeLoadedAt: 0,
             lastExternalTimeAt: 0,
-            playerActive: false,
+            isPlaying: false,
+            userStartedPlay: false,
             trSubUrl: '',
             episodes: []
         };
@@ -1060,6 +1488,46 @@
             loadMovies('top', '');
             initSeries();
             filterTv('ALL');
+            initYouTubePlus();
+            initShieldTouchListener();
+
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('./sw.js').catch(() => {});
+            }
+        });
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPwaPrompt = e;
+            const btn = document.getElementById('pwaInstallBtn');
+            if (btn) btn.style.display = 'inline-block';
+        });
+
+        async function installPWA() {
+            if (!deferredPwaPrompt) return;
+            deferredPwaPrompt.prompt();
+            await deferredPwaPrompt.userChoice.catch(() => {});
+            deferredPwaPrompt = null;
+            const btn = document.getElementById('pwaInstallBtn');
+            if (btn) btn.style.display = 'none';
+        }
+
+        // Kullanıcı oynatıcı iframe'inin içine (Play tuşuna) dokunduğunda algıla
+        window.addEventListener('blur', () => {
+            if (!state.id) return;
+            const f = document.getElementById('playerIframe');
+            if (document.activeElement === f && !state.userStartedPlay) {
+                state.userStartedPlay = true;
+                clearTimeout(playStartTimer);
+                // Play tuşuna basıldıktan 2.5 sn sonra akış başladığında sayacı ve Otomatik Kalkanı devreye al
+                playStartTimer = setTimeout(() => {
+                    if (state.id && state.userStartedPlay) {
+                        state.isPlaying = true;
+                        updateResumeBarUI();
+                        syncShieldOverlay();
+                    }
+                }, 2500);
+            }
         });
 
         // Sayfa arka plana alındığında veya kapatıldığında anında kaydet
@@ -1080,8 +1548,8 @@
             if (!d || typeof d !== 'object') return;
 
             // 1) VidSrc içinden gelen başlık mesajı ("Show Name · S01 E03" formatında seçilen bölümü bildirir)
+            // NOT: Bu mesaj sayfa açılır açılmaz gelir, videonun oynatıldığını göstermez!
             if (d.type === 'PLAYER_TITLE') {
-                state.playerActive = true;
                 if (state.type === 'series' && typeof d.title === 'string') {
                     const m = d.title.match(/S(\d+)\s*E(\d+)/i);
                     if (m) {
@@ -1108,9 +1576,8 @@
                 return;
             }
 
-            // 2) VidSrc TV_INFO / TV_STATE mesajları
+            // 2) VidSrc TV_INFO / TV_STATE mesajları (Sayfa açılışında veya bölüm değiştiğinde gelir)
             if (d.type === 'TV_INFO' || d.type === 'TV_STATE') {
-                state.playerActive = true;
                 if (d.eps && (!state.episodes || state.episodes.length === 0)) {
                     const list = [];
                     Object.keys(d.eps).map(Number).filter(n => !isNaN(n)).sort((a, b) => a - b).forEach(s => {
@@ -1138,15 +1605,28 @@
                 return;
             }
 
-            // 3) VidSrc PLAYER_UI (oynatıcı kontrolleri görünür/gizli -> video aktif)
+            // 3) VidSrc PLAYER_UI:
+            // visible === false -> Oynatıcı alt barı otomatik gizlendi, yani video şu an AKTİF OYNATILIYOR!
+            // visible === true  -> Oynatıcı alt barı açıldı (ya duraklatıldı ya da ekrana dokunuldu)
             if (d.type === 'PLAYER_UI') {
-                state.playerActive = true;
+                clearTimeout(uiHidePauseTimer);
+                if (d.visible === false && Date.now() - state.iframeLoadedAt > 1500) {
+                    state.userStartedPlay = true;
+                    state.isPlaying = true;
+                    updateResumeBarUI();
+                    syncShieldOverlay();
+                } else if (d.visible === true && state.isPlaying) {
+                    // Kontroller 4.5 saniye boyunca kapanmazsa video duraklatılmış demektir
+                    uiHidePauseTimer = setTimeout(() => {
+                        state.isPlaying = false;
+                        updateResumeBarUI();
+                    }, 4500);
+                }
                 return;
             }
 
             // 4) Userscript OMNI_VIDEO_READY
             if (d.type === 'OMNI_VIDEO_READY') {
-                state.playerActive = true;
                 if (state.watchedSeconds >= 10) {
                     sendSeekToIframe(state.watchedSeconds);
                 }
@@ -1155,13 +1635,18 @@
 
             // 5) VidLink Pro PLAYER_EVENT
             if (d.type === 'PLAYER_EVENT' && d.data) {
-                state.playerActive = true;
                 const ev = d.data;
+                if (ev.event === 'play' || (ev.event === 'timeupdate' && ev.currentTime > 0)) {
+                    state.userStartedPlay = true;
+                    state.isPlaying = true;
+                } else if (ev.event === 'pause' || ev.event === 'ended') {
+                    state.isPlaying = false;
+                }
                 if (state.type === 'series' && ev.season && ev.episode) {
                     state.season = Number(ev.season);
                     state.episode = Number(ev.episode);
                 }
-                if (typeof ev.currentTime === 'number') {
+                if (typeof ev.currentTime === 'number' && ev.currentTime > 0) {
                     handleIncomingTime(ev.currentTime, ev.duration || 0);
                 }
                 return;
@@ -1169,8 +1654,9 @@
 
             // 6) VidLink Pro / Genel MEDIA_DATA
             if (d.type === 'MEDIA_DATA' && d.data) {
-                state.playerActive = true;
-                if (typeof d.data.currentTime === 'number') {
+                if (typeof d.data.currentTime === 'number' && d.data.currentTime > 0) {
+                    state.userStartedPlay = true;
+                    state.isPlaying = true;
                     handleIncomingTime(d.data.currentTime, d.data.duration || 0);
                 } else {
                     const firstEntry = Object.values(d.data)[0];
@@ -1179,7 +1665,7 @@
                             state.season = Number(firstEntry.last_season_watched);
                             state.episode = Number(firstEntry.last_episode_watched);
                         }
-                        if (firstEntry.progress && typeof firstEntry.progress.watched === 'number') {
+                        if (firstEntry.progress && typeof firstEntry.progress.watched === 'number' && firstEntry.progress.watched > 0) {
                             handleIncomingTime(firstEntry.progress.watched, firstEntry.progress.duration || 0);
                         }
                     }
@@ -1188,9 +1674,24 @@
             }
 
             // 7) Userscript OMNI_TIME veya diğer zaman mesajları
+            if (d.type === 'OMNI_TIME') {
+                if (typeof d.paused === 'boolean') {
+                    state.isPlaying = !d.paused;
+                    if (!d.paused) state.userStartedPlay = true;
+                } else {
+                    state.userStartedPlay = true;
+                    state.isPlaying = true;
+                }
+                if (typeof d.currentTime === 'number' && d.currentTime > 0) {
+                    handleIncomingTime(d.currentTime, d.duration || 0);
+                }
+                return;
+            }
+
             const rawTime = d.currentTime ?? d.watched ?? d.position;
             if (typeof rawTime === 'number' && rawTime > 0) {
-                state.playerActive = true;
+                state.userStartedPlay = true;
+                state.isPlaying = true;
                 handleIncomingTime(rawTime, d.duration || 0);
             }
         });
@@ -1228,9 +1729,8 @@
             stopWatchTimer();
             watchInterval = setInterval(() => {
                 if (!state.id || document.hidden) return;
-                const elapsedSinceLoad = Date.now() - state.iframeLoadedAt;
-                // Oynatıcı aktif olduysa veya yükleneli 7 saniye geçtiyse ve dışarıdan saniye mesajı gelmiyorsa otomatik say
-                if ((state.playerActive || elapsedSinceLoad > 7000) && (Date.now() - state.lastExternalTimeAt > 3000)) {
+                // SADECE film/dizi fiilen oynatılıyorken (Play'e basıldıktan sonra) say!
+                if (state.isPlaying && (Date.now() - state.lastExternalTimeAt > 2500)) {
                     state.watchedSeconds += 1;
                     updateResumeBarUI();
                     if (state.watchedSeconds % 4 === 0) {
@@ -1241,6 +1741,8 @@
         }
 
         function stopWatchTimer() {
+            clearTimeout(uiHidePauseTimer);
+            clearTimeout(playStartTimer);
             if (watchInterval) {
                 clearInterval(watchInterval);
                 watchInterval = null;
@@ -1560,25 +2062,137 @@
             });
         }
 
-        // DOKUNMA KALKANI (Film başladıktan sonra tıklama reklamlarını %100 engeller)
-        function toggleShield(forceState) {
-            shieldLocked = typeof forceState === 'boolean' ? forceState : !shieldLocked;
-            clearTimeout(shieldTimer);
+        // AKILLI OTO-KALKAN & KATI SANDBOX (Eklenti/Script Olmadan Reklam Sekmelerini Engeller)
+        function initShieldTouchListener() {
+            const shield = document.getElementById('touchShield');
+            if (!shield) return;
+            shield.addEventListener('click', (e) => {
+                if (e.target === shield) {
+                    shield.classList.add('hud-show');
+                    clearTimeout(hudHideTimer);
+                    hudHideTimer = setTimeout(() => {
+                        shield.classList.remove('hud-show');
+                    }, 4000);
+                }
+            });
+        }
+
+        function syncShieldOverlay() {
             const shield = document.getElementById('touchShield');
             const btn = document.getElementById('shieldBtn');
-            shield.classList.toggle('active', shieldLocked);
-            btn.classList.toggle('shield-on', shieldLocked);
-            btn.innerHTML = shieldLocked ? '🔒 Kilit Açık' : '🛡️ Reklam Kilidi';
+            if (!shield || !btn) return;
+            const shouldBlock = autoShieldEnabled && state.isPlaying && !shieldTemporarilyUnlocked;
+            shield.classList.toggle('active', shouldBlock);
+            btn.classList.toggle('shield-on', autoShieldEnabled);
+            btn.innerHTML = autoShieldEnabled ? '🛡️ Oto-Kalkan: Açık' : '🛡️ Oto-Kalkan: Kapalı';
+        }
+
+        function toggleShield(forceState) {
+            if (typeof forceState === 'boolean') {
+                if (!forceState) {
+                    shieldTemporarilyUnlocked = false;
+                    clearTimeout(shieldTimer);
+                    const shield = document.getElementById('touchShield');
+                    if (shield) shield.classList.remove('active', 'hud-show');
+                    return;
+                }
+                autoShieldEnabled = true;
+            } else {
+                autoShieldEnabled = !autoShieldEnabled;
+            }
+            shieldTemporarilyUnlocked = false;
+            clearTimeout(shieldTimer);
+            syncShieldOverlay();
         }
 
         function unlockShieldTemporarily() {
+            shieldTemporarilyUnlocked = true;
             const shield = document.getElementById('touchShield');
-            shield.classList.remove('active');
+            if (shield) shield.classList.remove('active', 'hud-show');
             clearTimeout(shieldTimer);
             shieldTimer = setTimeout(() => {
-                if (shieldLocked) shield.classList.add('active');
-            }, 6000);
+                shieldTemporarilyUnlocked = false;
+                syncShieldOverlay();
+            }, 6500);
         }
+
+        function toggleSandboxGuard() {
+            sandboxGuard = !sandboxGuard;
+            const f = document.getElementById('playerIframe');
+            const btn = document.getElementById('sandboxBtn');
+            if (sandboxGuard) {
+                f.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms allow-presentation');
+                btn.classList.add('shield-on');
+                btn.innerHTML = '🔒 Katı Sandbox: Açık';
+            } else {
+                f.removeAttribute('sandbox');
+                btn.classList.remove('shield-on');
+                btn.innerHTML = '🔒 Katı Sandbox: Kapalı';
+            }
+            refreshIframe(state.watchedSeconds);
+        }
+
+        function toggleTheaterMode() {
+            const modal = document.getElementById('playerModal');
+            const btn = document.getElementById('theaterBtn');
+            const isTheater = modal.classList.toggle('theater-mode');
+            if (btn) btn.classList.toggle('shield-on', isTheater);
+        }
+
+        function togglePlayerFullscreen() {
+            const box = document.getElementById('playerFrameBox');
+            if (!box) return;
+            if (document.fullscreenElement) {
+                document.exitFullscreen().catch(() => {});
+            } else if (box.requestFullscreen) {
+                box.requestFullscreen().catch(() => {});
+            } else if (box.webkitRequestFullscreen) {
+                box.webkitRequestFullscreen();
+            }
+        }
+
+        // PC KLAVYE KISAYOLLARI (ESC, T: Sinema Modu, F: Tam Ekran, Sağ/Sol Ok: Sarma, Space: Oynat/Durdur)
+        window.addEventListener('keydown', (e) => {
+            const tag = (e.target && e.target.tagName) ? e.target.tagName.toUpperCase() : '';
+            if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+
+            const modalOpen = document.getElementById('playerModal').classList.contains('open');
+            const ytVisible = document.getElementById('view-youtube').style.display !== 'none';
+
+            if (e.key === 'Escape' && modalOpen) {
+                closeModal();
+                return;
+            }
+            if (modalOpen) {
+                if (e.key === 't' || e.key === 'T') {
+                    e.preventDefault();
+                    toggleTheaterMode();
+                } else if (e.key === 'f' || e.key === 'F') {
+                    e.preventDefault();
+                    togglePlayerFullscreen();
+                } else if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    adjustWatchedTime(60);
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    adjustWatchedTime(-60);
+                }
+            } else if (ytVisible && ytState.videoId) {
+                if (e.key === ' ') {
+                    e.preventDefault();
+                    toggleYtPlay();
+                } else if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    seekYt(10);
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    seekYt(-10);
+                } else if (e.key === 'f' || e.key === 'F') {
+                    e.preventDefault();
+                    toggleYtFullscreen();
+                }
+            }
+        });
 
         // OYNATICI AÇMA (Kaldığın Bölümü & Dakikayı Otomatik Hatırlar)
         async function openPlayer(id, type, name, tvmazeId, forcedSeason, forcedEpisode, rawItem) {
@@ -1591,6 +2205,9 @@
             const isSameEpisode = !saved || type !== 'series' || (Number(saved.season || 1) === initSeason && Number(saved.episode || 1) === initEpisode);
             const restoredSeconds = isSameEpisode ? (Number(saved?.watchedSeconds || rawItem?.watchedSeconds || 0)) : 0;
             const restoredDuration = Number(saved?.duration || rawItem?.duration || 0);
+
+            clearTimeout(uiHidePauseTimer);
+            clearTimeout(playStartTimer);
 
             state = {
                 id,
@@ -1609,12 +2226,14 @@
                 duration: restoredDuration,
                 iframeLoadedAt: Date.now(),
                 lastExternalTimeAt: 0,
-                playerActive: false,
+                isPlaying: false,
+                userStartedPlay: false,
                 trSubUrl: '',
                 episodes: []
             };
 
             toggleShield(false);
+            syncShieldOverlay();
             document.getElementById('playerModal').classList.add('open');
             document.getElementById('playerModal').scrollTop = 0;
             document.getElementById('modalTitle').textContent = type === 'series' ? `${name} (S${initSeason}:B${initEpisode})` : name;
@@ -1705,8 +2324,18 @@
             const startParam = startSec >= 5 ? `&startAt=${startSec}` : '';
             const subParam = trSubUrl ? `&sub_file=${encodeURIComponent(trSubUrl)}&sub_label=Turkce` : '';
 
+            clearTimeout(uiHidePauseTimer);
+            clearTimeout(playStartTimer);
             state.iframeLoadedAt = Date.now();
-            state.playerActive = false;
+            state.isPlaying = false;
+            state.userStartedPlay = false;
+            shieldTemporarilyUnlocked = false;
+            syncShieldOverlay();
+
+            const f = document.getElementById('playerIframe');
+            if (document.activeElement === f) {
+                try { f.blur(); window.focus(); } catch {}
+            }
 
             if (type === 'series') {
                 document.getElementById('modalTitle').textContent = `${name} (S${season}:B${episode})`;
@@ -1850,6 +2479,506 @@
             toggleShield(false);
             document.getElementById('playerModal').classList.remove('open');
             document.getElementById('playerIframe').src = 'about:blank';
+        }
+
+        // =============================================================
+        // YOUTUBE+ (PREMIUM + SPONSORBLOCK + KALDIĞIN YERDEN DEVAM ET)
+        // =============================================================
+        const YT_HISTORY_KEY = 'omnihub_yt_history_v1';
+        const YT_CURATED = {
+            trend: [
+                { videoId: 'QdBZY2fkU-0', title: 'Grand Theft Auto VI — Resmi Fragman 1', channel: 'Rockstar Games', durationText: '01:31' },
+                { videoId: 'jfKfPfyJRdk', title: 'lofi hip hop radio 📚 beats to relax/study to', channel: 'Lofi Girl', durationText: 'CANLI' },
+                { videoId: '4xDzrJKXOOY', title: 'synthwave radio 🌌 chill retro beats', channel: 'Lofi Girl', durationText: 'CANLI' },
+                { videoId: 'jNQXAC9IVRw', title: 'Me at the zoo (İlk YouTube Videosu)', channel: 'jawed', durationText: '00:19' },
+                { videoId: 'aqz-KE-bpKQ', title: 'Big Buck Bunny 60fps 4K Ultra HD', channel: 'Blender Foundation', durationText: '10:35' },
+                { videoId: 'LXb3EKWsInQ', title: 'COSTA RICA IN 4K 60fps HDR (Ultra HD)', channel: 'Jacob + Katie Schwarz', durationText: '05:14' },
+                { videoId: '2OEL4P1Rz04', title: 'Evrenin Sınırlarına Yolculuk 4K Belgesel', channel: 'Uzay & Bilim', durationText: '42:10' },
+                { videoId: 'ysz5S6PUM-U', title: 'Doğa & Yağmur Sesi — Odaklanma ve Uyku', channel: 'Ambient Worlds', durationText: '59:00' }
+            ],
+            music: [
+                { videoId: 'jfKfPfyJRdk', title: 'lofi hip hop radio 📚 beats to relax/study to', channel: 'Lofi Girl', durationText: 'CANLI' },
+                { videoId: '4xDzrJKXOOY', title: 'synthwave radio 🌌 beats to chill/game to', channel: 'Lofi Girl', durationText: 'CANLI' },
+                { videoId: '5yx6BWlEVcY', title: 'Chillhop Radio - jazzy & lofi hip hop beats', channel: 'Chillhop Music', durationText: 'CANLI' },
+                { videoId: 'DWcJFNfaw9c', title: 'Ambient Study Music To Concentrate', channel: 'Quiet Quest', durationText: '3:58:10' }
+            ],
+            podcast: [
+                { videoId: 'arj7oStGLkU', title: 'Inside the mind of a master procrastinator | Tim Urban', channel: 'TED', durationText: '14:04' },
+                { videoId: '8S0FDjFBj8o', title: 'How to speak so that people want to listen | Julian Treasure', channel: 'TED', durationText: '09:58' },
+                { videoId: 'iG9CE55wbtY', title: 'Do schools kill creativity? | Sir Ken Robinson', channel: 'TED', durationText: '20:03' }
+            ],
+            tech: [
+                { videoId: 'aircAruvnKk', title: 'But what is a neural network? | Deep learning, chapter 1', channel: '3Blue1Brown', durationText: '19:13' },
+                { videoId: 'ehjJ614QfeM', title: 'The Largest Black Holes in the Universe', channel: 'Kurzgesagt – In a Nutshell', durationText: '11:32' },
+                { videoId: 'uqKGREZs6-w', title: 'Solar Storm vs Earth — What If It Happened Today?', channel: 'Kurzgesagt – In a Nutshell', durationText: '10:45' }
+            ],
+            sport: [
+                { videoId: 'LXb3EKWsInQ', title: 'Extreme Nature & Adventure 4K 60FPS HDR', channel: 'Jacob + Katie Schwarz', durationText: '05:14' }
+            ],
+            gaming: [
+                { videoId: 'QdBZY2fkU-0', title: 'Grand Theft Auto VI Trailer 1', channel: 'Rockstar Games', durationText: '01:31' },
+                { videoId: 'aqz-KE-bpKQ', title: 'Big Buck Bunny 4K 60FPS', channel: 'Blender Open Movie', durationText: '10:35' }
+            ]
+        };
+
+        const YT_CATEGORY_QUERIES = {
+            trend: 'Barış Özcan yeni video',
+            music: 'Türkçe Pop Akustik Hit Şarkılar',
+            podcast: 'Türkçe Podcast Sohbet Bilim Kültür',
+            tech: 'Evrim Ağacı Barış Özcan Bilim Teknoloji',
+            sport: 'Süper Lig Şampiyonlar Ligi Özet',
+            gaming: 'Enis Kirazoğlu Oyun İnceleme'
+        };
+
+        let ytPlayer = null;
+        let ytApiReady = false;
+        let ytTimer = null;
+        let ytQueue = [...YT_CURATED.trend];
+        let ytState = {
+            videoId: '',
+            title: '',
+            channel: '',
+            watchedSeconds: 0,
+            duration: 0,
+            loop: false,
+            sponsorBlock: true,
+            speed: 1,
+            segments: [],
+            skippedCount: 0
+        };
+
+        function getYtHistory() {
+            try { return JSON.parse(localStorage.getItem(YT_HISTORY_KEY) || '[]'); } catch { return []; }
+        }
+
+        function saveYtHistory() {
+            if (!ytState.videoId) return;
+            const list = getYtHistory().filter(x => x.videoId !== ytState.videoId);
+            list.unshift({
+                videoId: ytState.videoId,
+                title: ytState.title || 'YouTube Video',
+                channel: ytState.channel || 'YouTube+',
+                watchedSeconds: Math.floor(ytState.watchedSeconds || 0),
+                duration: Math.floor(ytState.duration || 0),
+                durationText: ytState.duration > 0 ? formatTime(ytState.duration) : '',
+                updatedAt: Date.now()
+            });
+            try { localStorage.setItem(YT_HISTORY_KEY, JSON.stringify(list.slice(0, 40))); } catch {}
+        }
+
+        function initYouTubePlus() {
+            renderYtGrid(YT_CURATED.trend);
+            // İlk açılışta gerçek Türkiye gündem videolarını arka planda çek
+            fetchRealYouTubeSearch(YT_CATEGORY_QUERIES.trend).then(items => {
+                if (items && items.length > 0) {
+                    ytQueue = items;
+                    renderYtGrid(items);
+                }
+            }).catch(() => {});
+
+            if (!window.YT) {
+                const tag = document.createElement('script');
+                tag.src = 'https://www.youtube.com/iframe_api';
+                document.head.appendChild(tag);
+            }
+        }
+
+        window.onYouTubeIframeAPIReady = function () {
+            ytApiReady = true;
+        };
+
+        function extractYouTubeId(input) {
+            const s = (input || '').trim();
+            if (/^[a-zA-Z0-9_-]{11}$/.test(s)) return s;
+            const m = s.match(/(?:youtube\.com\/(?:watch\?.*v=|embed\/|shorts\/|live\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+            return m ? m[1] : null;
+        }
+
+        async function fetchRealYouTubeSearch(query) {
+            const ytUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}&sp=EgIQAQ%253D%253D`;
+            const proxies = [
+                `https://api.allorigins.win/raw?url=${encodeURIComponent(ytUrl)}`,
+                `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(ytUrl)}`,
+                `https://corsproxy.io/?${encodeURIComponent(ytUrl)}`
+            ];
+
+            for (const pUrl of proxies) {
+                try {
+                    const ctrl = new AbortController();
+                    const tId = setTimeout(() => ctrl.abort(), 6500);
+                    const html = await fetch(pUrl, { signal: ctrl.signal }).then(r => r.text());
+                    clearTimeout(tId);
+                    const parsed = parseYtInitialData(html);
+                    if (parsed.length > 0) return parsed;
+                } catch {}
+            }
+            return [];
+        }
+
+        function parseYtInitialData(html) {
+            if (!html) return [];
+            const results = [];
+            try {
+                const marker = 'var ytInitialData = ';
+                const idx = html.indexOf(marker);
+                if (idx !== -1) {
+                    const start = idx + marker.length;
+                    const end = html.indexOf(';</script>', start);
+                    if (end !== -1) {
+                        const data = JSON.parse(html.substring(start, end));
+                        const contents = data?.contents?.twoColumnSearchResultsRenderer?.primaryContents?.sectionListRenderer?.contents || [];
+                        for (const sec of contents) {
+                            const items = sec?.itemSectionRenderer?.contents || [];
+                            for (const it of items) {
+                                const v = it.videoRenderer;
+                                if (v && v.videoId) {
+                                    results.push({
+                                        videoId: v.videoId,
+                                        title: v.title?.runs?.[0]?.text || v.title?.simpleText || 'YouTube Video',
+                                        channel: v.ownerText?.runs?.[0]?.text || v.longBylineText?.runs?.[0]?.text || 'YouTube',
+                                        durationText: v.lengthText?.simpleText || 'CANLI'
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch {}
+
+            // Regex yedeği
+            if (results.length === 0) {
+                const seen = new Set();
+                const regex = /"videoRenderer":\{"videoId":"([a-zA-Z0-9_-]{11})".*?"title":\{"runs":\[\{"text":"([^"]+)"\}/g;
+                let m;
+                while ((m = regex.exec(html)) !== null && results.length < 24) {
+                    if (!seen.has(m[1])) {
+                        seen.add(m[1]);
+                        results.push({
+                            videoId: m[1],
+                            title: m[2].replace(/\\u0026/g, '&'),
+                            channel: 'YouTube+',
+                            durationText: 'Video'
+                        });
+                    }
+                }
+            }
+            return results.slice(0, 24);
+        }
+
+        async function searchYouTube() {
+            const input = document.getElementById('ytSearchInput');
+            const q = (input?.value || '').trim();
+            if (!q) return;
+
+            const directId = extractYouTubeId(q);
+            if (directId) {
+                let title = 'YouTube Video';
+                let author = 'YouTube+';
+                try {
+                    const meta = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${directId}`).then(r => r.json());
+                    if (meta.title) title = meta.title;
+                    if (meta.author_name) author = meta.author_name;
+                } catch {}
+                playYouTubeVideo(directId, title, author);
+                return;
+            }
+
+            document.getElementById('ytSectionTitle').textContent = `🔍 "${q}" YouTube+ Sonuçları`;
+            document.getElementById('ytGrid').innerHTML = '<div style="color:var(--muted); font-size:13px; grid-column:1/-1;">YouTube aranıyor...</div>';
+
+            const items = await fetchRealYouTubeSearch(q);
+            if (items.length > 0) {
+                ytQueue = items;
+                renderYtGrid(items);
+            } else {
+                const localMatches = Object.values(YT_CURATED).flat().filter(v =>
+                    v.title.toLowerCase().includes(q.toLowerCase()) || v.channel.toLowerCase().includes(q.toLowerCase())
+                );
+                const list = localMatches.length ? localMatches : YT_CURATED.trend;
+                ytQueue = list;
+                renderYtGrid(list);
+            }
+        }
+
+        async function loadYtCategory(cat, btn) {
+            if (btn) {
+                btn.parentElement.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+            }
+
+            if (cat === 'history') {
+                document.getElementById('ytSectionTitle').textContent = '🕒 Son İzlediğim YouTube+ Videoları';
+                const hist = getYtHistory();
+                if (!hist.length) {
+                    document.getElementById('ytGrid').innerHTML = '<div style="color:var(--muted); font-size:13px; grid-column:1/-1;">Henüz YouTube+ üzerinden bir video izlemedin.</div>';
+                } else {
+                    ytQueue = hist;
+                    renderYtGrid(hist);
+                }
+                return;
+            }
+
+            const fallback = YT_CURATED[cat] || YT_CURATED.trend;
+            ytQueue = fallback;
+            renderYtGrid(fallback);
+
+            const q = YT_CATEGORY_QUERIES[cat];
+            if (q) {
+                const live = await fetchRealYouTubeSearch(q);
+                if (live.length > 0) {
+                    ytQueue = live;
+                    renderYtGrid(live);
+                }
+            }
+        }
+
+        function renderYtGrid(list) {
+            const box = document.getElementById('ytGrid');
+            if (!box) return;
+            box.innerHTML = '';
+            const histMap = new Map(getYtHistory().map(h => [h.videoId, h]));
+
+            list.forEach(item => {
+                const saved = histMap.get(item.videoId);
+                const wSec = saved?.watchedSeconds || item.watchedSeconds || 0;
+                const resumeBadge = wSec >= 10 ? `<div class="yt-resume-pill">▶ ${formatTime(wSec)}'den Sürdür</div>` : '';
+                const thumb = `https://i.ytimg.com/vi/${item.videoId}/hqdefault.jpg`;
+
+                const card = document.createElement('div');
+                card.className = 'yt-card';
+                card.onclick = () => playYouTubeVideo(item.videoId, item.title, item.channel);
+                card.innerHTML = `
+                    <div class="yt-thumb">
+                        <img src="${thumb}" loading="lazy" alt="" />
+                        ${resumeBadge}
+                        ${item.durationText ? `<div class="yt-dur">${item.durationText}</div>` : ''}
+                    </div>
+                    <div class="yt-card-body">
+                        <div class="yt-card-title">${item.title}</div>
+                        <div class="yt-card-meta">
+                            <span>📺 ${item.channel || 'YouTube'}</span>
+                            <span style="color:#34d399; font-weight:600;">⚡ Reklamsız</span>
+                        </div>
+                    </div>
+                `;
+                box.appendChild(card);
+            });
+        }
+
+        async function fetchSponsorSegments(videoId) {
+            ytState.segments = [];
+            const statusEl = document.getElementById('ytSbStatus');
+            if (statusEl) statusEl.textContent = '🛡️ Reklamsız + SponsorBlock Aktif';
+            try {
+                const cats = encodeURIComponent(JSON.stringify(['sponsor', 'intro', 'outro', 'selfpromo', 'interaction']));
+                const res = await fetch(`https://sponsor.ajay.app/api/skipSegments?videoID=${videoId}&categories=${cats}`);
+                if (!res.ok) return;
+                const data = await res.json();
+                if (Array.isArray(data) && data.length > 0) {
+                    ytState.segments = data
+                        .filter(s => Array.isArray(s.segment) && s.segment.length === 2)
+                        .map(s => ({ start: s.segment[0], end: s.segment[1], category: s.category }));
+                    if (statusEl && ytState.segments.length > 0) {
+                        statusEl.textContent = `⚡ SponsorBlock: ${ytState.segments.length} Sponsor Bölümü Bulundu`;
+                    }
+                }
+            } catch {}
+        }
+
+        function showSbToast(msg) {
+            const toast = document.getElementById('sbToast');
+            if (!toast) return;
+            toast.textContent = msg || '⚡ Sponsorlu Bölüm Otomatik Atlandı!';
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
+
+        function playYouTubeVideo(videoId, title, channel) {
+            const saved = getYtHistory().find(x => x.videoId === videoId);
+            const startSec = saved?.watchedSeconds >= 10 ? Math.floor(saved.watchedSeconds) : 0;
+
+            ytState.videoId = videoId;
+            ytState.title = title || saved?.title || 'YouTube Video';
+            ytState.channel = channel || saved?.channel || 'YouTube+';
+            ytState.watchedSeconds = startSec;
+            ytState.duration = saved?.duration || 0;
+
+            document.getElementById('ytPlayerCard').classList.add('active');
+            document.getElementById('ytNowTitle').textContent = ytState.title;
+            document.getElementById('ytNowChannel').textContent = ytState.channel;
+            document.getElementById('ytTimeLabel').textContent = `⏱ ${formatTime(startSec)}`;
+            fetchSponsorSegments(videoId);
+            updateMediaSession();
+
+            const playerVars = {
+                autoplay: 1,
+                rel: 0,
+                modestbranding: 1,
+                playsinline: 1,
+                start: startSec
+            };
+
+            if (ytApiReady && window.YT && window.YT.Player) {
+                if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+                    ytPlayer.loadVideoById({ videoId, startSeconds: startSec });
+                    setTimeout(() => {
+                        try { ytPlayer.setPlaybackRate(ytState.speed); } catch {}
+                    }, 800);
+                } else {
+                    ytPlayer = new YT.Player('ytPlayerMount', {
+                        host: 'https://www.youtube-nocookie.com',
+                        videoId,
+                        playerVars,
+                        events: {
+                            onReady: (ev) => {
+                                try {
+                                    ev.target.setPlaybackRate(ytState.speed);
+                                    if (startSec >= 10) ev.target.seekTo(startSec, true);
+                                    ev.target.playVideo();
+                                } catch {}
+                            },
+                            onStateChange: (ev) => {
+                                if (ev.data === YT.PlayerState.ENDED) {
+                                    if (ytState.loop) {
+                                        ytPlayer.seekTo(0, true);
+                                        ytPlayer.playVideo();
+                                    } else {
+                                        playNextYt();
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            } else {
+                const mount = document.getElementById('ytPlayerMount');
+                mount.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1&start=${startSec}" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+            }
+
+            startYtMonitor();
+            saveYtHistory();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function startYtMonitor() {
+            clearInterval(ytTimer);
+            ytTimer = setInterval(() => {
+                if (!ytState.videoId || !ytPlayer || typeof ytPlayer.getCurrentTime !== 'function') return;
+                try {
+                    const stateCode = ytPlayer.getPlayerState ? ytPlayer.getPlayerState() : 1;
+                    if (stateCode !== 1) return; // Sadece oynatılıyorken (PLAYING === 1) say ve kontrol et
+
+                    const cur = ytPlayer.getCurrentTime() || 0;
+                    const dur = ytPlayer.getDuration ? (ytPlayer.getDuration() || 0) : 0;
+
+                    // SponsorBlock otomatik atlama kontrolü
+                    if (ytState.sponsorBlock && ytState.segments.length > 0) {
+                        for (const seg of ytState.segments) {
+                            if (cur >= seg.start && cur < seg.end - 0.8) {
+                                ytPlayer.seekTo(seg.end, true);
+                                showSbToast(`⚡ SponsorBlock: ${seg.category === 'sponsor' ? 'Sponsorlu Kısım' : 'İntro/Tanıtım'} Atlandı!`);
+                                break;
+                            }
+                        }
+                    }
+
+                    ytState.watchedSeconds = Math.floor(cur);
+                    if (dur > 0) ytState.duration = Math.floor(dur);
+
+                    const durStr = ytState.duration > 0 ? ` / ${formatTime(ytState.duration)}` : '';
+                    const lbl = document.getElementById('ytTimeLabel');
+                    if (lbl) lbl.textContent = `⏱ ${formatTime(ytState.watchedSeconds)}${durStr}`;
+
+                    if (ytState.watchedSeconds % 4 === 0) {
+                        saveYtHistory();
+                    }
+                } catch {}
+            }, 600);
+        }
+
+        function updateMediaSession() {
+            if (!('mediaSession' in navigator) || !ytState.videoId) return;
+            try {
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: ytState.title,
+                    artist: ytState.channel,
+                    album: 'OmniHub YouTube+',
+                    artwork: [{ src: `https://i.ytimg.com/vi/${ytState.videoId}/hqdefault.jpg`, sizes: '480x360', type: 'image/jpeg' }]
+                });
+                navigator.mediaSession.setActionHandler('play', () => { try { ytPlayer?.playVideo(); } catch {} });
+                navigator.mediaSession.setActionHandler('pause', () => { try { ytPlayer?.pauseVideo(); } catch {} });
+                navigator.mediaSession.setActionHandler('previoustrack', () => seekYt(-10));
+                navigator.mediaSession.setActionHandler('nexttrack', () => playNextYt());
+            } catch {}
+        }
+
+        function toggleYtPlay() {
+            if (!ytPlayer || typeof ytPlayer.getPlayerState !== 'function') return;
+            const st = ytPlayer.getPlayerState();
+            if (st === 1) ytPlayer.pauseVideo();
+            else ytPlayer.playVideo();
+        }
+
+        function seekYt(delta) {
+            if (!ytPlayer || typeof ytPlayer.getCurrentTime !== 'function') return;
+            const next = Math.max(0, (ytPlayer.getCurrentTime() || 0) + delta);
+            ytPlayer.seekTo(next, true);
+            ytState.watchedSeconds = Math.floor(next);
+            saveYtHistory();
+        }
+
+        function setYtSpeed(rate, btn) {
+            ytState.speed = rate;
+            if (ytPlayer && typeof ytPlayer.setPlaybackRate === 'function') {
+                try { ytPlayer.setPlaybackRate(rate); } catch {}
+            }
+            document.querySelectorAll('#ytSpeedGroup .yt-ctrl-btn').forEach(b => b.classList.remove('speed-active'));
+            if (btn) btn.classList.add('speed-active');
+        }
+
+        function toggleYtLoop() {
+            ytState.loop = !ytState.loop;
+            const btn = document.getElementById('ytLoopBtn');
+            if (btn) {
+                btn.classList.toggle('on', ytState.loop);
+                btn.textContent = ytState.loop ? '🔁 Döngü: Açık' : '🔁 Döngü: Kapalı';
+            }
+        }
+
+        function toggleSponsorBlock() {
+            ytState.sponsorBlock = !ytState.sponsorBlock;
+            const btn = document.getElementById('ytSbBtn');
+            if (btn) {
+                btn.classList.toggle('on', ytState.sponsorBlock);
+                btn.textContent = ytState.sponsorBlock ? '⚡ SponsorBlock: Açık' : '⚡ SponsorBlock: Kapalı';
+            }
+        }
+
+        function playNextYt() {
+            if (!ytQueue.length) return;
+            const idx = ytQueue.findIndex(x => x.videoId === ytState.videoId);
+            const nextItem = ytQueue[(idx + 1) % ytQueue.length];
+            if (nextItem) {
+                playYouTubeVideo(nextItem.videoId, nextItem.title, nextItem.channel);
+            }
+        }
+
+        function toggleYtFullscreen() {
+            const wrap = document.getElementById('ytVideoWrap');
+            if (!wrap) return;
+            if (document.fullscreenElement) {
+                document.exitFullscreen().catch(() => {});
+            } else if (wrap.requestFullscreen) {
+                wrap.requestFullscreen().catch(() => {});
+            }
+        }
+
+        function closeYtPlayer() {
+            saveYtHistory();
+            clearInterval(ytTimer);
+            try { ytPlayer?.stopVideo(); } catch {}
+            document.getElementById('ytPlayerCard').classList.remove('active');
+            ytState.videoId = '';
         }
 
         // Canlı TV
