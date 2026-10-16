@@ -595,6 +595,59 @@
             border-color: var(--accent);
         }
 
+        /* Kaldığın Dakika & Zaman Kontrol Barı */
+        .resume-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 10px 16px;
+            background: #13131c;
+            border-bottom: 1px solid var(--border);
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .resume-info {
+            font-size: 12px;
+            font-weight: 700;
+            color: #e5e7eb;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .resume-info span {
+            color: #fbbf24;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .resume-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .res-btn {
+            background: var(--surface-2);
+            color: #fff;
+            border: 1px solid var(--border);
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .res-btn.jump {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
         /* Zengin Film & Dizi Bilgi Kartı */
         .modal-body {
             max-width: 1000px;
@@ -852,6 +905,21 @@
             <button class="act-btn" id="nextEpBtn" style="display: none;" onclick="playNextEpisode()">⏭ Sonraki Bölüm</button>
         </div>
 
+        <!-- Kaldığın Dakika & Zaman Kontrol Barı -->
+        <div class="resume-bar">
+            <div class="resume-info">
+                ⏱ Kaldığın Yer: <span id="resumeTimeLabel">00:00</span>
+            </div>
+            <div class="resume-controls">
+                <button class="res-btn" onclick="resetProgressToZero()">↺ Başa Sar</button>
+                <button class="res-btn" onclick="adjustWatchedTime(-300)">-5dk</button>
+                <button class="res-btn" onclick="adjustWatchedTime(-60)">-1dk</button>
+                <button class="res-btn" onclick="adjustWatchedTime(60)">+1dk</button>
+                <button class="res-btn" onclick="adjustWatchedTime(300)">+5dk</button>
+                <button class="res-btn jump" onclick="seekPlayerNow()">🎯 Dakikaya Git</button>
+            </div>
+        </div>
+
         <!-- Kaynak Sunucuları -->
         <div class="servers-row">
             <button class="srv-btn active" onclick="setServer(0, this)">🇹🇷 Kaynak 1 (VidSrc ME)</button>
@@ -895,18 +963,18 @@
         const FAVS_KEY = 'omnihub_favorites_v1';
 
         const DEFAULT_MOVIES = [
-            { id: 'tt15398776', name: 'Oppenheimer', releaseInfo: '2023', imdbRating: '8.4', poster: 'https://m.media-amazon.com/images/M/MV5BN2JkMDc5MGQtZjg3YS00NmFiLWIyZmQtZTJmNTM5MjVmYTQ4XkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
-            { id: 'tt15239678', name: 'Dune: Part Two', releaseInfo: '2024', imdbRating: '8.5', poster: 'https://m.media-amazon.com/images/M/MV5BNTc0YmQxMjEtODI5MC00NjFiLTlkMWUtOGQ5NjFmYWUyZGJhXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
-            { id: 'tt6263850', name: 'Deadpool & Wolverine', releaseInfo: '2024', imdbRating: '7.7', poster: 'https://m.media-amazon.com/images/M/MV5BZTk5ODY0MmQtMzA3Ni00NGY1LThiYzItZThiNjFiNDM4MTM3XkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
-            { id: 'tt0816692', name: 'Interstellar', releaseInfo: '2014', imdbRating: '8.7', poster: 'https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
-            { id: 'tt0468569', name: 'The Dark Knight', releaseInfo: '2008', imdbRating: '9.0', poster: 'https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_FMjpg_UX500_.jpg' },
-            { id: 'tt1375666', name: 'Inception', releaseInfo: '2010', imdbRating: '8.8', poster: 'https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_FMjpg_UX500_.jpg' },
-            { id: 'tt1877830', name: 'The Batman', releaseInfo: '2022', imdbRating: '7.8', poster: 'https://m.media-amazon.com/images/M/MV5BMmU5NGJlMzAtMGNmOC00YjJjLTgyMzUtNjAyYmE4Njg5YWMyXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
-            { id: 'tt1745960', name: 'Top Gun: Maverick', releaseInfo: '2022', imdbRating: '8.2', poster: 'https://m.media-amazon.com/images/M/MV5BMDBkZDNjMWEtOTdmMi00NmExLTg5MmMtNTFlYTJlNWY5YTdmXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
-            { id: 'tt10366206', name: 'John Wick 4', releaseInfo: '2023', imdbRating: '7.7', poster: 'https://m.media-amazon.com/images/M/MV5BY2Q2ZmI5ZjUtNWVhMC00YzJkLTlmYjMtY2RmZDhkNzEzYjZhXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
-            { id: 'tt0111161', name: 'Shawshank Redemption', releaseInfo: '1994', imdbRating: '9.3', poster: 'https://m.media-amazon.com/images/M/MV5BMDAyY2FhYjctNDc5OS00MDNlLThiMGUtY2UxYWVkNGY2ZjljXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
-            { id: 'tt0133093', name: 'The Matrix', releaseInfo: '1999', imdbRating: '8.7', poster: 'https://m.media-amazon.com/images/M/MV5BN2NmN2VhMTQtMDNiOS00NDlhLTliMjgtODE2ZTY0ODQyNDRhXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
-            { id: 'tt7286456', name: 'Joker', releaseInfo: '2019', imdbRating: '8.4', poster: 'https://m.media-amazon.com/images/M/MV5BNzY3OWQ5NDktNWQ2OC00ZjdlLThkMmItMDhhNDk3NTFiZGU4XkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' }
+            { id: 'tt22084616', tmdbId: 969681, name: 'Spider-Man: Brand New Day', releaseInfo: '2026', imdbRating: '8.5', poster: 'https://image.tmdb.org/t/p/w500/bjiS5ipwxb9JFy3XRRN4OAilSeX.jpg' },
+            { id: 'tt15398776', tmdbId: 872585, name: 'Oppenheimer', releaseInfo: '2023', imdbRating: '8.4', poster: 'https://m.media-amazon.com/images/M/MV5BN2JkMDc5MGQtZjg3YS00NmFiLWIyZmQtZTJmNTM5MjVmYTQ4XkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
+            { id: 'tt15239678', tmdbId: 693134, name: 'Dune: Part Two', releaseInfo: '2024', imdbRating: '8.5', poster: 'https://m.media-amazon.com/images/M/MV5BNTc0YmQxMjEtODI5MC00NjFiLTlkMWUtOGQ5NjFmYWUyZGJhXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
+            { id: 'tt6263850', tmdbId: 533535, name: 'Deadpool & Wolverine', releaseInfo: '2024', imdbRating: '7.7', poster: 'https://m.media-amazon.com/images/M/MV5BZTk5ODY0MmQtMzA3Ni00NGY1LThiYzItZThiNjFiNDM4MTM3XkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
+            { id: 'tt0816692', tmdbId: 157336, name: 'Interstellar', releaseInfo: '2014', imdbRating: '8.7', poster: 'https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
+            { id: 'tt0468569', tmdbId: 155, name: 'The Dark Knight', releaseInfo: '2008', imdbRating: '9.0', poster: 'https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_FMjpg_UX500_.jpg' },
+            { id: 'tt1375666', tmdbId: 27205, name: 'Inception', releaseInfo: '2010', imdbRating: '8.8', poster: 'https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_FMjpg_UX500_.jpg' },
+            { id: 'tt1877830', tmdbId: 414906, name: 'The Batman', releaseInfo: '2022', imdbRating: '7.8', poster: 'https://m.media-amazon.com/images/M/MV5BMmU5NGJlMzAtMGNmOC00YjJjLTgyMzUtNjAyYmE4Njg5YWMyXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
+            { id: 'tt1745960', tmdbId: 361743, name: 'Top Gun: Maverick', releaseInfo: '2022', imdbRating: '8.2', poster: 'https://m.media-amazon.com/images/M/MV5BMDBkZDNjMWEtOTdmMi00NmExLTg5MmMtNTFlYTJlNWY5YTdmXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
+            { id: 'tt10366206', tmdbId: 603692, name: 'John Wick 4', releaseInfo: '2023', imdbRating: '7.7', poster: 'https://m.media-amazon.com/images/M/MV5BY2Q2ZmI5ZjUtNWVhMC00YzJkLTlmYjMtY2RmZDhkNzEzYjZhXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
+            { id: 'tt0111161', tmdbId: 278, name: 'Shawshank Redemption', releaseInfo: '1994', imdbRating: '9.3', poster: 'https://m.media-amazon.com/images/M/MV5BMDAyY2FhYjctNDc5OS00MDNlLThiMGUtY2UxYWVkNGY2ZjljXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
+            { id: 'tt0133093', tmdbId: 603, name: 'The Matrix', releaseInfo: '1999', imdbRating: '8.7', poster: 'https://m.media-amazon.com/images/M/MV5BN2NmN2VhMTQtMDNiOS00NDlhLTliMjgtODE2ZTY0ODQyNDRhXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' }
         ];
 
         const TV_CHANNELS = [
@@ -939,6 +1007,8 @@
         let hls = null;
         let shieldLocked = false;
         let shieldTimer = null;
+        let watchInterval = null;
+        let adjustDebounceTimer = null;
 
         let state = {
             id: '',
@@ -952,9 +1022,37 @@
             season: 1,
             episode: 1,
             server: 0,
+            watchedSeconds: 0,
+            initialResumeSeconds: 0,
+            duration: 0,
+            iframeLoadedAt: 0,
+            lastExternalTimeAt: 0,
+            playerActive: false,
             trSubUrl: '',
             episodes: []
         };
+
+        function formatTime(sec) {
+            const s = Math.max(0, Math.floor(Number(sec) || 0));
+            const h = Math.floor(s / 3600);
+            const m = Math.floor((s % 3600) / 60);
+            const r = s % 60;
+            const mm = String(m).padStart(2, '0');
+            const rr = String(r).padStart(2, '0');
+            return h > 0 ? `${h}:${mm}:${rr}` : `${mm}:${rr}`;
+        }
+
+        function updateResumeBarUI() {
+            const el = document.getElementById('resumeTimeLabel');
+            if (!el) return;
+            const timeStr = formatTime(state.watchedSeconds);
+            const durStr = state.duration > 60 ? ` / ${formatTime(state.duration)}` : '';
+            if (state.type === 'series') {
+                el.textContent = `S${state.season}:B${state.episode} • ${timeStr}${durStr}`;
+            } else {
+                el.textContent = `${timeStr}${durStr}`;
+            }
+        }
 
         window.addEventListener('DOMContentLoaded', () => {
             renderGrid('moviesGrid', DEFAULT_MOVIES, 'movie');
@@ -964,32 +1062,238 @@
             filterTv('ALL');
         });
 
-        // Oynatıcılardan gelen ilerleme / bölüm mesajlarını dinle (Kaldığın yerden devam et için)
+        // Sayfa arka plana alındığında veya kapatıldığında anında kaydet
+        window.addEventListener('visibilitychange', () => {
+            if (document.hidden && state.id) saveHistory();
+        });
+        window.addEventListener('pagehide', () => {
+            if (state.id) saveHistory();
+        });
+
+        // Oynatıcılardan gelen tüm ilerleme ve bölüm mesajlarını dinle (VidSrc ME, VidLink Pro, Userscript)
         window.addEventListener('message', (e) => {
             if (!state.id) return;
-            const d = e.data;
+            let d = e.data;
+            if (typeof d === 'string') {
+                try { d = JSON.parse(d); } catch { return; }
+            }
             if (!d || typeof d !== 'object') return;
 
-            if (d.type === 'TV_STATE' && d.season && d.episode) {
-                state.season = Number(d.season);
-                state.episode = Number(d.episode);
-                saveHistory();
-                renderEpisodesUI();
-            } else if (d.type === 'MEDIA_DATA' && d.data) {
-                saveHistory(d.data.currentTime, d.data.duration);
+            // 1) VidSrc içinden gelen başlık mesajı ("Show Name · S01 E03" formatında seçilen bölümü bildirir)
+            if (d.type === 'PLAYER_TITLE') {
+                state.playerActive = true;
+                if (state.type === 'series' && typeof d.title === 'string') {
+                    const m = d.title.match(/S(\d+)\s*E(\d+)/i);
+                    if (m) {
+                        const newS = parseInt(m[1], 10);
+                        const newE = parseInt(m[2], 10);
+                        if (newS > 0 && newE > 0) {
+                            const changed = (state.season !== newS || state.episode !== newE);
+                            state.season = newS;
+                            state.episode = newE;
+                            if (changed) {
+                                state.watchedSeconds = 0;
+                                state.initialResumeSeconds = 0;
+                                document.getElementById('modalTitle').textContent = `${state.name} (S${state.season}:B${state.episode})`;
+                                renderEpisodesUI();
+                                updateResumeBarUI();
+                            }
+                            saveHistory();
+                        }
+                    }
+                }
+                if (state.initialResumeSeconds >= 10 && Date.now() - state.iframeLoadedAt < 15000) {
+                    sendSeekToIframe(state.initialResumeSeconds);
+                }
+                return;
+            }
+
+            // 2) VidSrc TV_INFO / TV_STATE mesajları
+            if (d.type === 'TV_INFO' || d.type === 'TV_STATE') {
+                state.playerActive = true;
+                if (d.eps && (!state.episodes || state.episodes.length === 0)) {
+                    const list = [];
+                    Object.keys(d.eps).map(Number).filter(n => !isNaN(n)).sort((a, b) => a - b).forEach(s => {
+                        (d.eps[String(s)] || []).forEach(epNum => {
+                            list.push({ season: s, episode: Number(epNum), name: `${epNum}. Bölüm` });
+                        });
+                    });
+                    if (list.length) state.episodes = list;
+                }
+                if (d.season && d.episode) {
+                    const newS = Number(d.season);
+                    const newE = Number(d.episode);
+                    const changed = (state.season !== newS || state.episode !== newE);
+                    state.season = newS;
+                    state.episode = newE;
+                    if (changed && Date.now() - state.iframeLoadedAt > 4000) {
+                        state.watchedSeconds = 0;
+                        state.initialResumeSeconds = 0;
+                    }
+                    document.getElementById('modalTitle').textContent = `${state.name} (S${state.season}:B${state.episode})`;
+                    renderEpisodesUI();
+                    updateResumeBarUI();
+                    saveHistory();
+                }
+                return;
+            }
+
+            // 3) VidSrc PLAYER_UI (oynatıcı kontrolleri görünür/gizli -> video aktif)
+            if (d.type === 'PLAYER_UI') {
+                state.playerActive = true;
+                return;
+            }
+
+            // 4) Userscript OMNI_VIDEO_READY
+            if (d.type === 'OMNI_VIDEO_READY') {
+                state.playerActive = true;
+                if (state.watchedSeconds >= 10) {
+                    sendSeekToIframe(state.watchedSeconds);
+                }
+                return;
+            }
+
+            // 5) VidLink Pro PLAYER_EVENT
+            if (d.type === 'PLAYER_EVENT' && d.data) {
+                state.playerActive = true;
+                const ev = d.data;
+                if (state.type === 'series' && ev.season && ev.episode) {
+                    state.season = Number(ev.season);
+                    state.episode = Number(ev.episode);
+                }
+                if (typeof ev.currentTime === 'number') {
+                    handleIncomingTime(ev.currentTime, ev.duration || 0);
+                }
+                return;
+            }
+
+            // 6) VidLink Pro / Genel MEDIA_DATA
+            if (d.type === 'MEDIA_DATA' && d.data) {
+                state.playerActive = true;
+                if (typeof d.data.currentTime === 'number') {
+                    handleIncomingTime(d.data.currentTime, d.data.duration || 0);
+                } else {
+                    const firstEntry = Object.values(d.data)[0];
+                    if (firstEntry && typeof firstEntry === 'object') {
+                        if (state.type === 'series' && firstEntry.last_season_watched && firstEntry.last_episode_watched) {
+                            state.season = Number(firstEntry.last_season_watched);
+                            state.episode = Number(firstEntry.last_episode_watched);
+                        }
+                        if (firstEntry.progress && typeof firstEntry.progress.watched === 'number') {
+                            handleIncomingTime(firstEntry.progress.watched, firstEntry.progress.duration || 0);
+                        }
+                    }
+                }
+                return;
+            }
+
+            // 7) Userscript OMNI_TIME veya diğer zaman mesajları
+            const rawTime = d.currentTime ?? d.watched ?? d.position;
+            if (typeof rawTime === 'number' && rawTime > 0) {
+                state.playerActive = true;
+                handleIncomingTime(rawTime, d.duration || 0);
             }
         });
+
+        function handleIncomingTime(curSec, durSec) {
+            const sec = Math.floor(Number(curSec) || 0);
+            const dur = Math.floor(Number(durSec) || 0);
+            if (dur > 60) state.duration = dur;
+
+            // İlk 14 saniye içinde oynatıcı henüz startAt saniyesine atlamadan "0" gönderirse eski kaydı ezme
+            if (state.initialResumeSeconds >= 15 && Date.now() - state.iframeLoadedAt < 14000 && sec < state.initialResumeSeconds - 15) {
+                return;
+            }
+
+            if (sec >= 3) {
+                state.watchedSeconds = sec;
+                state.lastExternalTimeAt = Date.now();
+                updateResumeBarUI();
+                saveHistory();
+            }
+        }
+
+        function sendSeekToIframe(seconds) {
+            const sec = Math.floor(Number(seconds) || 0);
+            if (sec < 5) return;
+            const f = document.getElementById('playerIframe');
+            if (!f || !f.contentWindow) return;
+            try {
+                f.contentWindow.postMessage({ type: 'OMNI_SEEK', time: sec }, '*');
+                f.contentWindow.postMessage(JSON.stringify({ api: 'seek', set: sec }), '*');
+            } catch {}
+        }
+
+        function startWatchTimer() {
+            stopWatchTimer();
+            watchInterval = setInterval(() => {
+                if (!state.id || document.hidden) return;
+                const elapsedSinceLoad = Date.now() - state.iframeLoadedAt;
+                // Oynatıcı aktif olduysa veya yükleneli 7 saniye geçtiyse ve dışarıdan saniye mesajı gelmiyorsa otomatik say
+                if ((state.playerActive || elapsedSinceLoad > 7000) && (Date.now() - state.lastExternalTimeAt > 3000)) {
+                    state.watchedSeconds += 1;
+                    updateResumeBarUI();
+                    if (state.watchedSeconds % 4 === 0) {
+                        saveHistory();
+                    }
+                }
+            }, 1000);
+        }
+
+        function stopWatchTimer() {
+            if (watchInterval) {
+                clearInterval(watchInterval);
+                watchInterval = null;
+            }
+        }
+
+        function adjustWatchedTime(deltaSec) {
+            state.watchedSeconds = Math.max(0, (state.watchedSeconds || 0) + deltaSec);
+            state.initialResumeSeconds = state.watchedSeconds;
+            updateResumeBarUI();
+            saveHistory();
+
+            clearTimeout(adjustDebounceTimer);
+            adjustDebounceTimer = setTimeout(() => {
+                seekPlayerNow();
+            }, 750);
+        }
+
+        function resetProgressToZero() {
+            state.watchedSeconds = 0;
+            state.initialResumeSeconds = 0;
+            updateResumeBarUI();
+            saveHistory();
+            refreshIframe(0);
+        }
+
+        function seekPlayerNow() {
+            state.initialResumeSeconds = state.watchedSeconds;
+            saveHistory();
+            refreshIframe(state.watchedSeconds);
+        }
 
         // GEÇMİŞ & FAVORİ YÖNETİMİ (localStorage)
         function getHistory() {
             try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); } catch { return []; }
         }
 
-        function saveHistory(currentTime = 0, duration = 0) {
+        function saveHistory(currentTime, duration) {
             if (!state.id) return;
+            if (typeof currentTime === 'number' && currentTime > 0) {
+                state.watchedSeconds = Math.floor(currentTime);
+            }
+            if (typeof duration === 'number' && duration > 60) {
+                state.duration = Math.floor(duration);
+            }
+
             const list = getHistory().filter(x => x.id !== state.id);
             const epObj = state.episodes.find(e => e.season === state.season && e.episode === state.episode);
-            const pct = duration > 0 ? Math.min(98, Math.max(5, Math.round((currentTime / duration) * 100))) : 25;
+            const watched = Math.max(0, Math.floor(state.watchedSeconds || 0));
+            const dur = Math.max(0, Math.floor(state.duration || 0));
+            const pct = dur > 60
+                ? Math.min(98, Math.max(6, Math.round((watched / dur) * 100)))
+                : (watched > 0 ? Math.min(95, Math.max(8, Math.round((watched / 5400) * 100))) : 12);
 
             list.unshift({
                 id: state.id,
@@ -1004,6 +1308,8 @@
                 episode: state.episode,
                 epName: epObj?.name || '',
                 server: state.server,
+                watchedSeconds: watched,
+                duration: dur,
                 progress: pct,
                 updatedAt: Date.now()
             });
@@ -1072,20 +1378,32 @@
             rail.innerHTML = '';
 
             list.slice(0, 12).forEach(item => {
-                const badgeText = item.type === 'series' ? `▶ S${item.season}:B${item.episode} Devam Et` : '▶ Filmi Sürdür';
+                const wSec = item.watchedSeconds || 0;
+                const timeTag = wSec >= 10 ? formatTime(wSec) : '';
+                let badgeText = '';
+                if (item.type === 'series') {
+                    badgeText = timeTag ? `▶ S${item.season}:B${item.episode} • ${timeTag}` : `▶ S${item.season}:B${item.episode} Devam Et`;
+                } else {
+                    badgeText = timeTag ? `▶ ${timeTag}'den Sürdür` : '▶ Filmi Sürdür';
+                }
+
+                const subLabel = item.type === 'series'
+                    ? `${item.season}. Sezon ${item.episode}. Bölüm${timeTag ? ` (${timeTag})` : ''}`
+                    : (timeTag ? `⏱ ${timeTag} kaldı` : (item.releaseInfo || 'Film'));
+
                 const card = document.createElement('div');
                 card.className = 'continue-card';
-                card.onclick = () => openPlayer(item.id, item.type, item.name, item.tvmazeId, item.season, item.episode);
+                card.onclick = () => openPlayer(item.id, item.type, item.name, item.tvmazeId, item.season, item.episode, item);
                 card.innerHTML = `
                     <button class="rm-btn" onclick="removeFromHistory('${item.id}', event)">✕</button>
                     <div class="card-poster">
                         <img src="${item.poster}" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450/14141c/666?text=Poster'" />
                         <div class="continue-badge">${badgeText}</div>
                     </div>
-                    <div class="progress-bar"><div style="width:${item.progress || 25}%"></div></div>
+                    <div class="progress-bar"><div style="width:${item.progress || 15}%"></div></div>
                     <div class="card-body">
                         <div class="card-name">${item.name}</div>
-                        <div class="card-year">${item.type === 'series' ? `${item.season}. Sezon ${item.episode}. Bölüm` : (item.releaseInfo || 'Film')}</div>
+                        <div class="card-year">${subLabel}</div>
                     </div>
                 `;
                 rail.appendChild(card);
@@ -1129,8 +1447,7 @@
                 if (genre) url = `${CINEMETA}/catalog/movie/${catalog}/genre=${encodeURIComponent(genre)}.json`;
                 const res = await fetch(url).then(r => r.json());
                 if (res.metas && res.metas.length > 0) {
-                    const released = res.metas.filter(m => m.imdbRating && parseFloat(m.imdbRating) > 0);
-                    moviesCache = (released.length ? released : res.metas).slice(0, 48);
+                    moviesCache = res.metas.slice(0, 48);
                     renderGrid('moviesGrid', moviesCache, 'movie');
                 }
             } catch {
@@ -1215,9 +1532,16 @@
             list.forEach(item => {
                 const type = item.type || fallbackType;
                 const poster = item.poster || `https://images.metahub.space/poster/medium/${item.id}/img`;
-                const subText = (showResumeBadge && type === 'series' && item.season)
-                    ? `S${item.season}:B${item.episode} • Devam Et`
-                    : (item.releaseInfo || '');
+                const wSec = item.watchedSeconds || 0;
+                const timeStr = wSec >= 10 ? formatTime(wSec) : '';
+                let subText = item.releaseInfo || '';
+                if (showResumeBadge) {
+                    if (type === 'series' && item.season) {
+                        subText = `S${item.season}:B${item.episode}${timeStr ? ` • ${timeStr}` : ' • Devam Et'}`;
+                    } else if (timeStr) {
+                        subText = `⏱ ${timeStr} • Devam Et`;
+                    }
+                }
 
                 const div = document.createElement('div');
                 div.className = 'card';
@@ -1248,7 +1572,6 @@
         }
 
         function unlockShieldTemporarily() {
-            // Kullanıcı videoyu durdurmak/tam ekran yapmak istediğinde 6 saniyeliğine kilidi açıp tekrar koruma sağlar
             const shield = document.getElementById('touchShield');
             shield.classList.remove('active');
             clearTimeout(shieldTimer);
@@ -1257,17 +1580,22 @@
             }, 6000);
         }
 
-        // OYNATICI AÇMA (Kaldığın Bölümü Otomatik Hatırlar)
+        // OYNATICI AÇMA (Kaldığın Bölümü & Dakikayı Otomatik Hatırlar)
         async function openPlayer(id, type, name, tvmazeId, forcedSeason, forcedEpisode, rawItem) {
             const saved = getHistory().find(x => x.id === id);
-            const initSeason = forcedSeason || saved?.season || 1;
-            const initEpisode = forcedEpisode || saved?.episode || 1;
+            const initSeason = Number(forcedSeason || saved?.season || 1);
+            const initEpisode = Number(forcedEpisode || saved?.episode || 1);
             const initServer = saved?.server ?? 0;
+
+            // Eğer aynı bölüm/film açılıyorsa kayıtlı saniyeyi geri yükle, farklı bölüme geçildiyse 0'dan başlat
+            const isSameEpisode = !saved || type !== 'series' || (Number(saved.season || 1) === initSeason && Number(saved.episode || 1) === initEpisode);
+            const restoredSeconds = isSameEpisode ? (Number(saved?.watchedSeconds || rawItem?.watchedSeconds || 0)) : 0;
+            const restoredDuration = Number(saved?.duration || rawItem?.duration || 0);
 
             state = {
                 id,
-                tmdbId: saved?.tmdbId || null,
-                tvmazeId: tvmazeId || saved?.tvmazeId || null,
+                tmdbId: rawItem?.tmdbId || saved?.tmdbId || null,
+                tvmazeId: tvmazeId || rawItem?.tvmazeId || saved?.tvmazeId || null,
                 type,
                 name,
                 poster: rawItem?.poster || saved?.poster || `https://images.metahub.space/poster/medium/${id}/img`,
@@ -1276,6 +1604,12 @@
                 season: initSeason,
                 episode: initEpisode,
                 server: initServer,
+                watchedSeconds: restoredSeconds,
+                initialResumeSeconds: restoredSeconds,
+                duration: restoredDuration,
+                iframeLoadedAt: Date.now(),
+                lastExternalTimeAt: 0,
+                playerActive: false,
                 trSubUrl: '',
                 episodes: []
             };
@@ -1285,6 +1619,7 @@
             document.getElementById('playerModal').scrollTop = 0;
             document.getElementById('modalTitle').textContent = type === 'series' ? `${name} (S${initSeason}:B${initEpisode})` : name;
             document.querySelectorAll('.srv-btn').forEach((b, i) => b.classList.toggle('active', i === initServer));
+            updateResumeBarUI();
 
             // Detay kartı ilk yükleme
             document.getElementById('infoPoster').src = state.poster;
@@ -1314,7 +1649,8 @@
 
             saveHistory();
             await Promise.all([fetchMetaInfo(), fetchTrSub()]);
-            refreshIframe();
+            refreshIframe(state.watchedSeconds);
+            startWatchTimer();
         }
 
         async function fetchMetaInfo() {
@@ -1363,54 +1699,78 @@
             } catch {}
         }
 
-        function refreshIframe() {
+        function refreshIframe(customStartSec) {
             const { id, tmdbId, type, name, season, episode, server, trSubUrl } = state;
+            const startSec = typeof customStartSec === 'number' ? Math.floor(customStartSec) : Math.floor(state.watchedSeconds || 0);
+            const startParam = startSec >= 5 ? `&startAt=${startSec}` : '';
             const subParam = trSubUrl ? `&sub_file=${encodeURIComponent(trSubUrl)}&sub_label=Turkce` : '';
+
+            state.iframeLoadedAt = Date.now();
+            state.playerActive = false;
 
             if (type === 'series') {
                 document.getElementById('modalTitle').textContent = `${name} (S${season}:B${episode})`;
             }
+            updateResumeBarUI();
 
             let url = '';
             if (type === 'movie') {
-                if (server === 0) url = `https://vidsrc.me/embed/movie?imdb=${id}&ds_lang=tr`;
-                else if (server === 1) url = `https://vidlink.pro/movie/${tmdbId || id}?autoplay=true${subParam}`;
-                else if (server === 2) url = `https://vidsrc.pm/embed/movie?imdb=${id}&ds_lang=tr`;
+                if (server === 0) url = `https://vidsrc.me/embed/movie?imdb=${id}&ds_lang=tr${startParam}`;
+                else if (server === 1) url = `https://vidlink.pro/movie/${tmdbId || id}?autoplay=true${startParam}${subParam}`;
+                else if (server === 2) url = `https://vidsrc.pm/embed/movie?imdb=${id}&ds_lang=tr${startParam}`;
                 else if (server === 3) url = `https://autoembed.co/movie/imdb/${id}`;
             } else {
-                if (server === 0) url = `https://vidsrc.me/embed/tv?imdb=${id}&season=${season}&episode=${episode}&ds_lang=tr`;
-                else if (server === 1) url = `https://vidlink.pro/tv/${tmdbId || id}/${season}/${episode}?autoplay=true${subParam}`;
-                else if (server === 2) url = `https://vidsrc.pm/embed/tv?imdb=${id}&season=${season}&episode=${episode}&ds_lang=tr`;
+                if (server === 0) url = `https://vidsrc.me/embed/tv?imdb=${id}&season=${season}&episode=${episode}&ds_lang=tr${startParam}`;
+                else if (server === 1) url = `https://vidlink.pro/tv/${tmdbId || id}/${season}/${episode}?autoplay=true${startParam}${subParam}`;
+                else if (server === 2) url = `https://vidsrc.pm/embed/tv?imdb=${id}&season=${season}&episode=${episode}&ds_lang=tr${startParam}`;
                 else if (server === 3) url = `https://autoembed.co/tv/imdb/${id}-${season}-${episode}`;
             }
 
             document.getElementById('playerIframe').src = url;
             saveHistory();
+
+            if (startSec >= 5) {
+                [2000, 4000, 7000].forEach(delay => {
+                    setTimeout(() => {
+                        if (state.id === id) sendSeekToIframe(startSec);
+                    }, delay);
+                });
+            }
         }
 
         function setServer(idx, btn) {
             state.server = idx;
+            state.initialResumeSeconds = state.watchedSeconds;
             document.querySelectorAll('.srv-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            refreshIframe();
+            refreshIframe(state.watchedSeconds);
         }
 
         async function playNextEpisode() {
-            if (state.type !== 'series' || !state.episodes.length) return;
-            const curSeasonEps = state.episodes.filter(e => e.season === state.season);
-            const nextInSeason = curSeasonEps.find(e => e.episode === state.episode + 1);
-            if (nextInSeason) {
-                state.episode += 1;
-            } else {
-                const nextSeason = state.episodes.find(e => e.season === state.season + 1);
-                if (nextSeason) {
-                    state.season += 1;
-                    state.episode = 1;
+            if (state.type !== 'series') return;
+            if (state.episodes.length) {
+                const curSeasonEps = state.episodes.filter(e => e.season === state.season);
+                const nextInSeason = curSeasonEps.find(e => e.episode === state.episode + 1);
+                if (nextInSeason) {
+                    state.episode += 1;
+                } else {
+                    const nextSeason = state.episodes.find(e => e.season === state.season + 1);
+                    if (nextSeason) {
+                        state.season += 1;
+                        state.episode = 1;
+                    } else {
+                        state.episode += 1;
+                    }
                 }
+            } else {
+                state.episode += 1;
             }
+            state.watchedSeconds = 0;
+            state.initialResumeSeconds = 0;
             renderEpisodesUI();
+            updateResumeBarUI();
             await fetchTrSub();
-            refreshIframe();
+            refreshIframe(0);
         }
 
         async function fetchEpisodes(imdbId, tvmazeId) {
@@ -1424,6 +1784,7 @@
                 if (!showId) {
                     const info = await fetch(`https://api.tvmaze.com/lookup/shows?imdb=${imdbId}`).then(r => r.json());
                     showId = info.id;
+                    if (showId) state.tvmazeId = showId;
                 }
                 if (showId) {
                     const eps = await fetch(`https://api.tvmaze.com/shows/${showId}/episodes`).then(r => r.json());
@@ -1446,9 +1807,20 @@
                 const b = document.createElement('button');
                 b.className = 'chip' + (s === state.season ? ' active' : '');
                 b.textContent = `${s}. Sezon`;
-                b.onclick = () => {
-                    state.season = s;
-                    renderEpisodesUI();
+                b.onclick = async () => {
+                    if (state.season !== s) {
+                        state.season = s;
+                        const firstEp = state.episodes.find(e => e.season === s);
+                        state.episode = firstEp ? firstEp.episode : 1;
+                        state.watchedSeconds = 0;
+                        state.initialResumeSeconds = 0;
+                        renderEpisodesUI();
+                        updateResumeBarUI();
+                        await fetchTrSub();
+                        refreshIframe(0);
+                    } else {
+                        renderEpisodesUI();
+                    }
                 };
                 sRow.appendChild(b);
             });
@@ -1458,16 +1830,23 @@
                 b.className = 'ep-card' + (ep.episode === state.episode ? ' active' : '');
                 b.innerHTML = `<div class="num">${ep.episode}. Bölüm</div><div class="name">${ep.name || ''}</div>`;
                 b.onclick = async () => {
-                    state.episode = ep.episode;
+                    if (state.episode !== ep.episode) {
+                        state.episode = ep.episode;
+                        state.watchedSeconds = 0;
+                        state.initialResumeSeconds = 0;
+                    }
                     renderEpisodesUI();
+                    updateResumeBarUI();
                     await fetchTrSub();
-                    refreshIframe();
+                    refreshIframe(state.watchedSeconds);
                 };
                 eList.appendChild(b);
             });
         }
 
         function closeModal() {
+            saveHistory();
+            stopWatchTimer();
             toggleShield(false);
             document.getElementById('playerModal').classList.remove('open');
             document.getElementById('playerIframe').src = 'about:blank';
