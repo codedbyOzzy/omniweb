@@ -2623,7 +2623,7 @@
                 const idx = html.indexOf(marker);
                 if (idx !== -1) {
                     const start = idx + marker.length;
-                    const end = html.indexOf(';</script>', start);
+                    const end = html.indexOf(';</scr' + 'ipt>', start);
                     if (end !== -1) {
                         const data = JSON.parse(html.substring(start, end));
                         const contents = data?.contents?.twoColumnSearchResultsRenderer?.primaryContents?.sectionListRenderer?.contents || [];
