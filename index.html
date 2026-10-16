@@ -512,6 +512,98 @@
             pointer-events: auto;
         }
 
+        /* OMNIPLAYER PRO — KENDİ YERLİ HTML5 + HLS.JS REKLAMSIZ OYNATICIMIZ */
+        .omni-native-box {
+            position: absolute;
+            inset: 0;
+            background: #000;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+        }
+
+        .omni-native-box.active {
+            display: flex;
+        }
+
+        .omni-native-box video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000;
+        }
+
+        /* Özel Türkçe Altyazı Katmanı */
+        .omni-subtitles-overlay {
+            position: absolute;
+            bottom: 60px;
+            left: 5%;
+            right: 5%;
+            text-align: center;
+            pointer-events: none;
+            z-index: 12;
+            transition: bottom 0.2s ease;
+        }
+
+        .omni-subtitles-text {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.75);
+            color: #ffffff;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 19px;
+            font-weight: 600;
+            line-height: 1.35;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.9), 0 0 2px #000;
+            letter-spacing: 0.3px;
+        }
+
+        /* OmniPlayer Pro Kontrol Çubuğu */
+        .omni-controls-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 8px 14px;
+            background: #0d0d14;
+            border-bottom: 1px solid rgba(229, 9, 20, 0.3);
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .omni-mode-badge {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .omni-select {
+            background: var(--surface-2);
+            color: #fff;
+            border: 1px solid var(--border);
+            padding: 5px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .omni-select:focus {
+            border-color: var(--accent);
+        }
+
         /* Tek El Mobil Kontrol Barı (Videonun Hemen Altında - Tam Boyutlu) */
         .mobile-action-bar {
             display: grid;
@@ -1490,6 +1582,117 @@
             display: none;
         }
 
+        /* NETFLIX & DİJİTAL PLATFORM ÖZEL PANEL STİLLERİ */
+        .nfx-hero-bar {
+            background: linear-gradient(135deg, rgba(229, 9, 20, 0.22) 0%, rgba(15, 15, 22, 0.96) 65%);
+            border: 1px solid rgba(229, 9, 20, 0.35);
+            border-radius: 16px;
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .nfx-brand-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: 0.3px;
+            color: #fff;
+        }
+
+        .nfx-logo-box {
+            background: #e50914;
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 900;
+            box-shadow: 0 4px 14px rgba(229, 9, 20, 0.5);
+        }
+
+        .platform-Segment-bar {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .plat-btn {
+            background: rgba(255, 255, 255, 0.06);
+            color: #d1d5db;
+            border: 1px solid var(--border);
+            padding: 7px 13px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s;
+            white-space: nowrap;
+        }
+
+        .plat-btn.active {
+            background: #e50914;
+            border-color: #e50914;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(229, 9, 20, 0.35);
+        }
+
+        .nfx-dual-panels {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .nfx-panel-box {
+            background: rgba(20, 20, 28, 0.75);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 14px;
+        }
+
+        .card-plat-badge {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            background: rgba(229, 9, 20, 0.95);
+            color: #fff;
+            font-size: 9px;
+            font-weight: 900;
+            padding: 2px 6px;
+            border-radius: 5px;
+            letter-spacing: 0.4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        .card-plat-badge.new2026 {
+            background: rgba(16, 185, 129, 0.95);
+        }
+
+        .card-plat-badge.hbm {
+            background: rgba(124, 58, 237, 0.95);
+        }
+
+        .card-plat-badge.dnp {
+            background: rgba(37, 99, 235, 0.95);
+        }
+
+        .card-plat-badge.amp {
+            background: rgba(14, 165, 233, 0.95);
+        }
+
+        .card-plat-badge.atp {
+            background: rgba(55, 65, 81, 0.95);
+        }
+
         /* PC WEB (MASAÜSTÜ GENİŞ EKRAN) UYUMLULUĞU */
         @media (min-width: 900px) {
             body {
@@ -1550,6 +1753,9 @@
         <button class="nav-item active" data-tab="movies" onclick="showTab('movies')">
             <span class="ico">🎬</span><span>Filmler</span>
         </button>
+        <button class="nav-item" data-tab="netflix" onclick="showTab('netflix')">
+            <span class="ico" style="color:#e50914; font-weight:900;">N</span><span>Netflix</span>
+        </button>
         <button class="nav-item" data-tab="series" onclick="showTab('series')">
             <span class="ico">📺</span><span>Diziler</span>
         </button>
@@ -1564,7 +1770,7 @@
         </button>
     </nav>
 
-    <!-- 1. FİLMLER SEKMESİ -->
+    <!-- 1. DİĞER FİLMLER (2026 VİZYON & SİNEMA KATALOĞU - NETFLIX HARİCİ) SEKMESİ -->
     <div id="view-movies" class="tab-view">
         <!-- Kaldığın Yerden Devam Et Rayı -->
         <div class="container" id="homeContinueBox" style="display: none; padding-bottom: 0;">
@@ -1576,30 +1782,95 @@
         </div>
 
         <div class="chips-row">
-            <button class="chip active" onclick="loadMovies('top', '', this)">🔥 Popüler</button>
-            <button class="chip" onclick="loadMovies('imdbRating', '', this)">⭐ En İyiler</button>
+            <button class="chip active" onclick="loadMovies('year', '2026', this)">🆕 2026 En Güncel & Vizyon</button>
+            <button class="chip" onclick="loadMovies('top', '', this)">🔥 Gişe & Popüler Filmler</button>
+            <button class="chip" onclick="loadMovies('year', '2025', this)">📅 2025 Filmleri</button>
+            <button class="chip" onclick="loadMovies('imdbRating', '', this)">⭐ IMDb En İyiler</button>
             <button class="chip" onclick="loadMovies('top', 'Action', this)">💥 Aksiyon</button>
             <button class="chip" onclick="loadMovies('top', 'Sci-Fi', this)">🚀 Bilim Kurgu</button>
-            <button class="chip" onclick="loadMovies('top', 'Comedy', this)">😂 Komedi</button>
             <button class="chip" onclick="loadMovies('top', 'Horror', this)">👻 Korku</button>
             <button class="chip" onclick="loadMovies('top', 'Thriller', this)">🔪 Gerilim</button>
+            <button class="chip" onclick="loadMovies('top', 'Comedy', this)">😂 Komedi</button>
         </div>
         <div class="container">
+            <div class="section-header" style="margin-bottom: 10px;">
+                <div class="section-title" id="moviesSectionTitle">🆕 2026 Vizyon & Diğer Sinema Filmleri</div>
+                <button class="clear-link" style="color:#e50914; font-weight:700;" onclick="showTab('netflix')">🔴 Netflix Özel Paneline Git →</button>
+            </div>
             <div class="grid" id="moviesGrid"></div>
         </div>
     </div>
 
-    <!-- 2. DİZİLER SEKMESİ -->
+    <!-- 1.5 NETFLIX (DİZİ VE FİLM AYRI PANELLER) & DİJİTAL PLATFORMLAR SEKMESİ -->
+    <div id="view-netflix" class="tab-view" style="display: none;">
+        <div class="container" style="padding-bottom: 4px;">
+            <div class="nfx-hero-bar">
+                <div>
+                    <div class="nfx-brand-title">
+                        <span class="nfx-logo-box" id="platLogoBox">N</span>
+                        <span id="platHeaderTitle">Netflix Türkiye & Global Katalog</span>
+                    </div>
+                    <div style="font-size: 12px; color: var(--muted); margin-top: 4px;" id="platHeaderSub">
+                        Netflix'e ait en güncel diziler ve filmler diğer içeriklerden bağımsız, ayrı panellerde listelenir.
+                    </div>
+                </div>
+                <!-- Dijital Platform Seçici -->
+                <div class="platform-Segment-bar" id="platformSwitchBar">
+                    <button class="plat-btn active" onclick="switchStreamingPlatform('nfx', 'Netflix', 'N', this)">🔴 Netflix</button>
+                    <button class="plat-btn" onclick="switchStreamingPlatform('hbm', 'HBO Max', 'HBO', this)">🟣 HBO Max</button>
+                    <button class="plat-btn" onclick="switchStreamingPlatform('dnp', 'Disney+', 'D+', this)">🔵 Disney+</button>
+                    <button class="plat-btn" onclick="switchStreamingPlatform('amp', 'Prime Video', 'PRIME', this)">💠 Prime Video</button>
+                    <button class="plat-btn" onclick="switchStreamingPlatform('atp', 'Apple TV+', 'TV+', this)">🍎 Apple TV+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Netflix Görünüm Filtresi (Dizi+Film Ayrı Panel / Sadece Dizi / Sadece Film / 2026 Yeni) -->
+        <div class="chips-row" style="padding-top: 0;">
+            <button class="chip active" onclick="filterNetflixView('both', this)">🔥 Dizi & Film (Ayrı Paneller)</button>
+            <button class="chip" onclick="filterNetflixView('series', this)">📺 Sadece Netflix Dizileri</button>
+            <button class="chip" onclick="filterNetflixView('movies', this)">🎬 Sadece Netflix Filmleri</button>
+            <button class="chip" onclick="filterNetflixView('new2026', this)">🆕 2026 & 2025 En Güncel</button>
+        </div>
+
+        <div class="container">
+            <div class="nfx-dual-panels">
+                <!-- Panel 1: Netflix Dizileri -->
+                <div class="nfx-panel-box" id="nfxSeriesPanel">
+                    <div class="section-header" style="margin-bottom: 12px;">
+                        <div class="section-title" id="nfxSeriesTitle">📺 Netflix Dizileri (En Güncel & Trend)</div>
+                    </div>
+                    <div class="grid" id="netflixSeriesGrid"></div>
+                </div>
+
+                <!-- Panel 2: Netflix Filmleri -->
+                <div class="nfx-panel-box" id="nfxMoviesPanel">
+                    <div class="section-header" style="margin-bottom: 12px;">
+                        <div class="section-title" id="nfxMoviesTitle">🎬 Netflix Filmleri (En Güncel & Trend)</div>
+                    </div>
+                    <div class="grid" id="netflixMoviesGrid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. DİZİLER SEKMESİ (EN GÜNCEL 2026 & GENEL DİZİLER) -->
     <div id="view-series" class="tab-view" style="display: none;">
         <div class="chips-row">
-            <button class="chip active" onclick="loadSeries('ALL', this)">🔥 Popüler Diziler</button>
+            <button class="chip active" onclick="loadSeries('2026', this)">🆕 2026 Yeni Diziler</button>
+            <button class="chip" onclick="loadSeries('TOP', this)">🔥 En Popüler Diziler</button>
+            <button class="chip" onclick="loadSeries('2025', this)">📅 2025 Dizileri</button>
             <button class="chip" onclick="loadSeries('Drama', this)">🎭 Dram</button>
             <button class="chip" onclick="loadSeries('Action', this)">💥 Aksiyon</button>
             <button class="chip" onclick="loadSeries('Science-Fiction', this)">🚀 Bilim Kurgu</button>
-            <button class="chip" onclick="loadSeries('Crime', this)">🕵️ Suç</button>
+            <button class="chip" onclick="loadSeries('Crime', this)">🕵️ Suç & Polisiye</button>
             <button class="chip" onclick="loadSeries('Comedy', this)">😂 Komedi</button>
         </div>
         <div class="container">
+            <div class="section-header" style="margin-bottom: 10px;">
+                <div class="section-title" id="seriesSectionTitle">🆕 2026 Yeni Çıkan & Popüler Diziler</div>
+                <button class="clear-link" style="color:#e50914; font-weight:700;" onclick="showTab('netflix')">🔴 Netflix Dizileri İçin Tıkla →</button>
+            </div>
             <div class="grid" id="seriesGrid"></div>
         </div>
     </div>
@@ -1812,6 +2083,16 @@
             </div>
 
             <div class="player-frame-box" id="playerFrameBox">
+                <!-- 1. Kendi Yerli HTML5 + HLS.js Reklamsız Oynatıcımız (OmniPlayer Pro) -->
+                <div class="omni-native-box" id="omniNativeBox">
+                    <video id="omniNativeVideo" playsinline controls controlslist="nodownload"></video>
+                    <!-- Özel Türkçe Altyazı Katmanı -->
+                    <div class="omni-subtitles-overlay" id="omniSubsOverlay" style="display: none;">
+                        <span class="omni-subtitles-text" id="omniSubsText"></span>
+                    </div>
+                </div>
+
+                <!-- 2. Yedek Dış Embed Sayfası (Oto-Kalkan Korumalı) -->
                 <iframe id="playerIframe" allowfullscreen allow="autoplay; fullscreen; encrypted-media; picture-in-picture" referrerpolicy="origin"></iframe>
                 <!-- Akıllı Reklam & Popup Kalkanı: Film oynarken reklama tıklamayı %100 engeller ve hızlı kontrol sunar -->
                 <div class="touch-shield" id="touchShield">
@@ -1822,6 +2103,29 @@
                         <button class="hud-mini-btn" onclick="togglePlayerFullscreen()">⛶ Tam Ekran</button>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- OmniPlayer Pro Akıllı Durum & Dublaj/Altyazı Çubuğu -->
+        <div class="omni-controls-bar" id="omniControlsBar">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                <span class="omni-mode-badge" id="omniModeBadge">⚡ Yerli Oynatıcı: Aktif</span>
+                <!-- Ses / Dublaj Seçici -->
+                <select class="omni-select" id="omniAudioSelect" onchange="changeOmniAudioTrack(this.value)">
+                    <option value="-1">🎧 Ses: Otomatik</option>
+                </select>
+                <!-- Altyazı Seçici -->
+                <select class="omni-select" id="omniSubSelect" onchange="changeOmniSubtitle(this.value)">
+                    <option value="none">📝 Altyazı: Kapalı</option>
+                    <option value="tr_auto" selected>🇹🇷 Türkçe Altyazı</option>
+                </select>
+                <!-- Çözünürlük Seçici -->
+                <select class="omni-select" id="omniQualitySelect" onchange="changeOmniQuality(this.value)">
+                    <option value="-1">⚙️ Kalite: Auto (1080p)</option>
+                </select>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+                <button class="res-btn" onclick="openWorkerConfigModal()" title="Kendi Cloudflare Worker Proxy adresinizi bağlayın">🔌 Worker / Addon</button>
             </div>
         </div>
 
@@ -1850,14 +2154,14 @@
             </div>
         </div>
 
-        <!-- P-Stream & Çoklu Kaynak Sunucuları (6 Temiz Sunucu) -->
+        <!-- Akış Sunucuları & HLS Protokolleri -->
         <div class="servers-row">
-            <button class="srv-btn active" onclick="setServer(0, this)">🇹🇷 Kaynak 1 (VidSrc ME)</button>
-            <button class="srv-btn" onclick="setServer(1, this)">🚀 Kaynak 2 (VidLink Pro)</button>
-            <button class="srv-btn" onclick="setServer(2, this)">⚡ Kaynak 3 (VidSrc CC)</button>
-            <button class="srv-btn" onclick="setServer(3, this)">🎬 Kaynak 4 (MultiEmbed TR)</button>
-            <button class="srv-btn" onclick="setServer(4, this)">💎 Kaynak 5 (VidSrc PM)</button>
-            <button class="srv-btn" onclick="setServer(5, this)">🔥 Kaynak 6 (AutoEmbed)</button>
+            <button class="srv-btn active" onclick="setServer(0, this)">⚡ OmniPlayer (HLS Native)</button>
+            <button class="srv-btn" onclick="setServer(1, this)">🌐 Çoklu Ses & Dublaj Akışları</button>
+            <button class="srv-btn" onclick="setServer(2, this)">🚀 VidLink Gateway</button>
+            <button class="srv-btn" onclick="setServer(3, this)">🎬 MultiEmbed Stream</button>
+            <button class="srv-btn" onclick="setServer(4, this)">💎 VidSrc Gateway</button>
+            <button class="srv-btn" onclick="setServer(5, this)">🔥 AutoEmbed Gateway</button>
         </div>
 
         <!-- Alt Bölüm: Dizi Bölümleri + Film/Dizi Detay Kartı + Öneriler -->
@@ -1888,14 +2192,56 @@
         </div>
     </div>
 
+    <!-- WORKER / ADDON YAPILANDIRMA MODALI -->
+    <div class="modal" id="workerConfigModal" style="z-index: 10001; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center;">
+        <div style="background: #14141c; border: 1px solid var(--border); border-radius: 16px; width: 92%; max-width: 520px; padding: 22px; box-shadow: 0 10px 40px rgba(0,0,0,0.8);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 14px;">
+                <div style="font-size: 17px; font-weight: 800; color: #fff;">🔌 OmniHub Worker & HLS Gateway</div>
+                <button class="close-btn" onclick="closeWorkerConfigModal()">✕</button>
+            </div>
+            <p style="font-size: 13px; color: #9ca3af; line-height: 1.5; margin-bottom: 16px;">
+                Kendi ücretsiz <b>Cloudflare Worker</b> veya Vercel sunucunuzu bağlayarak <b>Stremio Protokolü</b> üzerinden <b>Doğrudan HLS (.m3u8)</b> ve <b>Çoklu Ses / Dublaj</b> akışlarını çalıştırabilirsiniz.
+            </p>
+            <div style="margin-bottom: 14px;">
+                <label style="display:block; font-size: 12px; font-weight:700; color: #d1d5db; margin-bottom: 6px;">Worker URL / Gateway Adresi:</label>
+                <input type="url" id="workerUrlInput" placeholder="https://omni-worker.kullanici.workers.dev" style="width: 100%; background: #1f1f2b; border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; font-size: 13px; color: #fff; outline: none;" />
+            </div>
+            <div style="display:flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;">
+                <button class="chip" onclick="setPresetWorker('https://enc-dec.app')">⚡ EncDec Gateway</button>
+                <button class="chip" onclick="setPresetWorker('https://stremio-addon-gateway.vercel.app')">🌐 Topluluk Gateway</button>
+                <button class="chip" onclick="setPresetWorker('')">Temizle</button>
+            </div>
+            <div id="workerTestStatus" style="font-size: 12px; margin-bottom: 14px; display: none;"></div>
+            <div style="display:flex; justify-content: flex-end; gap: 10px;">
+                <button class="act-btn" onclick="testWorkerConnection()" style="background: var(--surface-2);">🧪 Bağlantıyı Sına</button>
+                <button class="act-btn" onclick="saveWorkerConfig()" style="background: var(--accent);">💾 Kaydet & Uygula</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ÇOKLU SES & AKIŞ SEÇİCİ MODAL -->
+    <div class="modal" id="omniStreamModal" style="z-index: 10000; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center;">
+        <div style="background: #14141c; border: 1px solid var(--border); border-radius: 16px; width: 92%; max-width: 500px; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.8);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
+                <div style="font-size: 16px; font-weight: 800; color: #fff;" id="streamModalTitle">🌐 Bulunan Akış Kaynakları</div>
+                <button class="close-btn" onclick="closeStreamModal()">✕</button>
+            </div>
+            <div id="streamModalLoading" style="font-size: 13px; color: #fbbf24; padding: 14px 0; text-align: center;">
+                ⏳ Stremio eklenti akışları ve çoklu ses kanalları taranıyor...
+            </div>
+            <div id="streamModalList" style="display: flex; flex-direction: column; gap: 8px; max-height: 320px; overflow-y: auto;"></div>
+        </div>
+    </div>
+
     <script>
         const CINEMETA = 'https://v3-cinemeta.strem.io';
+        const STREAMING_CATALOGS = 'https://7a82163c306e-stremio-netflix-catalog-addon.baby-beamup.club';
         const OPENSUBS = 'https://opensubtitles-v3.strem.io';
         const HISTORY_KEY = 'omnihub_watch_history_v1';
         const FAVS_KEY = 'omnihub_favorites_v1';
 
         const DEFAULT_MOVIES = [
-            { id: 'tt22084616', tmdbId: 969681, name: 'Spider-Man: Brand New Day', releaseInfo: '2026', imdbRating: '8.5', poster: 'https://image.tmdb.org/t/p/w500/bjiS5ipwxb9JFy3XRRN4OAilSeX.jpg' },
+            { id: 'tt22084616', tmdbId: 969681, name: 'Spider-Man: Brand New Day', releaseInfo: '2026', imdbRating: '8.5', poster: 'https://image.tmdb.org/t/p/w500/bjiS5ipwxb9JFy3XRRN4OAilSeX.jpg', isNew2026: true },
             { id: 'tt15398776', tmdbId: 872585, name: 'Oppenheimer', releaseInfo: '2023', imdbRating: '8.4', poster: 'https://m.media-amazon.com/images/M/MV5BN2JkMDc5MGQtZjg3YS00NmFiLWIyZmQtZTJmNTM5MjVmYTQ4XkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
             { id: 'tt15239678', tmdbId: 693134, name: 'Dune: Part Two', releaseInfo: '2024', imdbRating: '8.5', poster: 'https://m.media-amazon.com/images/M/MV5BNTc0YmQxMjEtODI5MC00NjFiLTlkMWUtOGQ5NjFmYWUyZGJhXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
             { id: 'tt6263850', tmdbId: 533535, name: 'Deadpool & Wolverine', releaseInfo: '2024', imdbRating: '7.7', poster: 'https://m.media-amazon.com/images/M/MV5BZTk5ODY0MmQtMzA3Ni00NGY1LThiYzItZThiNjFiNDM4MTM3XkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
@@ -1936,7 +2282,31 @@
 
         let moviesCache = [...DEFAULT_MOVIES];
         let seriesCache = [];
+        let series2026Cache = [];
+        let series2025Cache = [];
+        let seriesTopCache = [];
+        let currentMoviesCatalog = { catalog: 'year', genre: '2026' };
+        let currentSeriesMode = '2026';
+
+        // Netflix & Dijital Platform Ayrı Katalog State
+        let netflixMovieIds = new Set();
+        let netflixSeriesIds = new Set();
+        let platMoviesCache = {};
+        let platSeriesCache = {};
+        let activePlatformCode = 'nfx';
+        let activePlatformName = 'Netflix';
+        let activePlatformBadge = 'N';
+        let activePlatFilter = 'both';
+
         let hls = null;
+        let omniHls = null;
+        let omniCurrentStreams = [];
+        let omniActiveStreamIndex = 0;
+        let omniCustomSubs = [];
+        let omniSubSyncOffset = 0; // saniye
+        const OMNI_WORKER_KEY = 'omnihub_custom_worker_url';
+        let customWorkerUrl = localStorage.getItem(OMNI_WORKER_KEY) || '';
+
         let autoShieldEnabled = true;
         let shieldTemporarilyUnlocked = false;
         let sandboxGuard = false;
@@ -1994,14 +2364,18 @@
             }
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener('DOMContentLoaded', async () => {
             renderGrid('moviesGrid', DEFAULT_MOVIES, 'movie');
             renderContinueRail();
-            loadMovies('top', '');
-            initSeries();
             filterTv('ALL');
             initYouTubePlus();
             initShieldTouchListener();
+            initOmniPlayer();
+
+            // Önce Netflix kataloğunu çek ki Filmler ve Diziler sekmesinden Netflix içerikleri ayrıştırılsın
+            await initNetflixCatalog();
+            loadMovies('year', '2026');
+            initSeries();
 
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('./sw.js').catch(() => {});
@@ -2262,6 +2636,17 @@
         }
 
         function adjustWatchedTime(deltaSec) {
+            const v = document.getElementById('omniNativeVideo');
+            const isNative = document.getElementById('omniNativeBox')?.style.display !== 'none';
+            if (isNative && v && !isNaN(v.duration) && v.duration > 0) {
+                v.currentTime = Math.max(0, Math.min(v.duration, v.currentTime + deltaSec));
+                state.watchedSeconds = Math.floor(v.currentTime);
+                state.initialResumeSeconds = state.watchedSeconds;
+                updateResumeBarUI();
+                saveHistory();
+                return;
+            }
+
             state.watchedSeconds = Math.max(0, (state.watchedSeconds || 0) + deltaSec);
             state.initialResumeSeconds = state.watchedSeconds;
             updateResumeBarUI();
@@ -2276,12 +2661,23 @@
         function resetProgressToZero() {
             state.watchedSeconds = 0;
             state.initialResumeSeconds = 0;
+            const v = document.getElementById('omniNativeVideo');
+            const isNative = document.getElementById('omniNativeBox')?.style.display !== 'none';
+            if (isNative && v) {
+                v.currentTime = 0;
+            }
             updateResumeBarUI();
             saveHistory();
             refreshIframe(0);
         }
 
         function seekPlayerNow() {
+            const v = document.getElementById('omniNativeVideo');
+            const isNative = document.getElementById('omniNativeBox')?.style.display !== 'none';
+            if (isNative && v) {
+                v.currentTime = state.watchedSeconds;
+                return;
+            }
             state.initialResumeSeconds = state.watchedSeconds;
             saveHistory();
             refreshIframe(state.watchedSeconds);
@@ -2445,13 +2841,135 @@
 
         function showTab(tab) {
             document.querySelectorAll('.tab-view').forEach(v => v.style.display = 'none');
-            document.getElementById('view-' + tab).style.display = 'block';
+            const target = document.getElementById('view-' + tab);
+            if (target) target.style.display = 'block';
             document.querySelectorAll('.nav-item').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
             if (tab === 'history') renderHistoryTab();
             window.scrollTo(0, 0);
         }
 
+        function normalizeCatalogItem(x, type, platCode = '', platBadge = '') {
+            const rel = String(x.releaseInfo || x.year || '');
+            const is2026 = rel.includes('2026');
+            return {
+                ...x,
+                id: x.id || x.imdb_id,
+                tmdbId: x.tmdbId || x.moviedb_id || null,
+                type: type,
+                name: x.name || 'İsimsiz İçerik',
+                poster: x.poster || `https://images.metahub.space/poster/medium/${x.id || x.imdb_id}/img`,
+                releaseInfo: rel,
+                imdbRating: x.imdbRating || '',
+                genres: x.genres || x.genre || [],
+                platformCode: platCode,
+                platformBadge: platBadge,
+                isNew2026: is2026
+            };
+        }
+
+        function prioritizeNewest2026(list) {
+            const y2026 = [];
+            const y2025 = [];
+            const rest = [];
+            list.forEach(item => {
+                const r = String(item.releaseInfo || '');
+                if (r.includes('2026')) y2026.push(item);
+                else if (r.includes('2025')) y2025.push(item);
+                else rest.push(item);
+            });
+            return [...y2026, ...y2025, ...rest];
+        }
+
+        async function initNetflixCatalog() {
+            await fetchPlatformCatalog('nfx', 'Netflix', 'N');
+            renderPlatformGrids();
+        }
+
+        async function fetchPlatformCatalog(code, name, badge) {
+            if (platMoviesCache[code] && platSeriesCache[code]) return;
+            try {
+                const [sRes, mRes] = await Promise.all([
+                    fetch(`${STREAMING_CATALOGS}/catalog/series/${code}.json`).then(r => r.json()).catch(() => ({ metas: [] })),
+                    fetch(`${STREAMING_CATALOGS}/catalog/movie/${code}.json`).then(r => r.json()).catch(() => ({ metas: [] }))
+                ]);
+
+                const sList = (sRes.metas || []).map(x => normalizeCatalogItem(x, 'series', code, badge));
+                const mList = (mRes.metas || []).map(x => normalizeCatalogItem(x, 'movie', code, badge));
+
+                if (code === 'nfx') {
+                    sList.forEach(i => { if (i.id) netflixSeriesIds.add(i.id); });
+                    mList.forEach(i => { if (i.id) netflixMovieIds.add(i.id); });
+                }
+
+                platSeriesCache[code] = prioritizeNewest2026(sList);
+                platMoviesCache[code] = prioritizeNewest2026(mList);
+            } catch (e) {
+                platSeriesCache[code] = platSeriesCache[code] || [];
+                platMoviesCache[code] = platMoviesCache[code] || [];
+            }
+        }
+
+        async function switchStreamingPlatform(code, name, badge, btn) {
+            activePlatformCode = code;
+            activePlatformName = name;
+            activePlatformBadge = badge;
+
+            if (btn) {
+                btn.parentElement.querySelectorAll('.plat-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+
+            const sTitle = document.getElementById('nfxSeriesTitle');
+            const mTitle = document.getElementById('nfxMoviesTitle');
+            if (sTitle) sTitle.textContent = `${name} Dizileri (En Güncel & Popüler)`;
+            if (mTitle) mTitle.textContent = `${name} Filmleri (En Güncel & Orijinal)`;
+
+            const sGrid = document.getElementById('netflixSeriesGrid');
+            const mGrid = document.getElementById('netflixMoviesGrid');
+            if (!platSeriesCache[code] || !platMoviesCache[code]) {
+                if (sGrid) sGrid.innerHTML = '<div style="color:var(--muted);padding:20px;grid-column:1/-1;">Katalog yükleniyor...</div>';
+                if (mGrid) mGrid.innerHTML = '<div style="color:var(--muted);padding:20px;grid-column:1/-1;">Katalog yükleniyor...</div>';
+                await fetchPlatformCatalog(code, name, badge);
+            }
+            renderPlatformGrids();
+        }
+
+        function filterNetflixView(mode, btn) {
+            activePlatFilter = mode;
+            if (btn) {
+                btn.parentElement.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+            }
+            renderPlatformGrids();
+        }
+
+        function renderPlatformGrids() {
+            const sPanel = document.getElementById('nfxSeriesPanel');
+            const mPanel = document.getElementById('nfxMoviesPanel');
+            let sList = platSeriesCache[activePlatformCode] || [];
+            let mList = platMoviesCache[activePlatformCode] || [];
+
+            if (activePlatFilter === 'new2026') {
+                sList = sList.filter(x => String(x.releaseInfo).includes('2026') || String(x.releaseInfo).includes('2025'));
+                mList = mList.filter(x => String(x.releaseInfo).includes('2026') || String(x.releaseInfo).includes('2025'));
+            }
+
+            if (sPanel) sPanel.style.display = (activePlatFilter === 'movies') ? 'none' : 'block';
+            if (mPanel) mPanel.style.display = (activePlatFilter === 'series') ? 'none' : 'block';
+
+            const sCount = document.getElementById('nfxSeriesCount');
+            const mCount = document.getElementById('nfxMoviesCount');
+            const limit = (activePlatFilter === 'series' || activePlatFilter === 'movies') ? 72 : 36;
+
+            if (sCount) sCount.textContent = `${sList.length} Dizi`;
+            if (mCount) mCount.textContent = `${mList.length} Film`;
+
+            renderGrid('netflixSeriesGrid', sList.slice(0, limit), 'series');
+            renderGrid('netflixMoviesGrid', mList.slice(0, limit), 'movie');
+        }
+
         async function loadMovies(catalog, genre, btn) {
+            currentMoviesCatalog = { catalog, genre };
             if (btn) {
                 btn.parentElement.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
                 btn.classList.add('active');
@@ -2461,41 +2979,79 @@
                 if (genre) url = `${CINEMETA}/catalog/movie/${catalog}/genre=${encodeURIComponent(genre)}.json`;
                 const res = await fetch(url).then(r => r.json());
                 if (res.metas && res.metas.length > 0) {
-                    moviesCache = res.metas.slice(0, 48);
+                    // Netflix filmlerini "Diğer Filmler" panelinden ayır (Netflix sekmesinde ayrı gösteriliyor)
+                    let nonNetflix = res.metas
+                        .filter(m => !netflixMovieIds.has(m.id))
+                        .map(m => normalizeCatalogItem(m, 'movie'));
+
+                    // 2026 Vizyon veya Popüler sekmesinde Spider-Man: Brand New Day (2026) en başta yer alsın
+                    if ((catalog === 'year' && genre === '2026') || (catalog === 'top' && !genre)) {
+                        const spidey = DEFAULT_MOVIES[0];
+                        nonNetflix = [spidey, ...nonNetflix.filter(x => x.id !== spidey.id)];
+                    } else if (catalog === 'top' && !genre) {
+                        nonNetflix = prioritizeNewest2026(nonNetflix);
+                    }
+
+                    moviesCache = nonNetflix.slice(0, 60);
                     renderGrid('moviesGrid', moviesCache, 'movie');
                 }
             } catch {
-                renderGrid('moviesGrid', DEFAULT_MOVIES, 'movie');
+                renderGrid('moviesGrid', DEFAULT_MOVIES.filter(m => !netflixMovieIds.has(m.id)), 'movie');
             }
         }
 
         async function initSeries() {
             try {
-                const shows = await fetch('https://api.tvmaze.com/shows?page=0').then(r => r.json());
-                seriesCache = shows
-                    .filter(s => s.externals && s.externals.imdb)
-                    .sort((a, b) => (b.rating?.average || 0) - (a.rating?.average || 0))
-                    .map(s => ({
-                        id: s.externals.imdb,
-                        tvmazeId: s.id,
-                        type: 'series',
-                        name: s.name,
-                        poster: s.image?.medium || s.image?.original || '',
-                        releaseInfo: (s.premiered || '').substring(0, 4),
-                        imdbRating: s.rating?.average || '',
-                        genres: s.genres || []
-                    }));
-                renderGrid('seriesGrid', seriesCache.slice(0, 48), 'series');
+                const [res2026, res2025, resTop] = await Promise.all([
+                    fetch(`${CINEMETA}/catalog/series/year/genre=2026.json`).then(r => r.json()).catch(() => ({ metas: [] })),
+                    fetch(`${CINEMETA}/catalog/series/year/genre=2025.json`).then(r => r.json()).catch(() => ({ metas: [] })),
+                    fetch(`${CINEMETA}/catalog/series/top.json`).then(r => r.json()).catch(() => ({ metas: [] }))
+                ]);
+
+                // Netflix dizilerini "Diğer Diziler" panelinden ayır (Netflix sekmesinde ayrı gösteriliyor)
+                series2026Cache = (res2026.metas || [])
+                    .filter(s => !netflixSeriesIds.has(s.id))
+                    .map(s => normalizeCatalogItem(s, 'series'));
+
+                series2025Cache = (res2025.metas || [])
+                    .filter(s => !netflixSeriesIds.has(s.id))
+                    .map(s => normalizeCatalogItem(s, 'series'));
+
+                seriesTopCache = (resTop.metas || [])
+                    .filter(s => !netflixSeriesIds.has(s.id))
+                    .map(s => normalizeCatalogItem(s, 'series'));
+
+                // Tüm tekil dizileri birleştir (Tür filtrelemesi için)
+                const seen = new Set();
+                seriesCache = [];
+                [...series2026Cache, ...series2025Cache, ...seriesTopCache].forEach(s => {
+                    if (s.id && !seen.has(s.id)) {
+                        seen.add(s.id);
+                        seriesCache.push(s);
+                    }
+                });
+
+                loadSeries(currentSeriesMode || '2026');
             } catch {}
         }
 
-        function loadSeries(genre, btn) {
+        function loadSeries(mode, btn) {
+            currentSeriesMode = mode;
             if (btn) {
                 btn.parentElement.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
                 btn.classList.add('active');
             }
-            const filtered = genre === 'ALL' ? seriesCache.slice(0, 48) : seriesCache.filter(s => s.genres.includes(genre));
-            renderGrid('seriesGrid', filtered, 'series');
+            let list = [];
+            if (mode === '2026') {
+                list = series2026Cache.length ? series2026Cache : seriesCache;
+            } else if (mode === '2025') {
+                list = series2025Cache.length ? series2025Cache : seriesCache;
+            } else if (mode === 'TOP') {
+                list = seriesTopCache.length ? prioritizeNewest2026(seriesTopCache) : seriesCache;
+            } else {
+                list = seriesCache.filter(s => (s.genres || []).some(g => g.toLowerCase() === mode.toLowerCase()));
+            }
+            renderGrid('seriesGrid', list.slice(0, 60), 'series');
         }
 
         let searchTimer = null;
@@ -2508,30 +3064,44 @@
                 showTab('search');
                 document.getElementById('searchTitle').textContent = `"${text}" Sonuçları`;
                 const items = [];
+                const seen = new Set();
+
+                // Önce yüklü Netflix / Platform kataloglarında eşleşenleri en üste rozetiyle koy
+                const lower = text.toLowerCase();
+                Object.keys(platSeriesCache).forEach(code => {
+                    (platSeriesCache[code] || []).forEach(s => {
+                        if (s.name?.toLowerCase().includes(lower) && !seen.has(s.id)) {
+                            seen.add(s.id);
+                            items.push(s);
+                        }
+                    });
+                });
+                Object.keys(platMoviesCache).forEach(code => {
+                    (platMoviesCache[code] || []).forEach(m => {
+                        if (m.name?.toLowerCase().includes(lower) && !seen.has(m.id)) {
+                            seen.add(m.id);
+                            items.push(m);
+                        }
+                    });
+                });
 
                 try {
                     const [m, s] = await Promise.all([
                         fetch(`${CINEMETA}/catalog/movie/top/search=${encodeURIComponent(text)}.json`).then(r => r.json()),
                         fetch(`${CINEMETA}/catalog/series/top/search=${encodeURIComponent(text)}.json`).then(r => r.json())
                     ]);
-                    (m.metas || []).forEach(x => items.push({ ...x, type: 'movie' }));
-                    (s.metas || []).forEach(x => items.push({ ...x, type: 'series' }));
-                } catch {}
-
-                try {
-                    const tv = await fetch(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(text)}`).then(r => r.json());
-                    tv.forEach(e => {
-                        const s = e.show;
-                        if (s?.externals?.imdb && !items.some(i => i.id === s.externals.imdb)) {
-                            items.push({
-                                id: s.externals.imdb,
-                                tvmazeId: s.id,
-                                type: 'series',
-                                name: s.name,
-                                poster: s.image?.medium || '',
-                                releaseInfo: (s.premiered || '').substring(0, 4),
-                                imdbRating: s.rating?.average || ''
-                            });
+                    (m.metas || []).forEach(x => {
+                        if (x.id && !seen.has(x.id)) {
+                            seen.add(x.id);
+                            const isNfx = netflixMovieIds.has(x.id);
+                            items.push(normalizeCatalogItem(x, 'movie', isNfx ? 'nfx' : '', isNfx ? 'N' : ''));
+                        }
+                    });
+                    (s.metas || []).forEach(x => {
+                        if (x.id && !seen.has(x.id)) {
+                            seen.add(x.id);
+                            const isNfx = netflixSeriesIds.has(x.id);
+                            items.push(normalizeCatalogItem(x, 'series', isNfx ? 'nfx' : '', isNfx ? 'N' : ''));
                         }
                     });
                 } catch {}
@@ -2542,6 +3112,7 @@
 
         function renderGrid(id, list, fallbackType, showResumeBadge = false) {
             const box = document.getElementById(id);
+            if (!box) return;
             box.innerHTML = '';
             list.forEach(item => {
                 const type = item.type || fallbackType;
@@ -2557,12 +3128,24 @@
                     }
                 }
 
+                // Sol üst köşe rozeti (Netflix / Platform veya 2026 Yeni)
+                let leftBadgeHtml = '';
+                const platCode = item.platformCode || (netflixMovieIds.has(item.id) || netflixSeriesIds.has(item.id) ? 'nfx' : '');
+                if (platCode === 'nfx') {
+                    leftBadgeHtml = `<span class="card-plat-badge nfx">N NETFLIX</span>`;
+                } else if (platCode) {
+                    leftBadgeHtml = `<span class="card-plat-badge other">${item.platformBadge || platCode.toUpperCase()}</span>`;
+                } else if (String(item.releaseInfo || '').includes('2026') || item.isNew2026) {
+                    leftBadgeHtml = `<span class="card-new-badge">🆕 2026</span>`;
+                }
+
                 const div = document.createElement('div');
                 div.className = 'card';
                 div.onclick = () => openPlayer(item.id, type, item.name, item.tvmazeId, item.season, item.episode, item);
                 div.innerHTML = `
                     <div class="card-poster">
                         <img src="${poster}" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450/14141c/666?text=Poster'" />
+                        ${leftBadgeHtml}
                         ${item.imdbRating ? `<span class="card-rating">⭐ ${item.imdbRating}</span>` : ''}
                     </div>
                     <div class="card-body">
@@ -2723,7 +3306,7 @@
 
             state = {
                 id,
-                tmdbId: rawItem?.tmdbId || saved?.tmdbId || null,
+                tmdbId: rawItem?.tmdbId || rawItem?.moviedb_id || saved?.tmdbId || null,
                 tvmazeId: tvmazeId || rawItem?.tvmazeId || saved?.tvmazeId || null,
                 type,
                 name,
@@ -2755,13 +3338,15 @@
             // Detay kartı ilk yükleme
             document.getElementById('infoPoster').src = state.poster;
             document.getElementById('infoName').textContent = name;
+            const isNfxItem = rawItem?.platformCode === 'nfx' || netflixMovieIds.has(id) || netflixSeriesIds.has(id);
             document.getElementById('infoMeta').innerHTML = `
+                ${isNfxItem ? `<span class="badge" style="background:rgba(229,9,20,0.2);color:#ff4d57;border-color:rgba(229,9,20,0.4);">🔴 NETFLIX</span>` : ''}
                 ${state.releaseInfo ? `<span class="badge">${state.releaseInfo}</span>` : ''}
                 ${state.imdbRating ? `<span class="badge gold">⭐ ${state.imdbRating}</span>` : ''}
                 <span class="badge">🇹🇷 Türkçe Altyazı</span>
             `;
-            document.getElementById('infoDesc').textContent = 'İçerik bilgileri yükleniyor...';
-            document.getElementById('infoCast').textContent = '';
+            document.getElementById('infoDesc').textContent = rawItem?.description || 'İçerik bilgileri yükleniyor...';
+            document.getElementById('infoCast').textContent = (rawItem?.cast && rawItem.cast.length) ? ('🎭 Oyuncular: ' + rawItem.cast.slice(0, 5).join(', ')) : '';
 
             updateFavButton();
 
@@ -2774,8 +3359,11 @@
                 document.getElementById('nextEpBtn').style.display = 'none';
             }
 
-            // Alt boşluğu dolduran benzer içerikler
-            const pool = (type === 'series' ? seriesCache : moviesCache).filter(x => x.id !== id).slice(0, 6);
+            // Alt boşluğu dolduran benzer içerikler (Netflix ise Netflix havuzundan, değilse genel havuzdan)
+            const sourcePool = isNfxItem
+                ? (type === 'series' ? (platSeriesCache['nfx'] || seriesCache) : (platMoviesCache['nfx'] || moviesCache))
+                : (type === 'series' ? seriesCache : moviesCache);
+            const pool = (sourcePool || []).filter(x => x.id !== id).slice(0, 6);
             renderGrid('relatedGrid', pool.length ? pool : DEFAULT_MOVIES.slice(0, 6), type);
 
             saveHistory();
@@ -2830,8 +3418,235 @@
             } catch {}
         }
 
-        function refreshIframe(customStartSec) {
-            const { id, tmdbId, type, name, season, episode, server, trSubUrl } = state;
+        // =============================================================
+        // OMNIPLAYER PRO: YERLİ REKLAMSIZ HTML5 + HLS & TÜRKÇE DUBLAJ MOTORU
+        // =============================================================
+        function initOmniPlayer() {
+            const v = document.getElementById('omniNativeVideo');
+            if (!v) return;
+
+            v.addEventListener('timeupdate', () => {
+                if (isNaN(v.currentTime)) return;
+                state.watchedSeconds = Math.floor(v.currentTime);
+                if (v.duration && !isNaN(v.duration)) {
+                    state.duration = Math.floor(v.duration);
+                }
+                state.isPlaying = !v.paused;
+                state.userStartedPlay = true;
+                updateResumeBarUI();
+                renderOmniSubtitle(v.currentTime);
+
+                if (state.watchedSeconds % 4 === 0) {
+                    saveHistory();
+                }
+            });
+
+            v.addEventListener('play', () => {
+                state.isPlaying = true;
+                state.userStartedPlay = true;
+                updateResumeBarUI();
+            });
+
+            v.addEventListener('pause', () => {
+                state.isPlaying = false;
+                updateResumeBarUI();
+            });
+
+            v.addEventListener('ended', () => {
+                state.isPlaying = false;
+                saveHistory();
+                if (state.type === 'series') {
+                    playNextEpisode();
+                }
+            });
+        }
+
+        async function fetchTurkishAndDirectStreams() {
+            const { id, tmdbId, type, name, season, episode } = state;
+            const streams = [];
+
+            // 1. Kullanıcının Kendi Cloudflare / Vercel Worker Adresi Varsa Öncelikli Çek
+            if (customWorkerUrl) {
+                try {
+                    const cleanUrl = customWorkerUrl.replace(/\/+$/, '');
+                    const q = new URLSearchParams({
+                        type: type === 'series' ? 'tv' : 'movie',
+                        imdb: id || '',
+                        tmdb: tmdbId || '',
+                        title: name || '',
+                        season: String(season || 1),
+                        episode: String(episode || 1)
+                    });
+                    const res = await fetch(`${cleanUrl}/api/extract?${q.toString()}`, { signal: AbortSignal.timeout(6000) });
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (Array.isArray(data.streams)) {
+                            streams.push(...data.streams);
+                        }
+                    }
+                } catch (e) {
+                    console.warn('Worker extract hatası:', e);
+                }
+            }
+
+            // 2. Açık Kaynak Stremio Topluluk Eklentilerinden Türkçe Akışları Tara
+            const streamTarget = type === 'series' ? `${id}:${season}:${episode}` : id;
+            const stremioEndpoints = [
+                atob('aHR0cHM6Ly9zZXpvbmx1a2Rpemktc3RyZW1pby52ZXJjZWwuYXBw') + `/stream/${type}/${streamTarget}.json`,
+                atob('aHR0cHM6Ly9oZGZpbG1jZWhlbm5lbWktc3RyZW1pby52ZXJjZWwuYXBw') + `/stream/${type}/${streamTarget}.json`
+            ];
+
+            await Promise.allSettled(stremioEndpoints.map(async (ep) => {
+                try {
+                    const r = await fetch(ep, { signal: AbortSignal.timeout(3500) });
+                    if (r.ok) {
+                        const j = await r.json();
+                        if (Array.isArray(j.streams)) {
+                            j.streams.forEach(s => {
+                                streams.push({
+                                    name: s.name || s.title || 'Türkçe Kaynak',
+                                    title: s.title || s.name || '',
+                                    url: s.url,
+                                    dub: (s.title || '').toLowerCase().includes('dublaj') || (s.name || '').toLowerCase().includes('dublaj'),
+                                    provider: 'stremio'
+                                });
+                            });
+                        }
+                    }
+                } catch {}
+            }));
+
+            return streams;
+        }
+
+        async function tryPlayOmniNative(startSec) {
+            const badge = document.getElementById('omniModeBadge');
+            if (badge) {
+                badge.innerHTML = '⚡ Yerli Oynatıcı: Akış Taranıyor...';
+                badge.style.color = '#fbbf24';
+            }
+
+            // Doğrudan akışları ara
+            const streams = await fetchTurkishAndDirectStreams();
+            omniCurrentStreams = streams;
+
+            if (streams && streams.length > 0) {
+                omniActiveStreamIndex = 0;
+                const target = streams[0];
+                loadOmniNativeStream(target.url, startSec, target.name || 'HLS Akışı');
+            } else {
+                // Doğrudan HLS bulunamazsa kullanıcıyı bekletmeden korumalı VidLink'e aktar
+                if (badge) {
+                    badge.innerHTML = '🛡️ Korumalı Embed: Aktif';
+                    badge.style.color = '#38bdf8';
+                }
+                switchToProtectedEmbed(2, startSec);
+            }
+        }
+
+        function loadOmniNativeStream(streamUrl, startSec, streamTitle) {
+            const nativeBox = document.getElementById('omniNativeBox');
+            const iframe = document.getElementById('playerIframe');
+            const shield = document.getElementById('touchShield');
+            const v = document.getElementById('omniNativeVideo');
+            const badge = document.getElementById('omniModeBadge');
+
+            // 1. Ekranı Yerli Oynatıcıya Çevir (Reklam Yok, Kalkan Kapalı)
+            nativeBox.style.display = 'block';
+            iframe.style.display = 'none';
+            iframe.src = 'about:blank';
+            shield.style.display = 'none';
+
+            if (badge) {
+                badge.innerHTML = `⚡ Yerli Oynatıcı: ${streamTitle || 'Reklamsız HLS'}`;
+                badge.style.color = '#34d399';
+            }
+
+            // 2. Önceki Akışı Temizle
+            if (omniHls) {
+                omniHls.destroy();
+                omniHls = null;
+            }
+
+            // 3. Altyazıyı Yükle
+            if (state.trSubUrl) {
+                fetchAndParseSubtitles(state.trSubUrl);
+            }
+
+            // 4. HLS veya MP4 Akışını Başlat
+            const isHls = streamUrl.includes('.m3u8') || streamUrl.includes('/proxy/hls');
+            if (Hls.isSupported() && isHls) {
+                omniHls = new Hls({
+                    enableWorker: true,
+                    lowLatencyMode: false,
+                    backBufferLength: 90
+                });
+                omniHls.loadSource(streamUrl);
+                omniHls.attachMedia(v);
+
+                omniHls.on(Hls.Events.MANIFEST_PARSED, (e, data) => {
+                    updateOmniQualityOptions(omniHls.levels);
+                    updateOmniAudioOptions(omniHls.audioTracks);
+                    if (startSec > 5) v.currentTime = startSec;
+                    v.play().catch(() => {});
+                });
+
+                omniHls.on(Hls.Events.AUDIO_TRACKS_UPDATED, () => {
+                    updateOmniAudioOptions(omniHls.audioTracks);
+                });
+
+                omniHls.on(Hls.Events.ERROR, (e, data) => {
+                    if (data.fatal) {
+                        console.warn('OmniHLS fatal error:', data);
+                        if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
+                            omniHls.startLoad();
+                        } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
+                            omniHls.recoverMediaError();
+                        }
+                    }
+                });
+            } else {
+                v.src = streamUrl;
+                v.addEventListener('loadedmetadata', () => {
+                    if (startSec > 5) v.currentTime = startSec;
+                    v.play().catch(() => {});
+                }, { once: true });
+            }
+
+            state.isPlaying = true;
+            state.userStartedPlay = true;
+            updateResumeBarUI();
+            saveHistory();
+        }
+
+        function switchToProtectedEmbed(srvIdx, startSec) {
+            const nativeBox = document.getElementById('omniNativeBox');
+            const iframe = document.getElementById('playerIframe');
+            const shield = document.getElementById('touchShield');
+            const v = document.getElementById('omniNativeVideo');
+
+            if (omniHls) {
+                omniHls.destroy();
+                omniHls = null;
+            }
+            if (v) {
+                v.pause();
+                v.removeAttribute('src');
+            }
+            document.getElementById('omniSubsOverlay').style.display = 'none';
+
+            nativeBox.style.display = 'none';
+            iframe.style.display = 'block';
+            shield.style.display = 'block';
+
+            state.server = srvIdx;
+            document.querySelectorAll('.srv-btn').forEach((b, i) => b.classList.toggle('active', i === srvIdx));
+
+            loadEmbedIframe(srvIdx, startSec);
+        }
+
+        function loadEmbedIframe(server, customStartSec) {
+            const { id, tmdbId, type, name, season, episode, trSubUrl } = state;
             const startSec = typeof customStartSec === 'number' ? Math.floor(customStartSec) : Math.floor(state.watchedSeconds || 0);
             const startParam = startSec >= 5 ? `&startAt=${startSec}` : '';
             const subParam = trSubUrl ? `&sub_file=${encodeURIComponent(trSubUrl)}&sub_label=Turkce` : '';
@@ -2849,29 +3664,22 @@
                 try { f.blur(); window.focus(); } catch {}
             }
 
-            if (type === 'series') {
-                document.getElementById('modalTitle').textContent = `${name} (S${season}:B${episode})`;
-            }
-            updateResumeBarUI();
-
             let url = '';
             if (type === 'movie') {
-                if (server === 0) url = `https://vidsrc.me/embed/movie?imdb=${id}&ds_lang=tr${startParam}`;
-                else if (server === 1) url = `https://vidlink.pro/movie/${tmdbId || id}?autoplay=true${startParam}${subParam}`;
-                else if (server === 2) url = `https://vidsrc.cc/v2/embed/movie/${tmdbId || id}?autoPlay=true`;
+                if (server === 2) url = `https://vidlink.pro/movie/${tmdbId || id}?autoplay=true${startParam}${subParam}`;
                 else if (server === 3) url = `https://multiembed.mov/?video_id=${id}&tr=1`;
-                else if (server === 4) url = `https://vidsrc.pm/embed/movie?imdb=${id}&ds_lang=tr${startParam}`;
+                else if (server === 4) url = `https://vidsrc.me/embed/movie?imdb=${id}&ds_lang=tr${startParam}`;
                 else if (server === 5) url = `https://autoembed.co/movie/imdb/${id}`;
+                else url = `https://vidlink.pro/movie/${tmdbId || id}?autoplay=true${startParam}${subParam}`;
             } else {
-                if (server === 0) url = `https://vidsrc.me/embed/tv?imdb=${id}&season=${season}&episode=${episode}&ds_lang=tr${startParam}`;
-                else if (server === 1) url = `https://vidlink.pro/tv/${tmdbId || id}/${season}/${episode}?autoplay=true${startParam}${subParam}`;
-                else if (server === 2) url = `https://vidsrc.cc/v2/embed/tv/${tmdbId || id}/${season}/${episode}?autoPlay=true`;
+                if (server === 2) url = `https://vidlink.pro/tv/${tmdbId || id}/${season}/${episode}?autoplay=true${startParam}${subParam}`;
                 else if (server === 3) url = `https://multiembed.mov/?video_id=${id}&s=${season}&e=${episode}&tr=1`;
-                else if (server === 4) url = `https://vidsrc.pm/embed/tv?imdb=${id}&season=${season}&episode=${episode}&ds_lang=tr${startParam}`;
+                else if (server === 4) url = `https://vidsrc.me/embed/tv?imdb=${id}&season=${season}&episode=${episode}&ds_lang=tr${startParam}`;
                 else if (server === 5) url = `https://autoembed.co/tv/imdb/${id}-${season}-${episode}`;
+                else url = `https://vidlink.pro/tv/${tmdbId || id}/${season}/${episode}?autoplay=true${startParam}${subParam}`;
             }
 
-            document.getElementById('playerIframe').src = url;
+            f.src = url;
             saveHistory();
 
             if (startSec >= 5) {
@@ -2883,12 +3691,279 @@
             }
         }
 
+        function refreshIframe(customStartSec) {
+            const { server, type, name, season, episode } = state;
+            const startSec = typeof customStartSec === 'number' ? Math.floor(customStartSec) : Math.floor(state.watchedSeconds || 0);
+
+            if (type === 'series') {
+                document.getElementById('modalTitle').textContent = `${name} (S${season}:B${episode})`;
+            }
+            updateResumeBarUI();
+
+            if (server === 0) {
+                tryPlayOmniNative(startSec);
+            } else if (server === 1) {
+                openTurkishStreamPicker();
+            } else {
+                switchToProtectedEmbed(server, startSec);
+            }
+        }
+
         function setServer(idx, btn) {
             state.server = idx;
             state.initialResumeSeconds = state.watchedSeconds;
             document.querySelectorAll('.srv-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            if (btn) btn.classList.add('active');
             refreshIframe(state.watchedSeconds);
+        }
+
+        async function openTurkishStreamPicker() {
+            const modal = document.getElementById('omniStreamModal');
+            const list = document.getElementById('streamModalList');
+            const loading = document.getElementById('streamModalLoading');
+            const title = document.getElementById('streamModalTitle');
+            if (!modal || !list || !loading) return;
+
+            modal.style.display = 'flex';
+            loading.style.display = 'block';
+            loading.innerHTML = '⏳ Stremio eklenti akışları ve çoklu ses kanalları taranıyor...';
+            list.innerHTML = '';
+            title.textContent = `🌐 ${state.name} (${state.type === 'series' ? `S${state.season}:B${state.episode}` : 'Film'})`;
+
+            const streams = await fetchTurkishAndDirectStreams();
+            omniCurrentStreams = streams;
+            loading.style.display = 'none';
+
+            if (!streams || streams.length === 0) {
+                list.innerHTML = `
+                    <div style="text-align: center; padding: 20px 10px; color: #9ca3af; font-size: 13px;">
+                        <div style="font-size: 28px; margin-bottom: 8px;">🔍</div>
+                        Doğrudan HLS akışı bulunamadı.<br>
+                        <div style="margin-top: 10px; font-size: 12px; color: #6b7280;">
+                            Ücretsiz <b>omni-worker.js</b> Worker proxy'nizi bağlayarak Stremio eklentileri üzerinden doğrudan HLS akışlarını izleyebilirsiniz.
+                        </div>
+                        <div style="margin-top: 14px; display: flex; gap: 8px; justify-content: center;">
+                            <button class="act-btn" onclick="closeStreamModal(); openWorkerConfigModal();" style="background: var(--accent);">🔌 Worker Kurulumu</button>
+                            <button class="act-btn" onclick="closeStreamModal(); setServer(2, document.querySelectorAll('.srv-btn')[2]);" style="background: var(--surface-2);">🎬 Alternatif Oynatıcı</button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            streams.forEach((st, idx) => {
+                const item = document.createElement('div');
+                item.style.cssText = 'background: #1f1f2b; border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.15s;';
+                const isDub = st.dub || (st.title || '').toLowerCase().includes('dublaj') || (st.name || '').toLowerCase().includes('dublaj');
+                item.innerHTML = `
+                    <div>
+                        <div style="font-size: 14px; font-weight: 700; color: #fff;">${isDub ? '🇹🇷 TÜRKÇE DUBLAJ' : '📝 TÜRKÇE ALTYAZI'}</div>
+                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">${st.name || st.title || 'HLS Akış'}</div>
+                    </div>
+                    <button class="res-btn jump" style="pointer-events: none;">▶ Oynat</button>
+                `;
+                item.onclick = () => {
+                    closeStreamModal();
+                    omniActiveStreamIndex = idx;
+                    loadOmniNativeStream(st.url, state.watchedSeconds, st.name || (isDub ? 'Türkçe Dublaj' : 'Türkçe Altyazı'));
+                };
+                list.appendChild(item);
+            });
+        }
+
+        function closeStreamModal() {
+            const m = document.getElementById('omniStreamModal');
+            if (m) m.style.display = 'none';
+        }
+
+        // =============================================================
+        // OMNIPLAYER ALTYAZI, SES & KALİTE YÖNETİMİ
+        // =============================================================
+        function updateOmniAudioOptions(audioTracks) {
+            const sel = document.getElementById('omniAudioSelect');
+            if (!sel) return;
+            sel.innerHTML = '<option value="-1">🎧 Ses: Otomatik</option>';
+            if (!audioTracks || audioTracks.length === 0) return;
+            audioTracks.forEach((track, idx) => {
+                const opt = document.createElement('option');
+                opt.value = idx;
+                const lang = track.lang || track.name || `Ses #${idx + 1}`;
+                const isTr = lang.toLowerCase().includes('tr') || lang.toLowerCase().includes('tur');
+                opt.textContent = `${isTr ? '🇹🇷 ' : '🎧 '}${track.name || lang}`;
+                sel.appendChild(opt);
+            });
+        }
+
+        function updateOmniQualityOptions(levels) {
+            const sel = document.getElementById('omniQualitySelect');
+            if (!sel) return;
+            sel.innerHTML = '<option value="-1">⚙️ Kalite: Auto</option>';
+            if (!levels || levels.length === 0) return;
+            levels.forEach((lvl, idx) => {
+                const opt = document.createElement('option');
+                opt.value = idx;
+                const res = lvl.height ? `${lvl.height}p` : `${Math.round(lvl.bitrate / 1000)}k`;
+                opt.textContent = `⚙️ ${res}`;
+                sel.appendChild(opt);
+            });
+        }
+
+        function changeOmniAudioTrack(idx) {
+            if (omniHls) {
+                omniHls.audioTrack = Number(idx);
+            }
+        }
+
+        function changeOmniQuality(idx) {
+            if (omniHls) {
+                omniHls.currentLevel = Number(idx);
+            }
+        }
+
+        async function fetchAndParseSubtitles(subUrl) {
+            omniCustomSubs = [];
+            if (!subUrl) return;
+            try {
+                const res = await fetch(subUrl);
+                if (res.ok) {
+                    const text = await res.text();
+                    omniCustomSubs = parseSrtOrVtt(text);
+                }
+            } catch (e) {
+                console.warn('Altyazı indirme hatası:', e);
+            }
+        }
+
+        function parseTimestamp(str) {
+            try {
+                const parts = str.split(':');
+                let sec = 0;
+                if (parts.length === 3) {
+                    sec = parseFloat(parts[0]) * 3600 + parseFloat(parts[1]) * 60 + parseFloat(parts[2].replace(',', '.'));
+                } else if (parts.length === 2) {
+                    sec = parseFloat(parts[0]) * 60 + parseFloat(parts[1].replace(',', '.'));
+                }
+                return isNaN(sec) ? null : sec;
+            } catch {
+                return null;
+            }
+        }
+
+        function parseSrtOrVtt(content) {
+            if (!content) return [];
+            const items = [];
+            const normalized = content.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+            const blocks = normalized.split(/\n\n+/);
+            for (const b of blocks) {
+                const lines = b.trim().split('\n');
+                let timeLine = '';
+                let textLines = [];
+                for (const line of lines) {
+                    if (line.includes('-->')) {
+                        timeLine = line;
+                    } else if (timeLine) {
+                        textLines.push(line);
+                    }
+                }
+                if (timeLine) {
+                    const parts = timeLine.split('-->');
+                    const start = parseTimestamp(parts[0].trim());
+                    const end = parseTimestamp(parts[1].trim().split(' ')[0]);
+                    const text = textLines.join('\n').replace(/<[^>]*>/g, '').trim();
+                    if (start !== null && end !== null && text) {
+                        items.push({ start, end, text });
+                    }
+                }
+            }
+            return items;
+        }
+
+        function renderOmniSubtitle(currentTime) {
+            const overlay = document.getElementById('omniSubsOverlay');
+            const textEl = document.getElementById('omniSubsText');
+            const subSelect = document.getElementById('omniSubSelect');
+            if (!overlay || !textEl || !subSelect || subSelect.value === 'none') {
+                if (overlay) overlay.style.display = 'none';
+                return;
+            }
+            const t = currentTime + omniSubSyncOffset;
+            const cue = omniCustomSubs.find(c => t >= c.start && t <= c.end);
+            if (cue) {
+                overlay.style.display = 'block';
+                textEl.textContent = cue.text;
+            } else {
+                overlay.style.display = 'none';
+            }
+        }
+
+        function changeOmniSubtitle(val) {
+            const overlay = document.getElementById('omniSubsOverlay');
+            if (val === 'none') {
+                if (overlay) overlay.style.display = 'none';
+            } else {
+                if (state.trSubUrl && omniCustomSubs.length === 0) {
+                    fetchAndParseSubtitles(state.trSubUrl);
+                }
+            }
+        }
+
+        // =============================================================
+        // CLOUDFLARE WORKER / ADDON AYARLARI
+        // =============================================================
+        function openWorkerConfigModal() {
+            const m = document.getElementById('workerConfigModal');
+            if (!m) return;
+            document.getElementById('workerUrlInput').value = customWorkerUrl;
+            document.getElementById('workerTestStatus').style.display = 'none';
+            m.style.display = 'flex';
+        }
+
+        function closeWorkerConfigModal() {
+            const m = document.getElementById('workerConfigModal');
+            if (m) m.style.display = 'none';
+        }
+
+        function setPresetWorker(url) {
+            document.getElementById('workerUrlInput').value = url;
+        }
+
+        async function testWorkerConnection() {
+            const input = document.getElementById('workerUrlInput');
+            const st = document.getElementById('workerTestStatus');
+            const url = (input.value || '').trim().replace(/\/+$/, '');
+            if (!url) {
+                st.style.display = 'block';
+                st.style.color = '#ef4444';
+                st.textContent = '❌ Lütfen geçerli bir URL girin.';
+                return;
+            }
+            st.style.display = 'block';
+            st.style.color = '#fbbf24';
+            st.textContent = '⏳ Worker sunucusuna bağlanılıyor...';
+            try {
+                const res = await fetch(`${url}/health`, { signal: AbortSignal.timeout(4000) });
+                if (res.ok) {
+                    st.style.color = '#34d399';
+                    st.textContent = '✓ Başarılı! OmniHub Worker aktif ve çalışıyor.';
+                } else {
+                    st.style.color = '#fbbf24';
+                    st.textContent = `⚠️ Yanıt alındı (${res.status}), ancak /health endpointi bulunamadı.`;
+                }
+            } catch (e) {
+                st.style.color = '#ef4444';
+                st.textContent = `✕ Bağlantı başarısız (${e.message}). URL'yi kontrol edin.`;
+            }
+        }
+
+        function saveWorkerConfig() {
+            const input = document.getElementById('workerUrlInput');
+            const url = (input.value || '').trim().replace(/\/+$/, '');
+            customWorkerUrl = url;
+            localStorage.setItem(OMNI_WORKER_KEY, url);
+            closeWorkerConfigModal();
+            if (document.getElementById('playerModal').classList.contains('open')) {
+                refreshIframe(state.watchedSeconds);
+            }
         }
 
         async function playNextEpisode() {
@@ -2993,6 +4068,19 @@
             saveHistory();
             stopWatchTimer();
             toggleShield(false);
+            if (omniHls) {
+                omniHls.destroy();
+                omniHls = null;
+            }
+            const v = document.getElementById('omniNativeVideo');
+            if (v) {
+                v.pause();
+                v.removeAttribute('src');
+                v.load();
+            }
+            const subOverlay = document.getElementById('omniSubsOverlay');
+            if (subOverlay) subOverlay.style.display = 'none';
+
             document.getElementById('playerModal').classList.remove('open');
             document.getElementById('playerIframe').src = 'about:blank';
         }
