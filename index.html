@@ -408,20 +408,29 @@
             color: var(--green);
         }
 
-        /* Oynatıcı Modalı (Mobil Tek El Ergonomili & Dolu Alt Alan) */
+        /* Oynatıcı Modalı (Sıkışma Yapmayan Blok Akış & Premium Mobil Tasarım) */
         .modal {
             position: fixed;
             inset: 0;
             z-index: 200;
             background: var(--bg);
             display: none;
-            flex-direction: column;
             overflow-y: auto;
-            padding-bottom: calc(30px + env(safe-area-inset-bottom));
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: calc(36px + env(safe-area-inset-bottom));
         }
 
         .modal.open {
-            display: flex;
+            display: block;
+        }
+
+        .modal-top-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            background: var(--bg);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65);
         }
 
         .modal-header {
@@ -432,9 +441,6 @@
             align-items: center;
             justify-content: space-between;
             gap: 10px;
-            position: sticky;
-            top: 0;
-            z-index: 20;
         }
 
         .modal-title {
@@ -453,6 +459,9 @@
             height: 34px;
             border-radius: 50%;
             font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
             flex-shrink: 0;
         }
@@ -464,16 +473,16 @@
             aspect-ratio: 16 / 9;
             background: #000;
             position: relative;
-            flex-shrink: 0;
         }
 
         .player-frame-box iframe {
             width: 100%;
             height: 100%;
             border: none;
+            display: block;
         }
 
-        /* Dokunma Kalkanı (Film başladıktan sonra tıklama reklamlarını %100 keser) */
+        /* Dokunma Kalkanı */
         .touch-shield {
             position: absolute;
             inset: 0;
@@ -490,37 +499,36 @@
         }
 
         .shield-badge {
-            background: rgba(16, 185, 129, 0.92);
+            background: rgba(16, 185, 129, 0.95);
             color: #fff;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
-            padding: 6px 12px;
+            padding: 8px 14px;
             border-radius: 20px;
             border: none;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.6);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.7);
             cursor: pointer;
         }
 
-        /* Tek El Mobil Kontrol Barı (Videonun Hemen Altında) */
+        /* Tek El Mobil Kontrol Barı (Videonun Hemen Altında - Tam Boyutlu) */
         .mobile-action-bar {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
             gap: 8px;
-            padding: 10px 14px;
+            padding: 12px 16px;
             background: var(--surface);
             border-bottom: 1px solid var(--border);
             max-width: 1000px;
             width: 100%;
             margin: 0 auto;
-            overflow-x: auto;
-            scrollbar-width: none;
         }
-        .mobile-action-bar::-webkit-scrollbar { display: none; }
 
         .act-btn {
             background: var(--surface-2);
             color: #fff;
             border: 1px solid var(--border);
-            padding: 9px 13px;
+            min-height: 40px;
+            padding: 8px 10px;
             border-radius: 10px;
             font-size: 12px;
             font-weight: 700;
@@ -530,11 +538,10 @@
             gap: 6px;
             white-space: nowrap;
             cursor: pointer;
-            flex: 1;
         }
 
         .act-btn.back {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .act-btn.shield-on {
@@ -549,11 +556,12 @@
             color: #ff6b6b;
         }
 
-        /* Sunucu Seçici */
+        /* Sunucu Seçici (Tam Yükseklik & Kaydırılabilir) */
         .servers-row {
             display: flex;
-            gap: 6px;
-            padding: 10px 14px;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
             background: #101016;
             overflow-x: auto;
             scrollbar-width: none;
@@ -568,12 +576,17 @@
             background: var(--surface-2);
             color: #d1d5db;
             border: 1px solid var(--border);
-            padding: 7px 12px;
-            border-radius: 8px;
+            min-height: 36px;
+            padding: 8px 14px;
+            border-radius: 10px;
             font-size: 12px;
             font-weight: 600;
             white-space: nowrap;
             cursor: pointer;
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .srv-btn.active {
@@ -582,15 +595,15 @@
             border-color: var(--accent);
         }
 
-        /* Zengin Film & Dizi Bilgi Kartı (Alt Boşluğu Doldurur) */
+        /* Zengin Film & Dizi Bilgi Kartı */
         .modal-body {
             max-width: 1000px;
             width: 100%;
             margin: 0 auto;
-            padding: 14px 16px;
+            padding: 16px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 18px;
         }
 
         .info-card {
@@ -816,16 +829,18 @@
 
     <!-- GELİŞMİŞ MOBİL DOSTU OYNATICI MODALI -->
     <div class="modal" id="playerModal">
-        <div class="modal-header">
-            <div class="modal-title" id="modalTitle">Başlık</div>
-            <button class="close-btn" onclick="closeModal()">✕</button>
-        </div>
+        <div class="modal-top-sticky">
+            <div class="modal-header">
+                <div class="modal-title" id="modalTitle">Başlık</div>
+                <button class="close-btn" onclick="closeModal()">✕</button>
+            </div>
 
-        <div class="player-frame-box">
-            <iframe id="playerIframe" allowfullscreen allow="autoplay; fullscreen; encrypted-media; picture-in-picture" referrerpolicy="origin"></iframe>
-            <!-- Dokunma Kalkanı: Aktifken video üzerindeki reklam yönlendirmelerini %100 engeller -->
-            <div class="touch-shield" id="touchShield" onclick="unlockShieldTemporarily()">
-                <button class="shield-badge">🛡️ Reklam Kilidi Aktif (Kontrol için dokun)</button>
+            <div class="player-frame-box">
+                <iframe id="playerIframe" allowfullscreen allow="autoplay; fullscreen; encrypted-media; picture-in-picture" referrerpolicy="origin"></iframe>
+                <!-- Dokunma Kalkanı: Aktifken video üzerindeki reklam yönlendirmelerini %100 engeller -->
+                <div class="touch-shield" id="touchShield" onclick="unlockShieldTemporarily()">
+                    <button class="shield-badge">🛡️ Reklam Kilidi Aktif (Kontrol için dokun)</button>
+                </div>
             </div>
         </div>
 
