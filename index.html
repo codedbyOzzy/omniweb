@@ -3,31 +3,25 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    <title>OmniHub v4.0 — Stremio Eklenti Motoru, Türkçe Altyazı & Canlı TV</title>
+    <title>OmniHub — Sinema, Dizi & Canlı TV</title>
 
     <link rel="manifest" href="manifest.json" />
-    <meta name="theme-color" content="#0a0a0f" />
+    <meta name="theme-color" content="#0b0b0f" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="OmniHub" />
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2503/2503508.png" />
 
-    <!-- HLS.js -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
     <style>
         :root {
-            --bg-main: #0a0a0f;
-            --bg-card: #14141d;
-            --bg-elevated: #1e1e2c;
+            --bg: #0b0b0f;
+            --surface: #14141c;
+            --surface-2: #1f1f2b;
             --accent: #e50914;
-            --accent-hover: #ff1e29;
-            --purple: #7c3aed;
-            --green: #10b981;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0b8;
-            --border-color: rgba(255, 255, 255, 0.08);
-            --radius: 12px;
+            --text: #ffffff;
+            --muted: #9ca3af;
+            --border: rgba(255, 255, 255, 0.08);
         }
 
         * {
@@ -38,357 +32,277 @@
         }
 
         body {
-            background-color: var(--bg-main);
-            color: var(--text-primary);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            padding-bottom: 76px;
             overflow-x: hidden;
-            padding-bottom: 85px;
         }
 
+        /* Sade ve Şık Üst Bar */
         header {
             position: sticky;
             top: 0;
-            z-index: 100;
-            background: rgba(10, 10, 15, 0.94);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border-color);
-            padding: 12px 20px;
+            z-index: 90;
+            background: rgba(11, 11, 15, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 12px;
         }
 
-        .brand {
+        .logo {
+            font-size: 19px;
+            font-weight: 800;
+            color: #fff;
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 20px;
-            font-weight: 800;
-            color: #fff;
             cursor: pointer;
-            user-select: none;
+            white-space: nowrap;
         }
 
-        .brand span.logo-badge {
-            background: linear-gradient(135deg, var(--accent), var(--purple));
-            color: #fff;
-            padding: 4px 9px;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        .desktop-nav {
-            display: flex;
-            gap: 6px;
-        }
-
-        .nav-btn {
-            background: transparent;
-            color: var(--text-secondary);
-            border: none;
-            padding: 8px 13px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .nav-btn:hover, .nav-btn.active {
+        .logo span {
             background: var(--accent);
-            color: #fff;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 13px;
         }
 
-        .search-box {
-            position: relative;
+        .search-wrap {
             flex: 1;
-            max-width: 320px;
+            max-width: 340px;
         }
 
-        .search-box input {
+        .search-wrap input {
             width: 100%;
-            background: var(--bg-elevated);
-            border: 1px solid var(--border-color);
+            background: var(--surface-2);
+            border: 1px solid var(--border);
             color: #fff;
-            padding: 9px 14px 9px 36px;
-            border-radius: 24px;
+            padding: 9px 14px;
+            border-radius: 20px;
             font-size: 13px;
             outline: none;
         }
 
-        .search-box input:focus { border-color: var(--accent); }
-        .search-box .search-icon {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-            font-size: 13px;
+        .search-wrap input:focus {
+            border-color: var(--accent);
         }
 
-        .mobile-nav {
-            display: none;
+        /* Alt Menü (Mobil & Masaüstü Ortak Temiz Bar) */
+        .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            z-index: 100;
-            background: rgba(14, 14, 22, 0.98);
-            backdrop-filter: blur(16px);
-            border-top: 1px solid var(--border-color);
-            padding: 8px 6px calc(8px + env(safe-area-inset-bottom));
+            z-index: 90;
+            background: rgba(15, 15, 22, 0.96);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-top: 1px solid var(--border);
+            display: flex;
             justify-content: space-around;
+            padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
         }
 
-        .mobile-nav-btn {
+        .nav-item {
             background: none;
             border: none;
-            color: var(--text-secondary);
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 600;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 3px;
-            font-size: 10px;
-            font-weight: 600;
+            gap: 4px;
             cursor: pointer;
-            padding: 4px 6px;
+            padding: 4px 16px;
         }
 
-        .mobile-nav-btn .icon { font-size: 18px; }
-        .mobile-nav-btn.active { color: var(--accent); }
-
-        @media (max-width: 768px) {
-            .desktop-nav { display: none; }
-            .mobile-nav { display: flex; }
-            header { padding: 10px 12px; }
-            .brand span.brand-text { display: none; }
+        .nav-item .ico {
+            font-size: 19px;
         }
 
-        .filter-bar {
+        .nav-item.active {
+            color: var(--accent);
+        }
+
+        /* Kategori Çubuğu */
+        .chips-row {
             display: flex;
             gap: 8px;
-            padding: 10px 20px;
+            padding: 12px 16px 6px;
             overflow-x: auto;
             scrollbar-width: none;
         }
-        .filter-bar::-webkit-scrollbar { display: none; }
+        .chips-row::-webkit-scrollbar { display: none; }
 
         .chip {
-            background: var(--bg-elevated);
-            color: var(--text-secondary);
-            border: 1px solid var(--border-color);
-            padding: 8px 14px;
-            border-radius: 20px;
+            background: var(--surface-2);
+            color: var(--muted);
+            border: 1px solid var(--border);
+            padding: 7px 14px;
+            border-radius: 18px;
             font-size: 12px;
             font-weight: 600;
             white-space: nowrap;
             cursor: pointer;
         }
 
-        .chip.active, .chip:hover {
+        .chip.active {
             background: var(--accent);
             color: #fff;
             border-color: var(--accent);
         }
 
-        .section { padding: 10px 20px 24px; }
-        @media (max-width: 768px) {
-            .section { padding: 8px 12px 20px; }
-            .filter-bar { padding: 8px 12px; }
+        /* İçerik Izgarası */
+        .container {
+            padding: 12px 16px;
         }
 
-        .section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
             margin-bottom: 12px;
-            gap: 8px;
-            flex-wrap: wrap;
         }
 
-        .section-title { font-size: 17px; font-weight: 700; }
-
-        .media-grid {
+        .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
-            gap: 14px;
+            grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+            gap: 12px;
         }
 
-        @media (max-width: 480px) {
-            .media-grid {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-                gap: 10px;
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+                gap: 16px;
             }
         }
 
-        .media-card {
-            background: var(--bg-card);
-            border-radius: var(--radius);
+        .card {
+            background: var(--surface);
+            border-radius: 10px;
             overflow: hidden;
+            border: 1px solid var(--border);
             cursor: pointer;
-            transition: transform 0.2s ease;
-            border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
         }
 
-        .media-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent);
-        }
-
-        .poster-wrap {
+        .card-poster {
             position: relative;
             aspect-ratio: 2 / 3;
-            background: #1a1a26;
-            overflow: hidden;
+            background: #1a1a24;
         }
 
-        .poster-wrap img {
+        .card-poster img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
         }
 
-        .rating-badge {
+        .card-rating {
             position: absolute;
             top: 6px;
             left: 6px;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.82);
             color: #fbbf24;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 3px 6px;
-            border-radius: 5px;
-        }
-
-        .lang-badge {
-            position: absolute;
-            bottom: 6px;
-            left: 6px;
-            background: rgba(16, 185, 129, 0.92);
-            color: #fff;
             font-size: 10px;
             font-weight: 700;
             padding: 2px 6px;
             border-radius: 4px;
         }
 
-        .type-badge {
-            position: absolute;
-            top: 6px;
-            right: 6px;
-            background: var(--accent);
-            color: #fff;
-            font-size: 9px;
-            font-weight: 700;
-            padding: 3px 6px;
-            border-radius: 4px;
+        .card-body {
+            padding: 8px;
         }
 
-        .card-info { padding: 9px; }
-        .card-title {
+        .card-name {
             font-size: 12px;
             font-weight: 600;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin-bottom: 3px;
         }
-        .card-meta {
-            font-size: 11px;
-            color: var(--text-secondary);
-            display: flex;
-            justify-content: space-between;
+
+        .card-year {
+            font-size: 10px;
+            color: var(--muted);
+            margin-top: 2px;
         }
 
         /* Canlı TV */
-        .tv-layout {
+        .tv-grid {
             display: grid;
-            grid-template-columns: 1.45fr 1fr;
-            gap: 16px;
-            margin-top: 6px;
+            grid-template-columns: 1fr;
+            gap: 14px;
         }
 
-        @media (max-width: 960px) {
-            .tv-layout { grid-template-columns: 1fr; }
+        @media (min-width: 900px) {
+            .tv-grid {
+                grid-template-columns: 1.4fr 1fr;
+            }
         }
 
-        .tv-player-box {
-            background: #000;
-            border-radius: var(--radius);
+        .tv-player-card {
+            background: var(--surface);
+            border-radius: 12px;
             overflow: hidden;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border);
         }
 
-        .tv-video-container {
+        .video-box {
             width: 100%;
             aspect-ratio: 16 / 9;
             background: #000;
-            position: relative;
         }
 
-        .tv-video-container video, .tv-video-container iframe {
+        .video-box video {
             width: 100%;
             height: 100%;
-            border: none;
         }
 
-        .tv-now-playing {
-            padding: 12px 14px;
-            background: var(--bg-card);
+        .tv-bar {
+            padding: 10px 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
-            flex-wrap: wrap;
         }
 
-        .channel-list-box {
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            border: 1px solid var(--border-color);
-            padding: 12px;
-            max-height: 550px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .channel-items {
-            overflow-y: auto;
+        .channels-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
             gap: 8px;
         }
 
-        .channel-btn {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border-color);
+        .ch-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
             color: #fff;
-            padding: 9px;
+            padding: 10px;
             border-radius: 10px;
             display: flex;
             align-items: center;
-            gap: 9px;
+            gap: 10px;
             cursor: pointer;
             text-align: left;
         }
 
-        .channel-btn:hover, .channel-btn.active {
+        .ch-item.active {
             border-color: var(--accent);
-            background: rgba(229, 9, 20, 0.2);
+            background: rgba(229, 9, 20, 0.18);
         }
 
-        .channel-btn .ch-badge {
+        .ch-icon {
             width: 32px;
             height: 32px;
-            border-radius: 7px;
+            border-radius: 6px;
             background: var(--accent);
-            color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -397,7 +311,7 @@
             flex-shrink: 0;
         }
 
-        .channel-btn .ch-name {
+        .ch-title {
             font-size: 12px;
             font-weight: 600;
             white-space: nowrap;
@@ -405,915 +319,353 @@
             text-overflow: ellipsis;
         }
 
-        .channel-btn .ch-group {
+        .ch-sub {
             font-size: 10px;
-            color: var(--green);
+            color: #10b981;
         }
 
-        /* Stremio Eklenti Yöneticisi Kartları */
-        .addon-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            padding: 16px;
-            margin-bottom: 16px;
-        }
-
-        .addon-input-row {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
-
-        .addon-input-row input {
-            flex: 1;
-            min-width: 220px;
-            background: var(--bg-elevated);
-            border: 1px solid var(--border-color);
-            color: #fff;
-            padding: 10px 14px;
-            border-radius: 8px;
-            font-size: 13px;
-        }
-
-        .addon-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 12px;
-        }
-
-        .addon-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 14px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: 10px;
-        }
-
-        /* Modal */
-        .modal-overlay {
+        /* Sade ve Temiz Oynatıcı Modalı */
+        .modal {
             position: fixed;
             inset: 0;
-            z-index: 1000;
-            background: rgba(5, 5, 10, 0.96);
-            backdrop-filter: blur(12px);
+            z-index: 200;
+            background: var(--bg);
             display: none;
+            flex-direction: column;
             overflow-y: auto;
-            padding: 16px;
-        }
-        .modal-overlay.open { display: block; }
-
-        .modal-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            background: var(--bg-card);
-            border-radius: 14px;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
         }
 
-        @media (max-width: 768px) {
-            .modal-overlay { padding: 0; }
-            .modal-container { border-radius: 0; min-height: 100vh; }
+        .modal.open {
+            display: flex;
         }
 
-        .modal-top {
+        .modal-header {
             padding: 12px 16px;
-            background: var(--bg-elevated);
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 8px;
-            border-bottom: 1px solid var(--border-color);
+            gap: 10px;
         }
 
         .modal-title {
             font-size: 15px;
             font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .close-modal-btn {
-            background: rgba(255, 255, 255, 0.14);
+        .close-btn {
+            background: var(--surface-2);
             color: #fff;
             border: none;
-            width: 34px;
-            height: 34px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
-            font-size: 17px;
+            font-size: 16px;
             cursor: pointer;
+            flex-shrink: 0;
         }
 
-        .server-bar {
-            padding: 10px 14px;
-            background: #101018;
+        .servers-row {
             display: flex;
-            align-items: center;
             gap: 6px;
+            padding: 10px 16px;
+            background: #101016;
             overflow-x: auto;
-            border-bottom: 1px solid var(--border-color);
+            scrollbar-width: none;
+            border-bottom: 1px solid var(--border);
         }
+        .servers-row::-webkit-scrollbar { display: none; }
 
-        .server-btn {
-            background: var(--bg-elevated);
-            color: #ccc;
-            border: 1px solid var(--border-color);
-            padding: 7px 11px;
+        .srv-btn {
+            background: var(--surface-2);
+            color: #d1d5db;
+            border: 1px solid var(--border);
+            padding: 7px 12px;
             border-radius: 8px;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 600;
-            cursor: pointer;
             white-space: nowrap;
+            cursor: pointer;
         }
 
-        .server-btn.active {
+        .srv-btn.active {
             background: var(--accent);
             color: #fff;
             border-color: var(--accent);
         }
 
-        .adshield-btn {
-            background: rgba(16, 185, 129, 0.2);
-            color: #10b981;
-            border: 1px solid #10b981;
-            padding: 6px 10px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 700;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .subtitles-bar {
-            padding: 8px 14px;
-            background: #141422;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            overflow-x: auto;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .sub-chip {
-            background: rgba(124, 58, 237, 0.18);
-            color: #ddd6fe;
-            border: 1px solid rgba(124, 58, 237, 0.4);
-            padding: 5px 10px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-            text-decoration: none;
-        }
-
-        .sub-chip.active, .sub-chip:hover {
-            background: var(--purple);
-            color: #fff;
-        }
-
-        .player-wrapper {
+        .player-frame-box {
             width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
             aspect-ratio: 16 / 9;
             background: #000;
-            position: relative;
         }
 
-        .player-wrapper iframe, .player-wrapper video {
+        .player-frame-box iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
 
-        .stremio-streams-box {
-            padding: 12px 16px;
-            background: #11111a;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .stremio-stream-list {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-top: 8px;
-            padding-bottom: 4px;
-        }
-
-        .stremio-stream-btn {
-            background: var(--bg-elevated);
-            border: 1px solid rgba(124, 58, 237, 0.4);
-            color: #fff;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 11px;
-            cursor: pointer;
-            white-space: nowrap;
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-            text-align: left;
-            text-decoration: none;
-        }
-
-        .stremio-stream-btn:hover {
-            background: var(--purple);
-            border-color: var(--purple);
-        }
-
-        .series-controls {
+        .episodes-section {
             padding: 14px 16px;
-            border-top: 1px solid var(--border-color);
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
         }
 
-        .season-tabs {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            margin-bottom: 12px;
-        }
-
-        .episodes-grid {
+        .ep-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 8px;
-            max-height: 260px;
-            overflow-y: auto;
+            margin-top: 10px;
         }
 
-        .ep-btn {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border-color);
+        .ep-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
             color: #fff;
-            padding: 9px 11px;
+            padding: 9px 10px;
             border-radius: 8px;
             text-align: left;
             cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
         }
 
-        .ep-btn.active, .ep-btn:hover {
-            background: rgba(229, 9, 20, 0.22);
+        .ep-card.active {
             border-color: var(--accent);
+            background: rgba(229, 9, 20, 0.2);
         }
 
-        .ep-num { font-size: 10px; color: var(--accent); font-weight: 700; }
-        .ep-name { font-size: 12px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-
-        .modal-details {
-            padding: 14px 16px;
-            color: var(--text-secondary);
-            font-size: 12px;
-            line-height: 1.5;
-        }
-
-        .btn-primary {
-            background: var(--accent);
-            color: #fff;
-            border: none;
-            padding: 9px 16px;
-            border-radius: 8px;
+        .ep-card .num {
+            font-size: 10px;
+            color: var(--accent);
             font-weight: 700;
-            font-size: 12px;
-            cursor: pointer;
         }
 
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.12);
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 8px 14px;
-            border-radius: 8px;
+        .ep-card .name {
+            font-size: 12px;
             font-weight: 600;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        .loader {
-            text-align: center;
-            padding: 30px;
-            color: var(--text-secondary);
-            font-size: 13px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 2px;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="brand" onclick="switchTab('home')">
-            <span class="logo-badge">▶</span>
-            <span class="brand-text">OmniHub <small style="font-size:11px; color:#a78bfa;">+ Stremio Engine</small></span>
+        <div class="logo" onclick="showTab('movies')">
+            <span>▶</span> OmniHub
         </div>
-
-        <nav class="desktop-nav">
-            <button class="nav-btn active" data-tab="home" onclick="switchTab('home')">🏠 Vitrin</button>
-            <button class="nav-btn" data-tab="movies" onclick="switchTab('movies')">🎬 Filmler</button>
-            <button class="nav-btn" data-tab="series" onclick="switchTab('series')">📺 Diziler</button>
-            <button class="nav-btn" data-tab="livetv" onclick="switchTab('livetv')">📡 Canlı TV</button>
-            <button class="nav-btn" data-tab="addons" onclick="switchTab('addons')">🧩 Stremio Eklentileri</button>
-        </nav>
-
-        <div class="search-box">
-            <span class="search-icon">🔍</span>
-            <input type="text" id="globalSearch" placeholder="Film veya dizi ara..." oninput="handleSearch(this.value)" />
+        <div class="search-wrap">
+            <input type="text" id="searchInput" placeholder="Film veya dizi ara..." oninput="onSearch(this.value)" />
         </div>
     </header>
 
-    <nav class="mobile-nav">
-        <button class="mobile-nav-btn active" data-tab="home" onclick="switchTab('home')">
-            <span class="icon">🏠</span><span>Vitrin</span>
-        </button>
-        <button class="mobile-nav-btn" data-tab="movies" onclick="switchTab('movies')">
-            <span class="icon">🎬</span><span>Filmler</span>
-        </button>
-        <button class="mobile-nav-btn" data-tab="series" onclick="switchTab('series')">
-            <span class="icon">📺</span><span>Diziler</span>
-        </button>
-        <button class="mobile-nav-btn" data-tab="livetv" onclick="switchTab('livetv')">
-            <span class="icon">📡</span><span>Canlı TV</span>
-        </button>
-        <button class="mobile-nav-btn" data-tab="addons" onclick="switchTab('addons')">
-            <span class="icon">🧩</span><span>Eklentiler</span>
-        </button>
-    </nav>
-
-    <main id="mainContent">
-        <!-- 1. VİTRİN -->
-        <div id="tab-home" class="tab-view">
-            <section class="section" id="continueSection" style="display: none;">
-                <div class="section-header">
-                    <h2 class="section-title">⏱️ İzlemeye Devam Et</h2>
-                    <button class="chip" onclick="clearHistory()">Temizle</button>
-                </div>
-                <div class="media-grid" id="continueGrid"></div>
-            </section>
-
-            <section class="section">
-                <div class="section-header">
-                    <h2 class="section-title">🇹🇷 Doğrudan Türkçe & Yerli Sinema (Sıfır Reklam)</h2>
-                </div>
-                <div class="media-grid" id="homeTrDubGrid"></div>
-            </section>
-
-            <section class="section">
-                <div class="section-header">
-                    <h2 class="section-title">🔥 Popüler Filmler (Stremio OpenSubtitles TR Altyazılı)</h2>
-                    <button class="chip" onclick="switchTab('movies')">Tümünü Gör →</button>
-                </div>
-                <div class="media-grid" id="homeMoviesGrid"></div>
-            </section>
-
-            <section class="section">
-                <div class="section-header">
-                    <h2 class="section-title">📺 Popüler Diziler (Stremio OpenSubtitles TR Altyazılı)</h2>
-                    <button class="chip" onclick="switchTab('series')">Tümünü Gör →</button>
-                </div>
-                <div class="media-grid" id="homeSeriesGrid"></div>
-            </section>
+    <!-- 1. FİLMLER SEKMESİ -->
+    <div id="view-movies" class="tab-view">
+        <div class="chips-row">
+            <button class="chip active" onclick="loadMovies('top', '', this)">🔥 Popüler</button>
+            <button class="chip" onclick="loadMovies('imdbRating', '', this)">⭐ En İyiler</button>
+            <button class="chip" onclick="loadMovies('top', 'Action', this)">💥 Aksiyon</button>
+            <button class="chip" onclick="loadMovies('top', 'Sci-Fi', this)">🚀 Bilim Kurgu</button>
+            <button class="chip" onclick="loadMovies('top', 'Comedy', this)">😂 Komedi</button>
+            <button class="chip" onclick="loadMovies('top', 'Horror', this)">👻 Korku</button>
+            <button class="chip" onclick="loadMovies('top', 'Thriller', this)">🔪 Gerilim</button>
         </div>
-
-        <!-- 2. FİLMLER -->
-        <div id="tab-movies" class="tab-view" style="display: none;">
-            <div class="filter-bar">
-                <button class="chip active" onclick="filterMovies('ALL', this)">🔥 Seçkin Filmler</button>
-                <button class="chip" onclick="loadDynamicMovieCatalog('top', this)">🌍 Stremio Trend Filmler</button>
-                <button class="chip" onclick="loadDynamicMovieCatalog('imdbRating', this)">⭐ IMDb En İyiler</button>
-                <button class="chip" onclick="filterMovies('Sci-Fi', this)">🚀 Bilim Kurgu</button>
-                <button class="chip" onclick="filterMovies('Action', this)">💥 Aksiyon</button>
-                <button class="chip" onclick="filterMovies('Crime', this)">🕵️ Suç & Gerilim</button>
-            </div>
-            <section class="section">
-                <div class="section-header">
-                    <h2 class="section-title" id="moviesHeading">🎬 Filmler</h2>
-                </div>
-                <div class="media-grid" id="moviesGrid"></div>
-            </section>
+        <div class="container">
+            <div class="grid" id="moviesGrid"></div>
         </div>
+    </div>
 
-        <!-- 3. DİZİLER -->
-        <div id="tab-series" class="tab-view" style="display: none;">
-            <div class="filter-bar">
-                <button class="chip active" onclick="filterSeries('ALL', this)">🔥 Tüm Diziler</button>
-                <button class="chip" onclick="filterSeries('Drama', this)">🎭 Dram</button>
-                <button class="chip" onclick="filterSeries('Science-Fiction', this)">🚀 Bilim Kurgu</button>
-                <button class="chip" onclick="filterSeries('Action', this)">💥 Aksiyon</button>
-                <button class="chip" onclick="filterSeries('Crime', this)">🕵️ Suç & Polisiye</button>
-                <button class="chip" onclick="filterSeries('Comedy', this)">😂 Komedi</button>
-            </div>
-            <section class="section">
-                <div class="section-header">
-                    <h2 class="section-title" id="seriesHeading">📺 Diziler</h2>
-                </div>
-                <div class="media-grid" id="seriesGrid"></div>
-            </section>
+    <!-- 2. DİZİLER SEKMESİ -->
+    <div id="view-series" class="tab-view" style="display: none;">
+        <div class="chips-row">
+            <button class="chip active" onclick="loadSeries('ALL', this)">🔥 Popüler Diziler</button>
+            <button class="chip" onclick="loadSeries('Drama', this)">🎭 Dram</button>
+            <button class="chip" onclick="loadSeries('Action', this)">💥 Aksiyon</button>
+            <button class="chip" onclick="loadSeries('Science-Fiction', this)">🚀 Bilim Kurgu</button>
+            <button class="chip" onclick="loadSeries('Crime', this)">🕵️ Suç</button>
+            <button class="chip" onclick="loadSeries('Comedy', this)">😂 Komedi</button>
         </div>
+        <div class="container">
+            <div class="grid" id="seriesGrid"></div>
+        </div>
+    </div>
 
-        <!-- 4. CANLI TV -->
-        <div id="tab-livetv" class="tab-view" style="display: none;">
-            <section class="section">
-                <div class="section-header">
-                    <h2 class="section-title">📡 Türkiye Canlı TV (iPhone Native HLS + Yedek Kaynaklı)</h2>
-                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                        <button class="chip active" onclick="loadVerifiedTurkishChannels()">🇹🇷 Ulusal HD Kanallar</button>
-                        <button class="chip" onclick="loadFullM3uChannels()">🌐 Tüm M3U Listesi (150+)</button>
-                        <label class="chip" style="cursor: pointer;">
-                            📂 Özel M3U Seç
-                            <input type="file" accept=".m3u,.m3u8" style="display: none;" onchange="loadM3uFile(event)" />
-                        </label>
+    <!-- 3. CANLI TV SEKMESİ -->
+    <div id="view-tv" class="tab-view" style="display: none;">
+        <div class="chips-row">
+            <button class="chip active" onclick="filterTv('ALL', this)">Tümü</button>
+            <button class="chip" onclick="filterTv('Ulusal', this)">📺 Ulusal</button>
+            <button class="chip" onclick="filterTv('Haber', this)">📰 Haber</button>
+            <button class="chip" onclick="filterTv('Spor', this)">⚽ Spor</button>
+            <button class="chip" onclick="filterTv('Müzik', this)">🎵 Müzik & Çocuk</button>
+        </div>
+        <div class="container">
+            <div class="tv-grid">
+                <div class="tv-player-card">
+                    <div class="video-box">
+                        <video id="tvVideo" controls playsinline autoplay></video>
                     </div>
-                </div>
-
-                <div class="filter-bar" style="padding-left: 0; padding-right: 0;">
-                    <button class="chip active" onclick="filterChannels('ALL', this)">Tümü</button>
-                    <button class="chip" onclick="filterChannels('Ulusal', this)">📺 Ulusal</button>
-                    <button class="chip" onclick="filterChannels('Haber', this)">📰 Haber</button>
-                    <button class="chip" onclick="filterChannels('Spor', this)">⚽ Spor</button>
-                    <button class="chip" onclick="filterChannels('Çocuk & Müzik', this)">🎵 Çocuk & Müzik</button>
-                </div>
-
-                <div class="tv-layout">
-                    <div class="tv-player-box">
-                        <div class="tv-video-container">
-                            <video id="liveTvVideo" controls playsinline autoplay></video>
-                            <iframe id="liveTvIframe" style="display: none;" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                    <div class="tv-bar">
+                        <div>
+                            <div style="font-size: 14px; font-weight: 700;" id="tvTitle">Kanal Seçin</div>
+                            <div style="font-size: 11px; color: #10b981;" id="tvGroup">Canlı Yayın</div>
                         </div>
-                        <div class="tv-now-playing">
-                            <div>
-                                <div style="font-size: 15px; font-weight: 700;" id="activeChannelName">Kanal Seçin</div>
-                                <div style="font-size: 11px; color: var(--green);" id="activeChannelGroup">Apple HLS & Yedek Yayın Motoru Hazır</div>
-                            </div>
-                            <div style="display: flex; gap: 8px;">
-                                <button class="btn-secondary" id="tvBackupBtn" style="display: none;" onclick="switchTvBackupStream()">🔄 Açılmazsa Yedek Yayına Geç</button>
-                                <button class="btn-secondary" onclick="requestTvPiP()">📺 PiP</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="channel-list-box">
-                        <input type="text" id="channelSearchInput" placeholder="Kanal ara (ATV, Kanal D, NOW, Star, TV8, NTV, Spor)..." oninput="renderChannelList()" style="width: 100%; background: var(--bg-elevated); border: 1px solid var(--border-color); color: #fff; padding: 10px 14px; border-radius: 8px; font-size: 13px;" />
-                        <div class="channel-items" id="channelListContainer"></div>
+                        <button class="chip" onclick="toggleTvPiP()">📺 PiP</button>
                     </div>
                 </div>
-            </section>
-        </div>
-
-        <!-- 5. STREMIO EKLENTİ YÖNETİCİSİ SEKMESİ -->
-        <div id="tab-addons" class="tab-view" style="display: none;">
-            <section class="section">
-                <div class="addon-box">
-                    <h2 style="font-size: 18px; font-weight: 700; margin-bottom: 6px;">🧩 OmniHub Stremio Eklenti Motoru</h2>
-                    <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
-                        OmniHub, Stremio'nun açık eklenti protokolünü (<code>manifest.json</code>) doğrudan destekler. Bir film veya dizi açtığınızda kurulu olan tüm Stremio eklentilerinden <b>Türkçe Altyazıları (OpenSubtitles v3)</b> ve <b>Video Akışlarını</b> otomatik olarak sorgular.
-                    </p>
-                    <div class="addon-input-row">
-                        <input type="text" id="newAddonUrl" placeholder="Stremio eklenti linki yapıştırın (https://.../manifest.json)" />
-                        <button class="btn-primary" onclick="installCustomAddon()">+ Eklentiyi OmniHub'a Kur</button>
-                    </div>
-                </div>
-
-                <div class="section-header">
-                    <h3 class="section-title">✅ Kurulu Stremio Eklentileri</h3>
-                </div>
-                <div class="addon-list" id="installedAddonsList"></div>
-            </section>
-        </div>
-
-        <!-- ARAMA SONUÇLARI -->
-        <div id="tab-search" class="tab-view" style="display: none;">
-            <section class="section">
-                <div class="section-header"><h2 class="section-title" id="searchHeading">🔍 Arama Sonuçları</h2></div>
-                <div class="media-grid" id="searchGrid"></div>
-            </section>
-        </div>
-    </main>
-
-    <!-- VIDEO OYNATICI MODALI -->
-    <div class="modal-overlay" id="playerModal">
-        <div class="modal-container">
-            <div class="modal-top">
-                <div class="modal-title">
-                    <span id="modalMediaTitle">Yükleniyor...</span>
-                    <span id="modalEpBadge" style="font-size: 11px; background: var(--accent); padding: 3px 8px; border-radius: 6px; display: none;">S1:B1</span>
-                </div>
-                <button class="close-modal-btn" onclick="closeMediaModal()">✕</button>
-            </div>
-
-            <!-- Yan Sekme Reklam Kilidi + Gömülü Sunucular -->
-            <div class="server-bar" id="modalServerBar">
-                <button class="adshield-btn" id="sandboxToggleBtn" onclick="toggleSandboxLock()">🛡️ Reklam Kilidi: AÇIK</button>
-                <button class="server-btn active" onclick="switchStreamServer(0, this)">🇹🇷 Sunucu 1 (VidSrc XYZ + TR Altyazı)</button>
-                <button class="server-btn" onclick="switchStreamServer(1, this)">🇹🇷 Sunucu 2 (MultiEmbed + TR Altyazı)</button>
-                <button class="server-btn" onclick="switchStreamServer(2, this)">🇹🇷 Sunucu 3 (Vidflix PM + TR Altyazı)</button>
-                <button class="server-btn" onclick="switchStreamServer(3, this)">🇹🇷 Sunucu 4 (AutoEmbed + TR Altyazı)</button>
-            </div>
-
-            <!-- STREMIO OPENSUBTITLES V3 TÜRKÇE ALTYAZI ÇUBUĞU -->
-            <div class="subtitles-bar" id="stremioSubtitlesBar">
-                <span style="font-size:11px; color:#a78bfa; font-weight:700; white-space:nowrap;">🧩 Stremio Türkçe Altyazılar:</span>
-                <span style="font-size:11px; color:#888;" id="subStatusText">OpenSubtitles v3 taranıyor...</span>
-                <div id="subChipsContainer" style="display:flex; gap:6px;"></div>
-            </div>
-
-            <!-- OYNATICI ALANI (HEM IFRAME HEM YEREL STREMIO VIDEO DESTEKLİ) -->
-            <div class="player-wrapper">
-                <iframe
-                    id="streamIframe"
-                    sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"
-                    allowfullscreen
-                    allow="autoplay; encrypted-media; picture-in-picture">
-                </iframe>
-                <video id="nativeStremioVideo" controls playsinline crossorigin="anonymous" style="display: none;"></video>
-            </div>
-
-            <!-- STREMIO EKLENTİLERİNDEN GELEN AKIŞLAR (TORRENTIO / HTTP STREAMS) -->
-            <div class="stremio-streams-box" id="stremioStreamsBox">
-                <div style="font-size: 12px; font-weight: 700; color: #a78bfa; display: flex; justify-content: space-between;">
-                    <span>⚡ Stremio Eklenti Kaynakları (Torrentio / Doğrudan Akışlar)</span>
-                    <span id="stremioStreamCount" style="color: #888; font-weight: normal;">Sorgulanıyor...</span>
-                </div>
-                <div class="stremio-stream-list" id="stremioStreamsList"></div>
-            </div>
-
-            <!-- Dizi Sezon & Bölüm Seçici -->
-            <div class="series-controls" id="seriesControlsBox" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <h3 style="font-size: 14px; font-weight: 700;">📂 Sezon ve Bölümler</h3>
-                    <button class="btn-primary" onclick="playNextEpisode()">Sonraki Bölüm ⏭️</button>
-                </div>
-                <div class="season-tabs" id="seasonTabsContainer"></div>
-                <div class="episodes-grid" id="episodesGridContainer"></div>
-            </div>
-
-            <div class="modal-details">
-                <div id="modalMetaInfo" style="color: #10b981; font-weight: 600; margin-bottom: 4px;"></div>
-                <div id="modalDescription"></div>
+                <div class="channels-list" id="tvList"></div>
             </div>
         </div>
     </div>
 
+    <!-- ARAMA SONUÇLARI -->
+    <div id="view-search" class="tab-view" style="display: none;">
+        <div class="container">
+            <div class="section-title" id="searchTitle">Arama Sonuçları</div>
+            <div class="grid" id="searchGrid"></div>
+        </div>
+    </div>
+
+    <!-- ALT MENÜ -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" data-tab="movies" onclick="showTab('movies')">
+            <span class="ico">🎬</span><span>Filmler</span>
+        </button>
+        <button class="nav-item" data-tab="series" onclick="showTab('series')">
+            <span class="ico">📺</span><span>Diziler</span>
+        </button>
+        <button class="nav-item" data-tab="tv" onclick="showTab('tv')">
+            <span class="ico">📡</span><span>Canlı TV</span>
+        </button>
+    </nav>
+
+    <!-- SADE OYNATICI MODALI -->
+    <div class="modal" id="playerModal">
+        <div class="modal-header">
+            <div class="modal-title" id="modalTitle">Başlık</div>
+            <button class="close-btn" onclick="closeModal()">✕</button>
+        </div>
+
+        <div class="servers-row">
+            <button class="srv-btn active" onclick="setServer(0, this)">⚡ Kaynak 1 (VidSrc CC)</button>
+            <button class="srv-btn" onclick="setServer(1, this)">🚀 Kaynak 2 (VidLink Pro)</button>
+            <button class="srv-btn" onclick="setServer(2, this)">🇹🇷 Kaynak 3 (VidSrc XYZ)</button>
+            <button class="srv-btn" onclick="setServer(3, this)">🎬 Kaynak 4 (MultiEmbed)</button>
+            <button class="srv-btn" onclick="setServer(4, this)">🔥 Kaynak 5 (AutoEmbed)</button>
+        </div>
+
+        <div class="player-frame-box">
+            <iframe id="playerIframe" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture"></iframe>
+        </div>
+
+        <div class="episodes-section" id="episodesBox" style="display: none;">
+            <div class="chips-row" id="seasonsRow" style="padding: 0 0 8px 0;"></div>
+            <div class="ep-list" id="episodesList"></div>
+        </div>
+    </div>
+
     <script>
-        const CINEMETA_URL = 'https://v3-cinemeta.strem.io';
-        const OPENSUBTITLES_URL = 'https://opensubtitles-v3.strem.io';
+        const CINEMETA = 'https://v3-cinemeta.strem.io';
+        const OPENSUBS = 'https://opensubtitles-v3.strem.io';
 
-        // Varsayılan Kurulu Stremio Eklentileri
-        const DEFAULT_ADDONS = [
-            {
-                name: 'Cinemeta (Resmi Katalog)',
-                version: '3.0.0',
-                description: 'Stremio resmi film ve dizi katalog eklentisi.',
-                url: 'https://v3-cinemeta.strem.io/manifest.json',
-                baseUrl: 'https://v3-cinemeta.strem.io',
-                core: true
-            },
-            {
-                name: 'OpenSubtitles v3 (Resmi Türkçe Altyazı)',
-                version: '1.0.0',
-                description: 'Her film ve dizi bölümü için otomatik UTF-8 Türkçe (.srt) altyazı bulur ve oynatıcıya enjekte eder.',
-                url: 'https://opensubtitles-v3.strem.io/manifest.json',
-                baseUrl: 'https://opensubtitles-v3.strem.io',
-                core: true
-            },
-            {
-                name: 'Torrentio (4K & 1080p Kaynak Motoru)',
-                version: '0.0.15',
-                description: 'Global 4K, 1080p ve çok dilli akış kaynaklarını tarar.',
-                url: 'https://torrentio.strem.fun/manifest.json',
-                baseUrl: 'https://torrentio.strem.fun',
-                core: true
-            }
+        const DEFAULT_MOVIES = [
+            { id: 'tt15398776', name: 'Oppenheimer', releaseInfo: '2023', imdbRating: '8.4', poster: 'https://m.media-amazon.com/images/M/MV5BN2JkMDc5MGQtZjg3YS00NmFiLWIyZmQtZTJmNTM5MjVmYTQ4XkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
+            { id: 'tt15239678', name: 'Dune: Part Two', releaseInfo: '2024', imdbRating: '8.5', poster: 'https://m.media-amazon.com/images/M/MV5BNTc0YmQxMjEtODI5MC00NjFiLTlkMWUtOGQ5NjFmYWUyZGJhXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
+            { id: 'tt6263850', name: 'Deadpool & Wolverine', releaseInfo: '2024', imdbRating: '7.7', poster: 'https://m.media-amazon.com/images/M/MV5BZTk5ODY0MmQtMzA3Ni00NGY1LThiYzItZThiNjFiNDM4MTM3XkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
+            { id: 'tt0816692', name: 'Interstellar', releaseInfo: '2014', imdbRating: '8.7', poster: 'https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
+            { id: 'tt0468569', name: 'The Dark Knight', releaseInfo: '2008', imdbRating: '9.0', poster: 'https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_FMjpg_UX500_.jpg' },
+            { id: 'tt1375666', name: 'Inception', releaseInfo: '2010', imdbRating: '8.8', poster: 'https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_FMjpg_UX500_.jpg' },
+            { id: 'tt1877830', name: 'The Batman', releaseInfo: '2022', imdbRating: '7.8', poster: 'https://m.media-amazon.com/images/M/MV5BMmU5NGJlMzAtMGNmOC00YjJjLTgyMzUtNjAyYmE4Njg5YWMyXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
+            { id: 'tt1745960', name: 'Top Gun: Maverick', releaseInfo: '2022', imdbRating: '8.2', poster: 'https://m.media-amazon.com/images/M/MV5BMDBkZDNjMWEtOTdmMi00NmExLTg5MmMtNTFlYTJlNWY5YTdmXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
+            { id: 'tt10366206', name: 'John Wick 4', releaseInfo: '2023', imdbRating: '7.7', poster: 'https://m.media-amazon.com/images/M/MV5BY2Q2ZmI5ZjUtNWVhMC00YzJkLTlmYjMtY2RmZDhkNzEzYjZhXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
+            { id: 'tt0111161', name: 'Shawshank Redemption', releaseInfo: '1994', imdbRating: '9.3', poster: 'https://m.media-amazon.com/images/M/MV5BMDAyY2FhYjctNDc5OS00MDNlLThiMGUtY2UxYWVkNGY2ZjljXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
+            { id: 'tt0133093', name: 'The Matrix', releaseInfo: '1999', imdbRating: '8.7', poster: 'https://m.media-amazon.com/images/M/MV5BN2NmN2VhMTQtMDNiOS00NDlhLTliMjgtODE2ZTY0ODQyNDRhXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
+            { id: 'tt7286456', name: 'Joker', releaseInfo: '2019', imdbRating: '8.4', poster: 'https://m.media-amazon.com/images/M/MV5BNzY3OWQ5NDktNWQ2OC00ZjdlLThkMmItMDhhNDk3NTFiZGU4XkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' }
         ];
 
-        const TR_DUB_MOVIES = [
-            { id: 'yt_Gp_d4_l6G3o', isDirectEmbed: true, embedUrl: 'https://www.youtube.com/embed/Gp_d4_l6G3o?autoplay=1', name: 'Ölümlü Dünya (Yerli Komedi)', releaseInfo: '2018', imdbRating: '7.6', lang: '🇹🇷 Yerli HD', poster: 'https://m.media-amazon.com/images/M/MV5BNjI1ZTc2M2EtZTU1Ny00Y2I4LTg0NzMtYjIzN2I2MDU1YWIxXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
-            { id: 'yt_7BGnO99N7sA', isDirectEmbed: true, embedUrl: 'https://www.youtube.com/embed/7BGnO99N7sA?autoplay=1', name: 'Ayla (Yerli Dram)', releaseInfo: '2017', imdbRating: '8.2', lang: '🇹🇷 Yerli HD', poster: 'https://m.media-amazon.com/images/M/MV5BYTkyM2FkM2QtZGYxMy00Zjc0LWI2ODUtGWY0YTRkYzE5NWIzXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
-            { id: 'yt_5cE0X-y5b9M', isDirectEmbed: true, embedUrl: 'https://www.youtube.com/embed/5cE0X-y5b9M?autoplay=1', name: 'Kibar Feyzo (Restorasyonlu HD)', releaseInfo: '1978', imdbRating: '8.7', lang: '🇹🇷 Yerli HD', poster: 'https://m.media-amazon.com/images/M/MV5BMTc2M2I0ZTYtZGI2ZC00N2M4LTk3Y2UtY2M0OTk5NzI0ODk0XkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
-            { id: 'yt_X9vR6_hU2tI', isDirectEmbed: true, embedUrl: 'https://www.youtube.com/embed/X9vR6_hU2tI?autoplay=1', name: 'Züğürt Ağa (HD)', releaseInfo: '1985', imdbRating: '8.7', lang: '🇹🇷 Yerli HD', poster: 'https://m.media-amazon.com/images/M/MV5BNzI0Y2FjMjAtZTg2Yi00N2I4LTk5N2QtY2I4N2I0ZGIxNWIxXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' }
-        ];
-
-        const CURATED_MOVIES = [
-            { id: 'tt15398776', name: 'Oppenheimer', releaseInfo: '2023', imdbRating: '8.4', genre: 'Drama', lang: '🇹🇷 TR Altyazı', poster: 'https://m.media-amazon.com/images/M/MV5BN2JkMDc5MGQtZjg3YS00NmFiLWIyZmQtZTJmNTM5MjVmYTQ4XkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
-            { id: 'tt15239678', name: 'Dune: Part Two', releaseInfo: '2024', imdbRating: '8.5', genre: 'Sci-Fi', lang: '🇹🇷 TR Altyazı', poster: 'https://m.media-amazon.com/images/M/MV5BNTc0YmQxMjEtODI5MC00NjFiLTlkMWUtOGQ5NjFmYWUyZGJhXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
-            { id: 'tt0816692', name: 'Interstellar (Yıldızlararası)', releaseInfo: '2014', imdbRating: '8.7', genre: 'Sci-Fi', lang: '🇹🇷 TR Altyazı', poster: 'https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
-            { id: 'tt0468569', name: 'The Dark Knight', releaseInfo: '2008', imdbRating: '9.0', genre: 'Action', lang: '🇹🇷 TR Altyazı', poster: 'https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_FMjpg_UX500_.jpg' },
-            { id: 'tt1375666', name: 'Inception (Başlangıç)', releaseInfo: '2010', imdbRating: '8.8', genre: 'Sci-Fi', lang: '🇹🇷 TR Altyazı', poster: 'https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_FMjpg_UX500_.jpg' },
-            { id: 'tt1877830', name: 'The Batman', releaseInfo: '2022', imdbRating: '7.8', genre: 'Crime', lang: '🇹🇷 TR Altyazı', poster: 'https://m.media-amazon.com/images/M/MV5BMmU5NGJlMzAtMGNmOC00YjJjLTgyMzUtNjAyYmE4Njg5YWMyXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
-            { id: 'tt6263850', name: 'Deadpool & Wolverine', releaseInfo: '2024', imdbRating: '7.7', genre: 'Action', lang: '🇹🇷 TR Altyazı', poster: 'https://m.media-amazon.com/images/M/MV5BZTk5ODY0MmQtMzA3Ni00NGY1LThiYzItZThiNjFiNDM4MTM3XkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
-            { id: 'tt1745960', name: 'Top Gun: Maverick', releaseInfo: '2022', imdbRating: '8.2', genre: 'Action', lang: '🇹🇷 TR Altyazı', poster: 'https://m.media-amazon.com/images/M/MV5BMDBkZDNjMWEtOTdmMi00NmExLTg5MmMtNTFlYTJlNWY5YTdmXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
-            { id: 'tt10366206', name: 'John Wick: Chapter 4', releaseInfo: '2023', imdbRating: '7.7', genre: 'Action', lang: '🇹🇷 TR Altyazı', poster: 'https://m.media-amazon.com/images/M/MV5BY2Q2ZmI5ZjUtNWVhMC00YzJkLTlmYjMtY2RmZDhkNzEzYjZhXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
-            { id: 'tt0111161', name: 'Esaretin Bedeli', releaseInfo: '1994', imdbRating: '9.3', genre: 'Drama', lang: '🇹🇷 TR Altyazı', poster: 'https://m.media-amazon.com/images/M/MV5BMDAyY2FhYjctNDc5OS00MDNlLThiMGUtY2UxYWVkNGY2ZjljXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
-            { id: 'tt0133093', name: 'The Matrix', releaseInfo: '1999', imdbRating: '8.7', genre: 'Sci-Fi', lang: '🇹🇷 TR Altyazı', poster: 'https://m.media-amazon.com/images/M/MV5BN2NmN2VhMTQtMDNiOS00NDlhLTliMjgtODE2ZTY0ODQyNDRhXkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' },
-            { id: 'tt7286456', name: 'Joker', releaseInfo: '2019', imdbRating: '8.4', genre: 'Crime', lang: '🇹🇷 TR Altyazı', poster: 'https://m.media-amazon.com/images/M/MV5BNzY3OWQ5NDktNWQ2OC00ZjdlLThkMmItMDhhNDk3NTFiZGU4XkEyXkFqcGc@._V1_FMjpg_UX500_.jpg' }
-        ];
-
-        const VERIFIED_TR_CHANNELS = [
-            { name: 'ATV HD', group: 'Ulusal', url: 'https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/atv/atv_1080p.m3u8', ytEmbed: 'https://www.youtube.com/embed/live_stream?channel=UC0U5c9E3dG2u8xQ0X_aP3Kw&autoplay=1' },
-            { name: 'NOW TV (Fox) HD', group: 'Ulusal', url: 'https://uycyyuuzyh.turknet.ercdn.net/nphindgytw/nowtv/nowtv.m3u8', ytEmbed: 'https://www.youtube.com/embed/live_stream?channel=UCV6zcRug6Jq21646X_pX1xA&autoplay=1' },
-            { name: 'CNBC-e HD', group: 'Ulusal', url: 'https://hnpsechtsc.turknet.ercdn.net/xpnvudnlsv/cnbc-e/cnbc-e.m3u8' },
+        const TV_CHANNELS = [
+            { name: 'ATV HD', group: 'Ulusal', url: 'https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/atv/atv_1080p.m3u8' },
             { name: 'Kanal D HD', group: 'Ulusal', url: 'https://demiroren.daioncdn.net/kanald/kanald.m3u8?app=kanald_web&ce=3' },
+            { name: 'NOW TV HD', group: 'Ulusal', url: 'https://uycyyuuzyh.turknet.ercdn.net/nphindgytw/nowtv/nowtv.m3u8' },
             { name: 'Star TV HD', group: 'Ulusal', url: 'https://dogus.daioncdn.net/startv/startv_720p.m3u8?app=a20ac41e-bdc3-4aa1-934d-26b484480ac9&ce=3&sid=8l4w3lst4co5' },
             { name: 'TV8 HD', group: 'Ulusal', url: 'https://tv8.daioncdn.net/tv8/tv8.m3u8?app=7ddc255a-ef47-4e81-ab14-c0e5f2949788&ce=3' },
+            { name: 'CNBC-e HD', group: 'Ulusal', url: 'https://hnpsechtsc.turknet.ercdn.net/xpnvudnlsv/cnbc-e/cnbc-e.m3u8' },
             { name: 'A2 TV HD', group: 'Ulusal', url: 'https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/a2tv/a2tv.m3u8' },
             { name: '360 TV HD', group: 'Ulusal', url: 'https://turkmedya-live.ercdn.net/tv360/tv360.m3u8' },
             { name: 'TV 4 HD', group: 'Ulusal', url: 'https://turkmedya-live.ercdn.net/tv4/tv4.m3u8' },
-            { name: 'A Haber HD', group: 'Haber', url: 'https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/ahaber/ahaber.m3u8' },
             { name: 'NTV HD', group: 'Haber', url: 'https://dogus.daioncdn.net/ntv/ntv.m3u8?app=ntv_web' },
+            { name: 'A Haber HD', group: 'Haber', url: 'https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/ahaber/ahaber.m3u8' },
             { name: 'Halk TV HD', group: 'Haber', url: 'https://halktv-live.daioncdn.net/halktv/halktv.m3u8' },
             { name: '24 TV HD', group: 'Haber', url: 'https://turkmedya-live.ercdn.net/tv24/tv24.m3u8' },
-            { name: 'Ekotürk Ekonomi', group: 'Haber', url: 'https://cdn.ekoturk.net/hls/master.m3u8' },
+            { name: 'Ekotürk HD', group: 'Haber', url: 'https://cdn.ekoturk.net/hls/master.m3u8' },
             { name: 'TBMM TV', group: 'Haber', url: 'https://meclistv-live.ercdn.net/meclistv/meclistv.m3u8' },
-            { name: 'A Spor HD', group: 'Spor', url: 'https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/aspor/aspor.m3u8' },
             { name: 'TRT Spor HD', group: 'Spor', url: 'https://trt.daioncdn.net/trtspor/master.m3u8?app=web' },
-            { name: 'TRT Spor Yıldız HD', group: 'Spor', url: 'https://trt.daioncdn.net/trtspor-yildiz/master.m3u8?app=web&platform=trtspor' },
+            { name: 'TRT Spor Yıldız', group: 'Spor', url: 'https://trt.daioncdn.net/trtspor-yildiz/master.m3u8?app=web&platform=trtspor' },
+            { name: 'A Spor HD', group: 'Spor', url: 'https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/aspor/aspor.m3u8' },
             { name: 'HT Spor HD', group: 'Spor', url: 'https://ciner.daioncdn.net/ht-spor/ht-spor.m3u8?app=web' },
-            { name: 'Kral Pop TV', group: 'Çocuk & Müzik', url: 'https://dogus-live.daioncdn.net/kralpoptv/playlist.m3u8' },
-            { name: 'Minika GO', group: 'Çocuk & Müzik', url: 'https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/minikago/minikago.m3u8' },
-            { name: 'Minika Çocuk', group: 'Çocuk & Müzik', url: 'https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/minikago_cocuk/minikago_cocuk.m3u8' }
+            { name: 'Kral Pop TV', group: 'Müzik', url: 'https://dogus-live.daioncdn.net/kralpoptv/playlist.m3u8' },
+            { name: 'Minika GO', group: 'Müzik', url: 'https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/minikago/minikago.m3u8' },
+            { name: 'Minika Çocuk', group: 'Müzik', url: 'https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/minikago_cocuk/minikago_cocuk.m3u8' }
         ];
 
-        let allSeriesCache = [];
-        let allChannels = [...VERIFIED_TR_CHANNELS];
-        let activeCategory = 'ALL';
-        let hlsInstance = null;
-        let currentTvChannel = null;
-        let sandboxLocked = true;
-
-        let currentMedia = {
+        let seriesCache = [];
+        let hls = null;
+        let state = {
             id: '',
             tvmazeId: null,
-            isDirectEmbed: false,
-            embedUrl: '',
             type: 'movie',
             name: '',
-            poster: '',
             season: 1,
             episode: 1,
-            serverIndex: 0,
-            selectedTrSubUrl: '',
-            turkishSubtitles: [],
-            videos: []
+            server: 0,
+            trSubUrl: '',
+            episodes: []
         };
 
         window.addEventListener('DOMContentLoaded', () => {
-            renderMediaGrid('homeTrDubGrid', TR_DUB_MOVIES, 'movie');
-            renderMediaGrid('homeMoviesGrid', CURATED_MOVIES.slice(0, 12), 'movie');
-            renderMediaGrid('moviesGrid', CURATED_MOVIES, 'movie');
-            loadTvMazeSeries();
-            renderChannelList();
-            renderContinueWatching();
-            renderAddonsList();
+            renderGrid('moviesGrid', DEFAULT_MOVIES, 'movie');
+            loadMovies('top', '');
+            initSeries();
+            filterTv('ALL');
         });
 
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-view').forEach(el => el.style.display = 'none');
-            const target = document.getElementById('tab-' + tabId);
-            if (target) target.style.display = 'block';
-
-            document.querySelectorAll('.nav-btn, .mobile-nav-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.tab === tabId);
-            });
-
-            if (tabId === 'home') renderContinueWatching();
-            if (tabId === 'addons') renderAddonsList();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        function showTab(tab) {
+            document.querySelectorAll('.tab-view').forEach(v => v.style.display = 'none');
+            document.getElementById('view-' + tab).style.display = 'block';
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+            window.scrollTo(0, 0);
         }
 
-        // ------------------------------------------------------------------
-        // STREMIO EKLENTİ YÖNETİMİ
-        // ------------------------------------------------------------------
-        function getInstalledAddons() {
-            const custom = JSON.parse(localStorage.getItem('omnihub_stremio_addons') || '[]');
-            return [...DEFAULT_ADDONS, ...custom];
-        }
-
-        async function installCustomAddon() {
-            const input = document.getElementById('newAddonUrl');
-            let url = input.value.trim();
-            if (!url) return;
-            url = url.replace('stremio://', 'https://');
-            if (!url.endsWith('/manifest.json')) {
-                url = url.replace(/\/$/, '') + '/manifest.json';
+        async function loadMovies(catalog, genre, btn) {
+            if (btn) {
+                btn.parentElement.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
             }
-
             try {
-                const manifest = await fetch(url).then(r => r.json());
-                const baseUrl = url.replace('/manifest.json', '');
-                const custom = JSON.parse(localStorage.getItem('omnihub_stremio_addons') || '[]');
-                if (!custom.some(a => a.baseUrl === baseUrl)) {
-                    custom.push({
-                        name: manifest.name || 'Özel Stremio Eklentisi',
-                        version: manifest.version || '1.0',
-                        description: manifest.description || '',
-                        url,
-                        baseUrl,
-                        core: false
-                    });
-                    localStorage.setItem('omnihub_stremio_addons', JSON.stringify(custom));
+                let url = `${CINEMETA}/catalog/movie/${catalog}.json`;
+                if (genre) url = `${CINEMETA}/catalog/movie/${catalog}/genre=${encodeURIComponent(genre)}.json`;
+                const res = await fetch(url).then(r => r.json());
+                if (res.metas && res.metas.length > 0) {
+                    renderGrid('moviesGrid', res.metas.slice(0, 48), 'movie');
                 }
-                input.value = '';
-                renderAddonsList();
-                alert(`✅ "${manifest.name}" eklentisi OmniHub'a başarıyla kuruldu!`);
-            } catch (e) {
-                alert('Eklenti manifest.json dosyası okunamadı. Adresin doğru olduğundan emin olun.');
+            } catch {
+                renderGrid('moviesGrid', DEFAULT_MOVIES, 'movie');
             }
         }
 
-        function removeCustomAddon(baseUrl) {
-            let custom = JSON.parse(localStorage.getItem('omnihub_stremio_addons') || '[]');
-            custom = custom.filter(a => a.baseUrl !== baseUrl);
-            localStorage.setItem('omnihub_stremio_addons', JSON.stringify(custom));
-            renderAddonsList();
-        }
-
-        function renderAddonsList() {
-            const container = document.getElementById('installedAddonsList');
-            if (!container) return;
-            container.innerHTML = '';
-            const addons = getInstalledAddons();
-
-            addons.forEach(addon => {
-                const card = document.createElement('div');
-                card.className = 'addon-card';
-                card.innerHTML = `
-                    <div>
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                            <strong style="font-size:14px; color:#fff;">🧩 ${addon.name}</strong>
-                            <span style="font-size:11px; background:rgba(124,58,237,0.25); color:#c4b5fd; padding:2px 7px; border-radius:5px;">v${addon.version}</span>
-                        </div>
-                        <p style="font-size:12px; color:var(--text-secondary); line-height:1.4;">${addon.description}</p>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px; padding-top:8px; border-top:1px solid var(--border-color);">
-                        <span style="font-size:10px; color:#10b981;">● Aktif</span>
-                        ${addon.core ? '<span style="font-size:10px; color:#888;">Sistem Eklentisi</span>' : `<button class="chip" style="padding:4px 10px; font-size:11px;" onclick="removeCustomAddon('${addon.baseUrl}')">Kaldır</button>`}
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        // ------------------------------------------------------------------
-        // STREMIO OPENSUBTITLES V3 TÜRKÇE ALTYAZI MOTORU
-        // ------------------------------------------------------------------
-        async function fetchStremioTurkishSubtitles() {
-            const statusText = document.getElementById('subStatusText');
-            const container = document.getElementById('subChipsContainer');
-            container.innerHTML = '';
-            statusText.textContent = 'Stremio OpenSubtitles v3 üzerinden Türkçe altyazılar çekiliyor...';
-
-            const queryId = currentMedia.type === 'series'
-                ? `${currentMedia.id}:${currentMedia.season}:${currentMedia.episode}`
-                : currentMedia.id;
-
-            const subEndpoint = `${OPENSUBTITLES_URL}/subtitles/${currentMedia.type}/${queryId}.json`;
-
-            try {
-                const data = await fetch(subEndpoint).then(r => r.json());
-                const allSubs = data.subtitles || [];
-                const trSubs = allSubs.filter(s => s.lang === 'tur' || s.lang === 'tr');
-
-                currentMedia.turkishSubtitles = trSubs;
-
-                if (trSubs.length === 0) {
-                    statusText.textContent = 'Harici TR paketi bulunamadı (Oynatıcı içi CC menüsünü kullanın)';
-                    return;
-                }
-
-                statusText.textContent = `✅ ${trSubs.length} adet Türkçe Altyazı bulundu (Otomatik yüklendi):`;
-                currentMedia.selectedTrSubUrl = trSubs[0].url;
-
-                // İlk bulunan Türkçe altyazıyı oynatıcıya otomatik enjekte et
-                updatePlayerIframe();
-
-                trSubs.slice(0, 6).forEach((sub, idx) => {
-                    const btn = document.createElement('button');
-                    btn.className = 'sub-chip' + (idx === 0 ? ' active' : '');
-                    btn.textContent = `🇹🇷 Türkçe #${idx + 1}`;
-                    btn.title = sub.subtitleFileName || 'Türkçe Altyazı';
-                    btn.onclick = () => {
-                        currentMedia.selectedTrSubUrl = sub.url;
-                        container.querySelectorAll('.sub-chip').forEach(c => c.classList.remove('active'));
-                        btn.classList.add('active');
-                        updatePlayerIframe();
-                    };
-                    container.appendChild(btn);
-                });
-
-                // İndirme butonu
-                const dlLink = document.createElement('a');
-                dlLink.className = 'sub-chip';
-                dlLink.href = trSubs[0].url;
-                dlLink.target = '_blank';
-                dlLink.textContent = '⬇️ .SRT İndir';
-                container.appendChild(dlLink);
-            } catch (e) {
-                statusText.textContent = 'Altyazı servisi hazır (Oynatıcı içi CC menüsünden Turkish seçin)';
-            }
-        }
-
-        // ------------------------------------------------------------------
-        // STREMIO AKIŞ (STREAM) SORGULAMA MOTORU
-        // ------------------------------------------------------------------
-        async function fetchStremioAddonStreams() {
-            const listEl = document.getElementById('stremioStreamsList');
-            const countEl = document.getElementById('stremioStreamCount');
-            listEl.innerHTML = '';
-            countEl.textContent = 'Eklentiler taranıyor...';
-
-            const queryId = currentMedia.type === 'series'
-                ? `${currentMedia.id}:${currentMedia.season}:${currentMedia.episode}`
-                : currentMedia.id;
-
-            const addons = getInstalledAddons().filter(a => a.baseUrl !== CINEMETA_URL && a.baseUrl !== OPENSUBTITLES_URL);
-            let totalStreams = [];
-
-            await Promise.all(addons.map(async addon => {
-                try {
-                    const res = await fetch(`${addon.baseUrl}/stream/${currentMedia.type}/${queryId}.json`).then(r => r.json());
-                    if (res && res.streams) {
-                        res.streams.forEach(st => totalStreams.push({ ...st, addonName: addon.name }));
-                    }
-                } catch {}
-            }));
-
-            if (totalStreams.length === 0) {
-                countEl.textContent = 'Üstteki 4 gömülü sunucu aktif';
-                return;
-            }
-
-            countEl.textContent = `${totalStreams.length} Stremio kaynağı bulundu`;
-
-            totalStreams.slice(0, 15).forEach(st => {
-                const titleText = (st.title || st.description || '1080p Kaynak').replace(/\n/g, ' • ');
-                const nameBadge = st.name || st.addonName || 'Stremio';
-
-                // Doğrudan HTTP MP4/M3U8 akışı ise yerel reklamsız oynatıcıda aç
-                if (st.url && (st.url.startsWith('http://') || st.url.startsWith('https://'))) {
-                    const btn = document.createElement('button');
-                    btn.className = 'stremio-stream-btn';
-                    btn.innerHTML = `
-                        <strong style="color:#10b981;">▶ ${nameBadge} (Doğrudan Reklamsız)</strong>
-                        <span style="color:#ccc; font-size:10px; max-width:220px; overflow:hidden; text-overflow:ellipsis;">${titleText}</span>
-                    `;
-                    btn.onclick = () => playDirectStremioHttpStream(st.url);
-                    listEl.appendChild(btn);
-                } else if (st.infoHash) {
-                    // Magnet / Stremio P2P Akışı
-                    const magnet = `magnet:?xt=urn:btih:${st.infoHash}&dn=${encodeURIComponent(currentMedia.name)}`;
-                    const link = document.createElement('a');
-                    link.className = 'stremio-stream-btn';
-                    link.href = `stremio:///detail/${currentMedia.type}/${currentMedia.id}/${queryId}`;
-                    link.innerHTML = `
-                        <strong style="color:#c4b5fd;">⚡ ${nameBadge.replace(/\n/g, ' ')}</strong>
-                        <span style="color:#aaa; font-size:10px; max-width:220px; overflow:hidden; text-overflow:ellipsis;">${titleText}</span>
-                    `;
-                    link.title = magnet;
-                    listEl.appendChild(link);
-                }
-            });
-        }
-
-        // Doğrudan HTTP Akışını SRT->WebVTT Türkçe Altyazı İle Yerel Oynatıcıda Açma
-        async function playDirectStremioHttpStream(streamUrl) {
-            const iframe = document.getElementById('streamIframe');
-            const video = document.getElementById('nativeStremioVideo');
-            iframe.style.display = 'none';
-            iframe.src = 'about:blank';
-            video.style.display = 'block';
-            video.innerHTML = '';
-
-            // Eğer Türkçe SRT altyazı bulunduysa anında WebVTT'ye çevirip videoya göm!
-            if (currentMedia.selectedTrSubUrl) {
-                try {
-                    const srtText = await fetch(currentMedia.selectedTrSubUrl).then(r => r.text());
-                    const vttText = 'WEBVTT\n\n' + srtText.replace(/(\d\d:\d\d:\d\d),(\d\d\d)/g, '$1.$2');
-                    const blob = new Blob([vttText], { type: 'text/vtt' });
-                    const track = document.createElement('track');
-                    track.kind = 'subtitles';
-                    track.label = 'Türkçe (Stremio)';
-                    track.srclang = 'tr';
-                    track.src = URL.createObjectURL(blob);
-                    track.default = true;
-                    video.appendChild(track);
-                } catch {}
-            }
-
-            video.src = streamUrl;
-            video.play().catch(() => {});
-        }
-
-        // ------------------------------------------------------------------
-        // KATALOG & ARAMA
-        // ------------------------------------------------------------------
-        async function loadTvMazeSeries() {
+        async function initSeries() {
             try {
                 const shows = await fetch('https://api.tvmaze.com/shows?page=0').then(r => r.json());
-                allSeriesCache = shows
+                seriesCache = shows
                     .filter(s => s.externals && s.externals.imdb)
                     .sort((a, b) => (b.rating?.average || 0) - (a.rating?.average || 0))
                     .map(s => ({
@@ -1324,538 +676,258 @@
                         poster: s.image?.medium || s.image?.original || '',
                         releaseInfo: (s.premiered || '').substring(0, 4),
                         imdbRating: s.rating?.average || '',
-                        lang: '🇹🇷 TR Altyazı',
-                        genres: s.genres || [],
-                        description: (s.summary || '').replace(/<[^>]+>/g, '')
+                        genres: s.genres || []
                     }));
-
-                renderMediaGrid('homeSeriesGrid', allSeriesCache.slice(0, 12), 'series');
-                renderMediaGrid('seriesGrid', allSeriesCache.slice(0, 48), 'series');
+                renderGrid('seriesGrid', seriesCache.slice(0, 48), 'series');
             } catch {}
         }
 
-        function filterMovies(genre, btnEl) {
-            if (btnEl) {
-                btnEl.parentElement.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-                btnEl.classList.add('active');
+        function loadSeries(genre, btn) {
+            if (btn) {
+                btn.parentElement.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
             }
-            const list = genre === 'ALL' ? CURATED_MOVIES : CURATED_MOVIES.filter(m => m.genre === genre);
-            renderMediaGrid('moviesGrid', list, 'movie');
+            const filtered = genre === 'ALL' ? seriesCache.slice(0, 48) : seriesCache.filter(s => s.genres.includes(genre));
+            renderGrid('seriesGrid', filtered, 'series');
         }
 
-        async function loadDynamicMovieCatalog(catalogType, btnEl) {
-            if (btnEl) {
-                btnEl.parentElement.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-                btnEl.classList.add('active');
-            }
-            const grid = document.getElementById('moviesGrid');
-            grid.innerHTML = '<div class="loader">Stremio kataloğu yükleniyor...</div>';
-            try {
-                const res = await fetch(`${CINEMETA_URL}/catalog/movie/${catalogType}.json`).then(r => r.json());
-                const items = (res.metas || []).slice(0, 42).map(m => ({ ...m, lang: '🇹🇷 TR Altyazı' }));
-                renderMediaGrid('moviesGrid', items, 'movie');
-            } catch {
-                renderMediaGrid('moviesGrid', CURATED_MOVIES, 'movie');
-            }
-        }
+        let searchTimer = null;
+        function onSearch(q) {
+            clearTimeout(searchTimer);
+            const text = q.trim();
+            if (text.length < 2) return;
 
-        function filterSeries(genre, btnEl) {
-            if (btnEl) {
-                btnEl.parentElement.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-                btnEl.classList.add('active');
-            }
-            const list = genre === 'ALL' ? allSeriesCache.slice(0, 48) : allSeriesCache.filter(s => s.genres.includes(genre));
-            renderMediaGrid('seriesGrid', list, 'series');
-        }
-
-        let searchTimeout = null;
-        function handleSearch(query) {
-            clearTimeout(searchTimeout);
-            const trimmed = query.trim();
-            if (trimmed.length < 2) return;
-
-            searchTimeout = setTimeout(async () => {
-                switchTab('search');
-                document.getElementById('searchHeading').textContent = `🔍 "${trimmed}" için Sonuçlar`;
-                const grid = document.getElementById('searchGrid');
-                grid.innerHTML = '<div class="loader">Aranıyor...</div>';
-
-                const results = [];
-                [...TR_DUB_MOVIES, ...CURATED_MOVIES]
-                    .filter(m => m.name.toLowerCase().includes(trimmed.toLowerCase()))
-                    .forEach(m => results.push(m));
+            searchTimer = setTimeout(async () => {
+                showTab('search');
+                document.getElementById('searchTitle').textContent = `"${text}" Sonuçları`;
+                const items = [];
 
                 try {
-                    const [mRes, sRes] = await Promise.all([
-                        fetch(`${CINEMETA_URL}/catalog/movie/top/search=${encodeURIComponent(trimmed)}.json`).then(r => r.json()),
-                        fetch(`${CINEMETA_URL}/catalog/series/top/search=${encodeURIComponent(trimmed)}.json`).then(r => r.json())
+                    const [m, s] = await Promise.all([
+                        fetch(`${CINEMETA}/catalog/movie/top/search=${encodeURIComponent(text)}.json`).then(r => r.json()),
+                        fetch(`${CINEMETA}/catalog/series/top/search=${encodeURIComponent(text)}.json`).then(r => r.json())
                     ]);
-                    (mRes.metas || []).forEach(m => results.push({ ...m, type: 'movie', lang: '🇹🇷 TR Altyazı' }));
-                    (sRes.metas || []).forEach(s => results.push({ ...s, type: 'series', lang: '🇹🇷 TR Altyazı' }));
+                    (m.metas || []).forEach(x => items.push({ ...x, type: 'movie' }));
+                    (s.metas || []).forEach(x => items.push({ ...x, type: 'series' }));
                 } catch {}
 
                 try {
-                    const tvRes = await fetch(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(trimmed)}`).then(r => r.json());
-                    tvRes.forEach(entry => {
-                        const s = entry.show;
-                        if (s && s.externals && s.externals.imdb && !results.some(r => r.id === s.externals.imdb)) {
-                            results.push({
+                    const tv = await fetch(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(text)}`).then(r => r.json());
+                    tv.forEach(e => {
+                        const s = e.show;
+                        if (s?.externals?.imdb && !items.some(i => i.id === s.externals.imdb)) {
+                            items.push({
                                 id: s.externals.imdb,
                                 tvmazeId: s.id,
                                 type: 'series',
                                 name: s.name,
-                                poster: s.image?.medium || s.image?.original || '',
+                                poster: s.image?.medium || '',
                                 releaseInfo: (s.premiered || '').substring(0, 4),
-                                imdbRating: s.rating?.average || '',
-                                lang: '🇹🇷 TR Altyazı'
+                                imdbRating: s.rating?.average || ''
                             });
                         }
                     });
                 } catch {}
 
-                renderMediaGrid('searchGrid', results, 'movie');
-            }, 400);
+                renderGrid('searchGrid', items, 'movie');
+            }, 350);
         }
 
-        function renderMediaGrid(containerId, items, defaultType) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = '';
-
-            if (!items || items.length === 0) {
-                container.innerHTML = '<div class="loader">İçerik bulunamadı.</div>';
-                return;
-            }
-
-            items.forEach(item => {
-                const mediaType = item.type || defaultType;
+        function renderGrid(id, list, fallbackType) {
+            const box = document.getElementById(id);
+            box.innerHTML = '';
+            list.forEach(item => {
+                const type = item.type || fallbackType;
                 const poster = item.poster || `https://images.metahub.space/poster/medium/${item.id}/img`;
-                const rating = item.imdbRating ? `⭐ ${item.imdbRating}` : '';
-                const lang = item.lang || '🇹🇷 TR Altyazı';
-
-                const card = document.createElement('div');
-                card.className = 'media-card';
-                card.onclick = () => openMediaModal(item.id, mediaType, item.name, poster, item.season, item.episode, item.tvmazeId, item.description, item.isDirectEmbed, item.embedUrl);
-
-                card.innerHTML = `
-                    <div class="poster-wrap">
-                        <img src="${poster}" loading="lazy" alt="${item.name}" onerror="this.src='https://via.placeholder.com/300x450/14141d/888888?text=Poster'" />
-                        ${rating ? `<span class="rating-badge">${rating}</span>` : ''}
-                        <span class="lang-badge">${lang}</span>
-                        <span class="type-badge">${mediaType === 'series' ? 'DİZİ' : 'FİLM'}</span>
+                const div = document.createElement('div');
+                div.className = 'card';
+                div.onclick = () => openPlayer(item.id, type, item.name, item.tvmazeId);
+                div.innerHTML = `
+                    <div class="card-poster">
+                        <img src="${poster}" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450/14141c/666?text=Poster'" />
+                        ${item.imdbRating ? `<span class="card-rating">⭐ ${item.imdbRating}</span>` : ''}
                     </div>
-                    <div class="card-info">
-                        <div class="card-title">${item.name}</div>
-                        <div class="card-meta">
-                            <span>${item.releaseInfo || ''}</span>
-                            <span>${item.badgeText || ''}</span>
-                        </div>
+                    <div class="card-body">
+                        <div class="card-name">${item.name}</div>
+                        <div class="card-year">${item.releaseInfo || ''}</div>
                     </div>
                 `;
-                container.appendChild(card);
+                box.appendChild(div);
             });
         }
 
-        function toggleSandboxLock() {
-            sandboxLocked = !sandboxLocked;
-            const btn = document.getElementById('sandboxToggleBtn');
-            const iframe = document.getElementById('streamIframe');
-
-            if (sandboxLocked) {
-                iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms allow-presentation');
-                btn.textContent = '🛡️ Reklam Kilidi: AÇIK';
-                btn.style.color = '#10b981';
-                btn.style.borderColor = '#10b981';
-            } else {
-                iframe.removeAttribute('sandbox');
-                btn.textContent = '⚠️ Reklam Kilidi: KAPALI';
-                btn.style.color = '#fbbf24';
-                btn.style.borderColor = '#fbbf24';
-            }
-            updatePlayerIframe();
-        }
-
-        async function openMediaModal(id, type, name, poster, savedSeason, savedEpisode, tvmazeId, desc, isDirectEmbed, embedUrl) {
-            currentMedia = {
-                id,
-                tvmazeId: tvmazeId || null,
-                isDirectEmbed: !!isDirectEmbed,
-                embedUrl: embedUrl || '',
-                type,
-                name,
-                poster: poster || '',
-                season: savedSeason || 1,
-                episode: savedEpisode || 1,
-                serverIndex: 0,
-                selectedTrSubUrl: '',
-                turkishSubtitles: [],
-                videos: []
-            };
-
+        // Oynatıcı
+        async function openPlayer(id, type, name, tvmazeId) {
+            state = { id, tvmazeId, type, name, season: 1, episode: 1, server: 0, trSubUrl: '', episodes: [] };
             document.getElementById('playerModal').classList.add('open');
-            document.getElementById('modalMediaTitle').textContent = name;
-            document.getElementById('modalServerBar').style.display = isDirectEmbed ? 'none' : 'flex';
-            document.getElementById('stremioSubtitlesBar').style.display = isDirectEmbed ? 'none' : 'flex';
-            document.getElementById('stremioStreamsBox').style.display = isDirectEmbed ? 'none' : 'block';
+            document.getElementById('modalTitle').textContent = name;
+            document.querySelectorAll('.srv-btn').forEach((b, i) => b.classList.toggle('active', i === 0));
 
-            document.getElementById('modalMetaInfo').textContent = isDirectEmbed
-                ? '🇹🇷 Doğrudan Türkçe & Reklamsız Kaynak'
-                : '🧩 Stremio OpenSubtitles v3 Türkçe Altyazı Motoru & Sandbox Reklam Kilidi Aktif';
-            document.getElementById('modalDescription').textContent = desc || '';
-
-            document.querySelectorAll('.server-btn').forEach((b, idx) => b.classList.toggle('active', idx === 0));
-
-            if (type === 'series' && !isDirectEmbed) {
-                document.getElementById('seriesControlsBox').style.display = 'block';
-                document.getElementById('modalEpBadge').style.display = 'inline-block';
-                loadSeriesEpisodes(id, tvmazeId);
+            if (type === 'series') {
+                document.getElementById('episodesBox').style.display = 'block';
+                fetchEpisodes(id, tvmazeId);
             } else {
-                document.getElementById('seriesControlsBox').style.display = 'none';
-                document.getElementById('modalEpBadge').style.display = 'none';
+                document.getElementById('episodesBox').style.display = 'none';
             }
 
-            updatePlayerIframe();
-            saveToContinueWatching();
-
-            if (!isDirectEmbed) {
-                fetchStremioTurkishSubtitles();
-                fetchStremioAddonStreams();
-            }
+            // Önce Stremio OpenSubtitles'tan Türkçe altyazı linkini al, sonra oynatıcıyı başlat
+            await fetchTrSub();
+            refreshIframe();
         }
 
-        function getEmbedUrl(serverIdx, id, type, season, episode) {
-            if (currentMedia.isDirectEmbed) return currentMedia.embedUrl;
+        async function fetchTrSub() {
+            state.trSubUrl = '';
+            try {
+                const q = state.type === 'series' ? `${state.id}:${state.season}:${state.episode}` : state.id;
+                const res = await fetch(`${OPENSUBS}/subtitles/${state.type}/${q}.json`).then(r => r.json());
+                const tr = (res.subtitles || []).find(s => s.lang === 'tur' || s.lang === 'tr');
+                if (tr && tr.url) state.trSubUrl = tr.url;
+            } catch {}
+        }
 
-            const subParam = currentMedia.selectedTrSubUrl
-                ? `&sub.file=${encodeURIComponent(currentMedia.selectedTrSubUrl)}&sub.label=Turkce&sub=${encodeURIComponent(currentMedia.selectedTrSubUrl)}&sub_label=Turkce`
-                : '';
+        function refreshIframe() {
+            const { id, type, season, episode, server, trSubUrl } = state;
+            const subQuery = trSubUrl ? `&sub_file=${encodeURIComponent(trSubUrl)}&sub_label=Turkce&sub.file=${encodeURIComponent(trSubUrl)}&sub.label=Turkce` : '';
 
+            let url = '';
             if (type === 'movie') {
-                switch (serverIdx) {
-                    case 0: return `https://vidsrc.xyz/embed/movie/${id}?ds_lang=tr${subParam}`;
-                    case 1: return `https://multiembed.mov/?video_id=${id}${subParam}`;
-                    case 2: return `https://vidsrc.pm/embed/movie/${id}?ds_lang=tr${subParam}`;
-                    case 3: return `https://autoembed.co/movie/imdb/${id}?lang=tr`;
-                }
+                if (server === 0) url = `https://vidsrc.cc/v2/embed/movie/${id}?autoPlay=true`;
+                else if (server === 1) url = `https://vidlink.pro/movie/${id}?autoplay=true${subQuery}`;
+                else if (server === 2) url = `https://vidsrc.xyz/embed/movie/${id}?ds_lang=tr${subQuery}`;
+                else if (server === 3) url = `https://multiembed.mov/?video_id=${id}`;
+                else if (server === 4) url = `https://autoembed.co/movie/imdb/${id}`;
             } else {
-                switch (serverIdx) {
-                    case 0: return `https://vidsrc.xyz/embed/tv/${id}/${season}-${episode}?ds_lang=tr${subParam}`;
-                    case 1: return `https://multiembed.mov/?video_id=${id}&s=${season}&e=${episode}${subParam}`;
-                    case 2: return `https://vidsrc.pm/embed/tv/${id}/${season}/${episode}?ds_lang=tr${subParam}`;
-                    case 3: return `https://autoembed.co/tv/imdb/${id}-${season}-${episode}?lang=tr`;
-                }
+                if (server === 0) url = `https://vidsrc.cc/v2/embed/tv/${id}/${season}/${episode}?autoPlay=true`;
+                else if (server === 1) url = `https://vidlink.pro/tv/${id}/${season}/${episode}?autoplay=true${subQuery}`;
+                else if (server === 2) url = `https://vidsrc.xyz/embed/tv/${id}/${season}-${episode}?ds_lang=tr${subQuery}`;
+                else if (server === 3) url = `https://multiembed.mov/?video_id=${id}&s=${season}&e=${episode}`;
+                else if (server === 4) url = `https://autoembed.co/tv/imdb/${id}-${season}-${episode}`;
             }
+
+            document.getElementById('playerIframe').src = url;
         }
 
-        function updatePlayerIframe() {
-            const iframe = document.getElementById('streamIframe');
-            const video = document.getElementById('nativeStremioVideo');
-            video.pause();
-            video.style.display = 'none';
-            iframe.style.display = 'block';
-
-            iframe.src = getEmbedUrl(
-                currentMedia.serverIndex,
-                currentMedia.id,
-                currentMedia.type,
-                currentMedia.season,
-                currentMedia.episode
-            );
-            if (currentMedia.type === 'series') {
-                document.getElementById('modalEpBadge').textContent = `Sezon ${currentMedia.season} • Bölüm ${currentMedia.episode}`;
-            }
+        function setServer(idx, btn) {
+            state.server = idx;
+            document.querySelectorAll('.srv-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            refreshIframe();
         }
 
-        function switchStreamServer(serverIdx, btnEl) {
-            currentMedia.serverIndex = serverIdx;
-            document.querySelectorAll('.server-btn').forEach(b => b.classList.remove('active'));
-            btnEl.classList.add('active');
-            updatePlayerIframe();
-        }
-
-        async function loadSeriesEpisodes(imdbId, tvmazeId) {
-            const seasonTabs = document.getElementById('seasonTabsContainer');
-            const epGrid = document.getElementById('episodesGridContainer');
-            seasonTabs.innerHTML = '<span style="color:#aaa; font-size:12px;">Bölümler yükleniyor...</span>';
-            epGrid.innerHTML = '';
+        async function fetchEpisodes(imdbId, tvmazeId) {
+            const sRow = document.getElementById('seasonsRow');
+            const eList = document.getElementById('episodesList');
+            sRow.innerHTML = '';
+            eList.innerHTML = '';
 
             try {
                 let showId = tvmazeId;
                 if (!showId) {
-                    const lookup = await fetch(`https://api.tvmaze.com/lookup/shows?imdb=${imdbId}`).then(r => r.json());
-                    showId = lookup.id;
+                    const info = await fetch(`https://api.tvmaze.com/lookup/shows?imdb=${imdbId}`).then(r => r.json());
+                    showId = info.id;
                 }
                 if (showId) {
-                    const episodes = await fetch(`https://api.tvmaze.com/shows/${showId}/episodes`).then(r => r.json());
-                    currentMedia.videos = episodes.map(ep => ({
-                        season: ep.season,
-                        episode: ep.number,
-                        name: ep.name
-                    }));
-                    renderSeasonsAndEpisodes(currentMedia.videos);
+                    const eps = await fetch(`https://api.tvmaze.com/shows/${showId}/episodes`).then(r => r.json());
+                    state.episodes = eps.map(e => ({ season: e.season, episode: e.number, name: e.name }));
+                    renderEpisodesUI();
                 }
-            } catch {
-                const fallbackVideos = [];
-                for (let s = 1; s <= 5; s++) {
-                    for (let ep = 1; ep <= 12; ep++) {
-                        fallbackVideos.push({ season: s, episode: ep, name: `Bölüm ${ep}` });
-                    }
-                }
-                currentMedia.videos = fallbackVideos;
-                renderSeasonsAndEpisodes(fallbackVideos);
-            }
+            } catch {}
         }
 
-        function closeMediaModal() {
+        function renderEpisodesUI() {
+            const sRow = document.getElementById('seasonsRow');
+            const eList = document.getElementById('episodesList');
+            sRow.innerHTML = '';
+            eList.innerHTML = '';
+
+            const seasons = [...new Set(state.episodes.map(e => e.season))].filter(Boolean);
+            seasons.forEach(s => {
+                const b = document.createElement('button');
+                b.className = 'chip' + (s === state.season ? ' active' : '');
+                b.textContent = `${s}. Sezon`;
+                b.onclick = () => {
+                    state.season = s;
+                    renderEpisodesUI();
+                };
+                sRow.appendChild(b);
+            });
+
+            state.episodes.filter(e => e.season === state.season).forEach(ep => {
+                const b = document.createElement('button');
+                b.className = 'ep-card' + (ep.episode === state.episode ? ' active' : '');
+                b.innerHTML = `<div class="num">${ep.episode}. Bölüm</div><div class="name">${ep.name || ''}</div>`;
+                b.onclick = async () => {
+                    state.episode = ep.episode;
+                    renderEpisodesUI();
+                    await fetchTrSub();
+                    refreshIframe();
+                };
+                eList.appendChild(b);
+            });
+        }
+
+        function closeModal() {
             document.getElementById('playerModal').classList.remove('open');
-            document.getElementById('streamIframe').src = 'about:blank';
-            const video = document.getElementById('nativeStremioVideo');
-            video.pause();
-            video.src = '';
-        }
-
-        function renderSeasonsAndEpisodes(videos) {
-            const seasonsMap = {};
-            videos.forEach(v => {
-                if (!v.season) return;
-                if (!seasonsMap[v.season]) seasonsMap[v.season] = [];
-                seasonsMap[v.season].push(v);
-            });
-
-            const seasons = Object.keys(seasonsMap).map(Number).sort((a, b) => a - b);
-            const seasonTabs = document.getElementById('seasonTabsContainer');
-            seasonTabs.innerHTML = '';
-
-            seasons.forEach(sNum => {
-                const sBtn = document.createElement('button');
-                sBtn.className = 'chip' + (sNum === currentMedia.season ? ' active' : '');
-                sBtn.textContent = `${sNum}. Sezon`;
-                sBtn.onclick = () => {
-                    currentMedia.season = sNum;
-                    renderSeasonsAndEpisodes(videos);
-                };
-                seasonTabs.appendChild(sBtn);
-            });
-
-            const epGrid = document.getElementById('episodesGridContainer');
-            epGrid.innerHTML = '';
-            const currentSeasonEps = (seasonsMap[currentMedia.season] || []).sort((a, b) => a.episode - b.episode);
-
-            currentSeasonEps.forEach(ep => {
-                const epBtn = document.createElement('button');
-                const isActive = ep.season === currentMedia.season && ep.episode === currentMedia.episode;
-                epBtn.className = 'ep-btn' + (isActive ? ' active' : '');
-                epBtn.innerHTML = `
-                    <span class="ep-num">${ep.episode}. Bölüm</span>
-                    <span class="ep-name">${ep.name || ('Bölüm ' + ep.episode)}</span>
-                `;
-                epBtn.onclick = () => {
-                    currentMedia.season = ep.season;
-                    currentMedia.episode = ep.episode;
-                    updatePlayerIframe();
-                    fetchStremioTurkishSubtitles();
-                    fetchStremioAddonStreams();
-                    saveToContinueWatching();
-                    renderSeasonsAndEpisodes(videos);
-                };
-                epGrid.appendChild(epBtn);
-            });
-        }
-
-        function playNextEpisode() {
-            currentMedia.episode += 1;
-            updatePlayerIframe();
-            fetchStremioTurkishSubtitles();
-            fetchStremioAddonStreams();
-            saveToContinueWatching();
-            if (currentMedia.videos.length > 0) renderSeasonsAndEpisodes(currentMedia.videos);
+            document.getElementById('playerIframe').src = 'about:blank';
         }
 
         // Canlı TV
-        function loadVerifiedTurkishChannels() {
-            allChannels = [...VERIFIED_TR_CHANNELS];
-            activeCategory = 'ALL';
-            renderChannelList();
-        }
-
-        async function loadFullM3uChannels() {
-            const container = document.getElementById('channelListContainer');
-            container.innerHTML = '<div class="loader">Tüm Türkiye listesi yükleniyor...</div>';
-            try {
-                const text = await fetch('https://iptv-org.github.io/iptv/countries/tr.m3u').then(r => r.text());
-                parseM3uPlaylist(text);
-            } catch {
-                loadVerifiedTurkishChannels();
+        function filterTv(cat, btn) {
+            if (btn) {
+                btn.parentElement.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
             }
-        }
+            const list = document.getElementById('tvList');
+            list.innerHTML = '';
+            const items = cat === 'ALL' ? TV_CHANNELS : TV_CHANNELS.filter(c => c.group === cat);
 
-        function loadM3uFile(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = (e) => parseM3uPlaylist(e.target.result);
-            reader.readAsText(file);
-        }
-
-        function parseM3uPlaylist(content) {
-            const lines = content.split(/\r?\n/);
-            const parsed = [];
-            let currentItem = null;
-
-            for (let rawLine of lines) {
-                const line = rawLine.trim();
-                if (!line) continue;
-                if (line.startsWith('#EXTINF:')) {
-                    const groupMatch = line.match(/group-title="([^"]+)"/i);
-                    const commaIndex = line.lastIndexOf(',');
-                    const name = commaIndex !== -1 ? line.substring(commaIndex + 1).trim() : 'Kanal';
-                    currentItem = {
-                        name: name.replace(/\[.*?\]|\(.*?\)/g, '').trim() || name,
-                        group: groupMatch ? groupMatch[1] : 'Genel',
-                        url: ''
-                    };
-                } else if (!line.startsWith('#') && currentItem) {
-                    currentItem.url = line;
-                    parsed.push(currentItem);
-                    currentItem = null;
-                }
-            }
-            allChannels = [...VERIFIED_TR_CHANNELS, ...parsed];
-            renderChannelList();
-        }
-
-        function filterChannels(cat, btnEl) {
-            activeCategory = cat;
-            if (btnEl) {
-                btnEl.parentElement.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-                btnEl.classList.add('active');
-            }
-            renderChannelList();
-        }
-
-        function renderChannelList() {
-            const container = document.getElementById('channelListContainer');
-            const query = (document.getElementById('channelSearchInput').value || '').toLowerCase();
-            container.innerHTML = '';
-
-            const filtered = allChannels.filter(ch => {
-                const matchesCat = activeCategory === 'ALL' || ch.group.toLowerCase().includes(activeCategory.toLowerCase());
-                const matchesSearch = !query || ch.name.toLowerCase().includes(query) || ch.group.toLowerCase().includes(query);
-                return matchesCat && matchesSearch;
-            });
-
-            filtered.slice(0, 200).forEach(ch => {
-                const btn = document.createElement('button');
-                btn.className = 'channel-btn';
-                const initials = ch.name.substring(0, 2).toUpperCase();
-                btn.innerHTML = `
-                    <div class="ch-badge">${initials}</div>
-                    <div style="overflow: hidden;">
-                        <div class="ch-name">${ch.name}</div>
-                        <div class="ch-group">● ${ch.group}</div>
+            items.forEach(ch => {
+                const b = document.createElement('button');
+                b.className = 'ch-item';
+                b.innerHTML = `
+                    <div class="ch-icon">${ch.name.substring(0, 2).toUpperCase()}</div>
+                    <div style="overflow:hidden;">
+                        <div class="ch-title">${ch.name}</div>
+                        <div class="ch-sub">● ${ch.group}</div>
                     </div>
                 `;
-                btn.onclick = () => playLiveChannel(ch, btn);
-                container.appendChild(btn);
+                b.onclick = () => playTv(ch, b);
+                list.appendChild(b);
             });
         }
 
-        function playLiveChannel(channel, btnEl) {
-            currentTvChannel = channel;
-            document.querySelectorAll('.channel-btn').forEach(b => b.classList.remove('active'));
-            if (btnEl) btnEl.classList.add('active');
+        function playTv(ch, btn) {
+            document.querySelectorAll('.ch-item').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('tvTitle').textContent = ch.name;
+            document.getElementById('tvGroup').textContent = ch.group;
 
-            document.getElementById('activeChannelName').textContent = channel.name;
-            document.getElementById('activeChannelGroup').textContent = `● Canlı Yayın (${channel.group})`;
+            const video = document.getElementById('tvVideo');
+            if (hls) { hls.destroy(); hls = null; }
 
-            const video = document.getElementById('liveTvVideo');
-            const iframe = document.getElementById('liveTvIframe');
-            const backupBtn = document.getElementById('tvBackupBtn');
-
-            iframe.style.display = 'none';
-            iframe.src = 'about:blank';
-            video.style.display = 'block';
-            backupBtn.style.display = channel.ytEmbed ? 'inline-block' : 'none';
-
-            if (hlsInstance) {
-                hlsInstance.destroy();
-                hlsInstance = null;
-            }
-
-            const isAppleDevice = /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent) && !window.MSStream;
-            if (isAppleDevice && video.canPlayType('application/vnd.apple.mpegurl')) {
-                video.src = channel.url;
+            const isApple = /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent);
+            if (isApple && video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = ch.url;
                 video.load();
                 video.play().catch(() => {});
             } else if (Hls.isSupported()) {
-                hlsInstance = new Hls({ enableWorker: true });
-                hlsInstance.loadSource(channel.url);
-                hlsInstance.attachMedia(video);
-                hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => video.play().catch(() => {}));
-                hlsInstance.on(Hls.Events.ERROR, (event, data) => {
-                    if (data.fatal && video.canPlayType('application/vnd.apple.mpegurl')) {
-                        video.src = channel.url;
-                        video.play().catch(() => {});
-                    }
-                });
-            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                video.src = channel.url;
+                hls = new Hls();
+                hls.loadSource(ch.url);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, () => video.play().catch(() => {}));
+            } else {
+                video.src = ch.url;
                 video.play().catch(() => {});
             }
         }
 
-        function switchTvBackupStream() {
-            if (!currentTvChannel || !currentTvChannel.ytEmbed) return;
-            const video = document.getElementById('liveTvVideo');
-            const iframe = document.getElementById('liveTvIframe');
-            video.pause();
-            video.style.display = 'none';
-            iframe.style.display = 'block';
-            iframe.src = currentTvChannel.ytEmbed;
-            document.getElementById('activeChannelGroup').textContent = '● Yedek Resmi HD Yayın Aktif';
-        }
-
-        function requestTvPiP() {
-            const video = document.getElementById('liveTvVideo');
-            if (video.webkitSetPresentationMode) {
-                video.webkitSetPresentationMode(video.webkitPresentationMode === 'picture-in-picture' ? 'inline' : 'picture-in-picture');
-            } else if (video.requestPictureInPicture) {
-                video.requestPictureInPicture();
+        function toggleTvPiP() {
+            const v = document.getElementById('tvVideo');
+            if (v.webkitSetPresentationMode) {
+                v.webkitSetPresentationMode(v.webkitPresentationMode === 'picture-in-picture' ? 'inline' : 'picture-in-picture');
+            } else if (v.requestPictureInPicture) {
+                v.requestPictureInPicture();
             }
-        }
-
-        function saveToContinueWatching() {
-            let history = JSON.parse(localStorage.getItem('omnihub_history') || '[]');
-            history = history.filter(item => item.id !== currentMedia.id);
-            history.unshift({
-                id: currentMedia.id,
-                tvmazeId: currentMedia.tvmazeId,
-                isDirectEmbed: currentMedia.isDirectEmbed,
-                embedUrl: currentMedia.embedUrl,
-                type: currentMedia.type,
-                name: currentMedia.name,
-                poster: currentMedia.poster,
-                season: currentMedia.season,
-                episode: currentMedia.episode,
-                badgeText: currentMedia.type === 'series' ? `S${currentMedia.season}:B${currentMedia.episode}` : 'İzlendi'
-            });
-            localStorage.setItem('omnihub_history', JSON.stringify(history.slice(0, 12)));
-            renderContinueWatching();
-        }
-
-        function renderContinueWatching() {
-            const history = JSON.parse(localStorage.getItem('omnihub_history') || '[]');
-            const section = document.getElementById('continueSection');
-            if (history.length === 0) {
-                section.style.display = 'none';
-                return;
-            }
-            section.style.display = 'block';
-            renderMediaGrid('continueGrid', history, 'movie');
-        }
-
-        function clearHistory() {
-            localStorage.removeItem('omnihub_history');
-            renderContinueWatching();
         }
     </script>
 </body>
